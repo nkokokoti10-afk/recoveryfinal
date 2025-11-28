@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refund Claim - CyberProRecover</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#0b1020;--bg-2:#0f1724;--text:#e6eef6;--muted:#9aa7b7;--accent:#6366f1;--accent-2:#8b5cf6}
+        [data-theme="light"]{--bg:#f8f9fa;--bg-2:#fff;--text:#1a202c;--muted:#4a5568}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);padding-top:70px}
+        @media(max-width:720px){body{padding-top:64px}}
+
+        .animated-bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(99,102,241,0.02),rgba(139,92,246,0.01))}
+        
+        header{position:fixed;top:0;left:0;right:0;z-index:100;background:linear-gradient(180deg,rgba(11,16,32,0.95),rgba(15,23,36,0.85));backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.05);height:70px}
+        @media(max-width:720px){header{height:64px}}
+        .header-wrapper{padding:0 24px;height:100%;display:flex;align-items:center;max-width:1180px;margin:0 auto}
+        .logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:900;font-size:18px}
+        .logo img{height:40px;width:auto}
+        .logo span{background:linear-gradient(135deg,#6366f1,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+        .nav-desktop{display:flex;gap:2px;flex:1;margin:0 24px}
+        @media(max-width:720px){.nav-desktop{display:none}}
+        .nav-item{position:relative}
+        .nav-link{background:0;border:0;color:var(--muted);padding:8px 12px;cursor:pointer;font-size:13px;font-weight:600;border-radius:8px;transition:all 0.2s;font-family:inherit}
+        .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+        .dropdown-icon{font-size:10px;margin-left:4px;transition:transform 0.2s}
+        .dropdown-menu{position:absolute;top:100%;left:0;min-width:220px;background:var(--bg-2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:8px;margin-top:8px;box-shadow:0 8px 32px rgba(0,0,0,0.3);display:none;z-index:200;opacity:0;transform:translateY(-8px);pointer-events:none;transition:all 0.2s}
+        .dropdown[data-open] .dropdown-menu{display:block;opacity:1;transform:translateY(0);pointer-events:auto}
+        .dropdown-item{display:block;width:100%;padding:10px 12px;color:var(--muted);text-decoration:none;font-size:13px;border-radius:6px;transition:all 0.2s;border:0;background:0;cursor:pointer}
+        .dropdown-item:hover{color:var(--accent);background:rgba(99,102,241,0.1)}
+
+        .header-actions{display:flex;gap:12px;align-items:center}
+        .theme-toggle{background:0;border:0;padding:8px;color:var(--text);cursor:pointer;font-size:16px;border-radius:8px;transition:all 0.2s}
+
+        .hamburger{display:none;background:0;border:0;color:var(--text);padding:8px;cursor:pointer}
+        @media(max-width:720px){.hamburger{display:block}}
+        .hamburger span{display:block;width:20px;height:2px;background:currentColor;margin:4px 0;border-radius:2px;transition:all 0.3s}
+        .hamburger[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg) translate(8px,10px)}
+        .hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
+        .hamburger[aria-expanded="true"] span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+
+        .nav-mobile{position:fixed;right:-100%;top:70px;bottom:0;width:100%;max-width:280px;background:var(--bg-2);border-left:1px solid rgba(255,255,255,0.05);overflow-y:auto;transition:right 0.3s;z-index:95;display:flex;flex-direction:column}
+        @media(max-width:720px){.nav-mobile{top:64px}}
+        .nav-mobile.open{right:0}
+        .nav-mobile-item{display:block;padding:12px 16px;color:var(--muted);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);border-left:3px solid transparent;transition:all 0.2s;background:0;border:0;width:100%;text-align:left;cursor:pointer;font-family:inherit}
+        .nav-mobile-item:hover{color:var(--accent);background:rgba(99,102,241,0.05);border-left-color:var(--accent)}
+        .nav-mobile-submenu{max-height:0;overflow:hidden;transition:max-height 0.3s;background:rgba(99,102,241,0.05)}
+        .nav-mobile-submenu.open{max-height:500px}
+        .nav-mobile-subitem{display:block;padding:10px 16px 10px 32px;color:var(--muted);text-decoration:none;font-size:12px;transition:color 0.2s}
+        .nav-mobile-subitem:hover{color:var(--accent)}
+
+        .container{max-width:1180px;margin:0 auto;padding:0 24px}
+        main{padding:80px 0 60px}
+        h1{font-size:clamp(32px,5vw,52px);font-weight:900;margin-bottom:16px;background:linear-gradient(135deg,var(--text),var(--muted));-webkit-background-clip:text;background-clip:text;color:transparent}
+        h2{font-size:24px;font-weight:900;margin-bottom:24px;margin-top:32px}
+        p{color:var(--muted);line-height:1.7;margin-bottom:16px}
+        section{padding:60px 0;border-top:1px solid rgba(255,255,255,0.03)}
+
+        .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin:32px 0}
+        .info-card{background:var(--bg-2);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:28px;transition:all 0.3s}
+        .info-card:hover{border-color:rgba(99,102,241,0.3);background:rgba(99,102,441,0.02)}
+        .info-card h3{font-size:18px;font-weight:900;margin-bottom:12px;color:var(--text)}
+        .info-card p{margin-bottom:8px;font-size:14px}
+
+        ul{color:var(--muted);margin-left:20px;line-height:1.8;margin-bottom:16px}
+        ul li{margin-bottom:8px}
+
+        footer{margin-top:64px;padding:48px 0;border-top:1px solid rgba(255,255,255,0.05);background:linear-gradient(180deg,var(--bg),var(--bg-2))}
+        footer .container{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;padding:32px 0}
+        footer h5{font-weight:900;font-size:16px;margin-bottom:14px}
+        footer p,footer li{color:var(--muted);font-size:13px;line-height:1.6;margin:0}
+        footer ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;margin:0}
+        footer a{color:var(--muted);text-decoration:none;transition:color 0.2s}
+        footer a:hover{color:var(--accent)}
+        .copyright{border-top:1px solid rgba(255,255,255,0.05);margin-top:32px;padding-top:24px;text-align:center}
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <header>
+        <div class="header-wrapper">
+            <a href="index.html" class="logo">
+                <img src="logo/cropped_circle_image.png" alt="Logo">
+                <span>CyberProRecover</span>
+            </a>
+            <nav class="nav-desktop">
+                <div class="nav-item"><a href="index.html#overview" class="nav-link">Overview</a></div>
+                <div class="nav-item"><a href="index.html#services" class="nav-link">Services</a></div>
+                <div class="nav-item"><a href="index.html#process" class="nav-link">Process</a></div>
+                <div class="nav-item dropdown">
+                    <button class="nav-link" aria-expanded="false">Crypto Recovery <span class="dropdown-icon">▼</span></button>
+                    <div class="dropdown-menu">
+                        <a href="bitcoin-recovery.html" class="dropdown-item">Bitcoin</a>
+                        <a href="ethereum-recovery.html" class="dropdown-item">Ethereum</a>
+                        <a href="stablecoin-recovery.html" class="dropdown-item">Stablecoin</a>
+                        <a href="usdtrecov.html" class="dropdown-item">USDT Recovery</a>
+                    </div>
+                </div>
+                <div class="nav-item"><a href="chargeback.html" class="nav-link">Chargeback</a></div>
+                <div class="nav-item"><a href="contact-us.html" class="nav-link">Contact</a></div>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">🌙</button>
+                <button class="hamburger" id="mobileMenuBtn" aria-expanded="false"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-mobile" id="mobileNav" aria-hidden="true">
+        <a href="index.html#overview" class="nav-mobile-item">Overview</a>
+        <a href="index.html#services" class="nav-mobile-item">Services</a>
+        <a href="index.html#process" class="nav-mobile-item">Process</a>
+        <button class="nav-mobile-item" data-submenu="crypto">Crypto Recovery <span style="font-size:10px;float:right">▼</span></button>
+        <div class="nav-mobile-submenu" id="crypto">
+            <a href="bitcoin-recovery.html" class="nav-mobile-subitem">Bitcoin</a>
+            <a href="ethereum-recovery.html" class="nav-mobile-subitem">Ethereum</a>
+            <a href="stablecoin-recovery.html" class="nav-mobile-subitem">Stablecoin</a>
+            <a href="usdtrecov.html" class="nav-mobile-subitem">USDT Recovery</a>
+        </div>
+        <a href="chargeback.html" class="nav-mobile-item">Chargeback</a>
+        <a href="contact-us.html" class="nav-mobile-item">Contact</a>
+    </nav>
+
+    <main>
+        <section class="container">
+            <h1>Refund Claim Assistance</h1>
+            <p>Professional support for pursuing refund claims with merchants, platforms, and service providers with proven success.</p>
+        </section>
+
+        <section class="container">
+            <h2>Refund Claim Categories</h2>
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Defective Products</h3>
+                    <p>Received items that are broken, damaged, or don't match the product description provided.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Subscription Cancellation</h3>
+                    <p>Difficulty canceling recurring charges or refunds not processed after subscription termination.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Service Cancellation</h3>
+                    <p>Unused services or memberships where refunds are wrongly denied by provider or platform.</p>
+                </div>
+            </div>
+
+            <h2>Refund Claim Process</h2>
+            <ul>
+                <li><strong>Claim Preparation:</strong> Documenting reason for refund and gathering supporting evidence</li>
+                <li><strong>Direct Merchant Contact:</strong> Attempting resolution through direct communication with merchant</li>
+                <li><strong>Formal Complaint Filing:</strong> Submitting formal refund requests to merchant and payment processor</li>
+                <li><strong>Consumer Protection Escalation:</strong> Filing complaints with consumer protection agencies if needed</li>
+                <li><strong>Settlement Negotiation:</strong> Working toward full or partial refund through negotiation</li>
+            </ul>
+
+            <h2>Claim Success Factors</h2>
+            <p><strong>Average Resolution Time:</strong> 30-45 days from claim filing to refund or settlement</p>
+            <p><strong>Success Rate:</strong> 87% of refund claims result in full or partial recovery when documented properly</p>
+            <p><strong>Average Recovery Amount:</strong> 93% of claimed amount recovered</p>
+
+            <h2>Evidence That Strengthens Your Claim</h2>
+            <p>Transaction records, product photos, communication with merchant, shipping/delivery confirmation, terms of service documentation. The more evidence you provide, the higher your success rate. We help compile and present this professionally to maximize approval chances.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div>
+                <h5>CyberProRecover</h5>
+                <p>Digital asset recovery specialists with full transparency and legal compliance.</p>
+            </div>
+            <div>
+                <h5>Services</h5>
+                <ul>
+                    <li><a href="index.html#overview">Overview</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="chargeback.html">Chargeback</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Legal</h5>
+                <ul>
+                    <li><a href="terms-and-conditions.html">Terms</a></li>
+                    <li><a href="about-us.html">About</a></li>
+                    <li><a href="contact-us.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Contact</h5>
+                <ul>
+                    <li><a href="mailto:support@recoverx.io">support@recoverx.io</a></li>
+                    <li><a href="tel:+1-800-872-6238">+1 (800) 872-6238</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; <span id="year">2025</span> CyberProRecover. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const byId = id => document.getElementById(id);
+        const root = document.documentElement;
+        const themeBtn = byId('themeBtn');
+        const mobileBtn = byId('mobileMenuBtn');
+        const mobileNav = byId('mobileNav');
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        root.setAttribute('data-theme', savedTheme);
+        themeBtn.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+        themeBtn.addEventListener('click', () => {
+            const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeBtn.textContent = newTheme === 'light' ? '☀️' : '🌙';
+        });
+
+        mobileBtn.addEventListener('click', () => {
+            const isOpen = mobileNav.classList.contains('open');
+            if(!isOpen) {
+                mobileNav.classList.add('open');
+                mobileNav.setAttribute('aria-hidden', 'false');
+                mobileBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.querySelectorAll('[data-submenu]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                byId(btn.getAttribute('data-submenu')).classList.toggle('open');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if(mobileNav.classList.contains('open') && !mobileNav.contains(e.target) && !mobileBtn.contains(e.target)){
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape' && mobileNav.classList.contains('open')){
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.querySelectorAll('.dropdown > .nav-link').forEach(btn => {
+            const dropdown = btn.closest('.dropdown');
+            btn.addEventListener('mouseenter', () => {
+                if(window.innerWidth > 720) dropdown.setAttribute('data-open', '');
+            });
+            dropdown.addEventListener('mouseleave', () => {
+                dropdown.removeAttribute('data-open');
+            });
+        });
+
+        byId('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

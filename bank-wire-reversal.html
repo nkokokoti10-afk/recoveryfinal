@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Wire Reversal - CyberProRecover</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#0b1020;--bg-2:#0f1724;--text:#e6eef6;--muted:#9aa7b7;--accent:#6366f1;--accent-2:#8b5cf6}
+        [data-theme="light"]{--bg:#f8f9fa;--bg-2:#fff;--text:#1a202c;--muted:#4a5568}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);padding-top:70px}
+        @media(max-width:720px){body{padding-top:64px}}
+
+        .animated-bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(99,102,241,0.02),rgba(139,92,246,0.01))}
+        
+        header{position:fixed;top:0;left:0;right:0;z-index:100;background:linear-gradient(180deg,rgba(11,16,32,0.95),rgba(15,23,36,0.85));backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.05);height:70px}
+        @media(max-width:720px){header{height:64px}}
+        .header-wrapper{padding:0 24px;height:100%;display:flex;align-items:center;max-width:1180px;margin:0 auto}
+        .logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:900;font-size:18px}
+        .logo img{height:40px;width:auto}
+        .logo span{background:linear-gradient(135deg,#6366f1,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+        .nav-desktop{display:flex;gap:2px;flex:1;margin:0 24px}
+        @media(max-width:720px){.nav-desktop{display:none}}
+        .nav-item{position:relative}
+        .nav-link{background:0;border:0;color:var(--muted);padding:8px 12px;cursor:pointer;font-size:13px;font-weight:600;border-radius:8px;transition:all 0.2s;font-family:inherit}
+        .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+        .dropdown-icon{font-size:10px;margin-left:4px;transition:transform 0.2s}
+        .dropdown-menu{position:absolute;top:100%;left:0;min-width:220px;background:var(--bg-2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:8px;margin-top:8px;box-shadow:0 8px 32px rgba(0,0,0,0.3);display:none;z-index:200;opacity:0;transform:translateY(-8px);pointer-events:none;transition:all 0.2s}
+        .dropdown[data-open] .dropdown-menu{display:block;opacity:1;transform:translateY(0);pointer-events:auto}
+        .dropdown-item{display:block;width:100%;padding:10px 12px;color:var(--muted);text-decoration:none;font-size:13px;border-radius:6px;transition:all 0.2s;border:0;background:0;cursor:pointer}
+        .dropdown-item:hover{color:var(--accent);background:rgba(99,102,241,0.1)}
+
+        .header-actions{display:flex;gap:12px;align-items:center}
+        .theme-toggle{background:0;border:0;padding:8px;color:var(--text);cursor:pointer;font-size:16px;border-radius:8px;transition:all 0.2s}
+
+        .hamburger{display:none;background:0;border:0;color:var(--text);padding:8px;cursor:pointer}
+        @media(max-width:720px){.hamburger{display:block}}
+        .hamburger span{display:block;width:20px;height:2px;background:currentColor;margin:4px 0;border-radius:2px;transition:all 0.3s}
+        .hamburger[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg) translate(8px,10px)}
+        .hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
+        .hamburger[aria-expanded="true"] span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+
+        .nav-mobile{position:fixed;right:-100%;top:70px;bottom:0;width:100%;max-width:280px;background:var(--bg-2);border-left:1px solid rgba(255,255,255,0.05);overflow-y:auto;transition:right 0.3s;z-index:95;display:flex;flex-direction:column}
+        @media(max-width:720px){.nav-mobile{top:64px}}
+        .nav-mobile.open{right:0}
+        .nav-mobile-item{display:block;padding:12px 16px;color:var(--muted);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);border-left:3px solid transparent;transition:all 0.2s;background:0;border:0;width:100%;text-align:left;cursor:pointer;font-family:inherit}
+        .nav-mobile-item:hover{color:var(--accent);background:rgba(99,102,241,0.05);border-left-color:var(--accent)}
+        .nav-mobile-submenu{max-height:0;overflow:hidden;transition:max-height 0.3s;background:rgba(99,102,241,0.05)}
+        .nav-mobile-submenu.open{max-height:500px}
+        .nav-mobile-subitem{display:block;padding:10px 16px 10px 32px;color:var(--muted);text-decoration:none;font-size:12px;transition:color 0.2s}
+        .nav-mobile-subitem:hover{color:var(--accent)}
+
+        .container{max-width:1180px;margin:0 auto;padding:0 24px}
+        main{padding:80px 0 60px}
+        h1{font-size:clamp(32px,5vw,52px);font-weight:900;margin-bottom:16px;color:#10b981}
+        h2{font-size:24px;font-weight:900;margin-bottom:24px;margin-top:32px;color:var(--text)}
+        p{color:var(--muted);line-height:1.7;margin-bottom:16px}
+        section{padding:60px 0;border-top:1px solid rgba(255,255,255,0.03)}
+
+        .two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin:32px 0;align-items:start}
+        @media(max-width:720px){.two-col{grid-template-columns:1fr}}
+
+        .left-col h3{font-size:18px;font-weight:900;margin:24px 0 12px 0;color:#10b981}
+        .left-col p{margin-bottom:12px}
+        .left-col ul{margin-bottom:24px}
+
+        .right-col{background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));border:2px solid rgba(16,185,129,0.2);border-radius:12px;padding:32px}
+        .right-col h3{font-size:20px;font-weight:900;margin-bottom:16px;color:#10b981}
+        .right-col .highlight{background:rgba(16,185,129,0.1);padding:12px;border-left:3px solid #10b981;margin:16px 0;border-radius:4px}
+        .right-col .highlight strong{color:#10b981}
+
+        .urgency-badge{display:inline-block;background:#10b981;color:white;padding:8px 16px;border-radius:8px;font-weight:900;font-size:12px;margin-bottom:16px}
+
+        ul{color:var(--muted);margin-left:20px;line-height:1.8;margin-bottom:16px}
+        ul li{margin-bottom:8px}
+
+        footer{margin-top:64px;padding:48px 0;border-top:1px solid rgba(255,255,255,0.05);background:linear-gradient(180deg,var(--bg),var(--bg-2))}
+        footer .container{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;padding:32px 0}
+        footer h5{font-weight:900;font-size:16px;margin-bottom:14px}
+        footer p,footer li{color:var(--muted);font-size:13px;line-height:1.6;margin:0}
+        footer ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;margin:0}
+        footer a{color:var(--muted);text-decoration:none;transition:color 0.2s}
+        footer a:hover{color:var(--accent)}
+        .copyright{border-top:1px solid rgba(255,255,255,0.05);margin-top:32px;padding-top:24px;text-align:center}
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <header>
+        <div class="header-wrapper">
+            <a href="index.html" class="logo">
+                <img src="logo/cropped_circle_image.png" alt="Logo">
+                <span>CyberProRecover</span>
+            </a>
+            <nav class="nav-desktop">
+                <div class="nav-item"><a href="index.html#overview" class="nav-link">Overview</a></div>
+                <div class="nav-item"><a href="index.html#services" class="nav-link">Services</a></div>
+                <div class="nav-item"><a href="index.html#process" class="nav-link">Process</a></div>
+                <div class="nav-item dropdown">
+                    <button class="nav-link" aria-expanded="false">Crypto Recovery <span class="dropdown-icon">▼</span></button>
+                    <div class="dropdown-menu">
+                        <a href="bitcoin-recovery.html" class="dropdown-item">Bitcoin</a>
+                        <a href="ethereum-recovery.html" class="dropdown-item">Ethereum</a>
+                        <a href="stablecoin-recovery.html" class="dropdown-item">Stablecoin</a>
+                        <a href="usdtrecov.html" class="dropdown-item">USDT Recovery</a>
+                    </div>
+                </div>
+                <div class="nav-item"><a href="chargeback.html" class="nav-link">Chargeback</a></div>
+                <div class="nav-item"><a href="contact-us.html" class="nav-link">Contact</a></div>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">🌙</button>
+                <button class="hamburger" id="mobileMenuBtn" aria-expanded="false"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-mobile" id="mobileNav" aria-hidden="true">
+        <a href="index.html#overview" class="nav-mobile-item">Overview</a>
+        <a href="index.html#services" class="nav-mobile-item">Services</a>
+        <a href="index.html#process" class="nav-mobile-item">Process</a>
+        <button class="nav-mobile-item" data-submenu="crypto">Crypto Recovery <span style="font-size:10px;float:right">▼</span></button>
+        <div class="nav-mobile-submenu" id="crypto">
+            <a href="bitcoin-recovery.html" class="nav-mobile-subitem">Bitcoin</a>
+            <a href="ethereum-recovery.html" class="nav-mobile-subitem">Ethereum</a>
+            <a href="stablecoin-recovery.html" class="nav-mobile-subitem">Stablecoin</a>
+            <a href="usdtrecov.html" class="nav-mobile-subitem">USDT Recovery</a>
+        </div>
+        <a href="chargeback.html" class="nav-mobile-item">Chargeback</a>
+        <a href="contact-us.html" class="nav-mobile-item">Contact</a>
+    </nav>
+
+    <main>
+        <section class="container">
+            <h1>🏦 Bank Wire Reversal & Recovery</h1>
+            <p>Expert intervention for fraudulent wire transfers. Time is critical—we act immediately to freeze funds before they're withdrawn.</p>
+        </section>
+
+        <section class="container">
+            <div class="two-col">
+                <div class="left-col">
+                    <h3>Common Wire Fraud Tactics</h3>
+                    <p><strong>CEO Fraud:</strong> Scammers impersonate executives requesting urgent wire transfers to fraudulent accounts.</p>
+                    <p><strong>Vendor Spoofing:</strong> Fake invoices mimicking legitimate suppliers redirect payments to attacker accounts.</p>
+                    <p><strong>Account Compromise:</strong> Hackers gain access to business accounts and authorize unauthorized wire transfers.</p>
+                    <p><strong>Phishing Attacks:</strong> Credentials stolen through phishing emails leading to unauthorized wire access.</p>
+                </div>
+                <div class="right-col">
+                    <div class="urgency-badge">⚡ TIME-CRITICAL ACTION</div>
+                    <h3>Recovery Window</h3>
+                    <div class="highlight">
+                        <strong>First 24 hours:</strong> 78% recovery rate if immediate action taken
+                    </div>
+                    <div class="highlight">
+                        <strong>24-48 hours:</strong> 45% recovery rate as funds begin dispersal
+                    </div>
+                    <div class="highlight">
+                        <strong>After 48 hours:</strong> 12% recovery rate, funds likely already withdrawn
+                    </div>
+                    <p>Every minute counts. Contact us immediately upon discovering fraudulent wire activity.</p>
+                </div>
+            </div>
+
+            <h2>Wire Reversal Strategy</h2>
+            <ul>
+                <li><strong>Immediate Bank Contact:</strong> Halt transactions and alert sending/receiving banks simultaneously</li>
+                <li><strong>Beneficiary Bank Coordination:</strong> Request fund freeze at receiving institution</li>
+                <li><strong>Law Enforcement Liaison:</strong> File reports with FBI IC3 and local authorities for legal support</li>
+                <li><strong>SWIFT Network Alert:</strong> Coordinate with SWIFT for international wire blocks</li>
+                <li><strong>Legal Intervention:</strong> Obtain court orders freezing beneficiary accounts</li>
+            </ul>
+
+            <h2>Recovery Success Rates</h2>
+            <p><strong>Quick Action (0-24hrs):</strong> 78% success rate for full fund recovery</p>
+            <p><strong>Medium Timeline (24-48hrs):</strong> 45% success rate for partial recovery</p>
+            <p><strong>Delayed Action (48hrs+):</strong> 12% success rate, funds usually dispersed</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div>
+                <h5>CyberProRecover</h5>
+                <p>Digital asset recovery specialists with full transparency and legal compliance.</p>
+            </div>
+            <div>
+                <h5>Services</h5>
+                <ul>
+                    <li><a href="index.html#overview">Overview</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="chargeback.html">Chargeback</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Legal</h5>
+                <ul>
+                    <li><a href="terms-and-conditions.html">Terms</a></li>
+                    <li><a href="about-us.html">About</a></li>
+                    <li><a href="contact-us.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Contact</h5>
+                <ul>
+                    <li><a href="mailto:support@recoverx.io">support@recoverx.io</a></li>
+                    <li><a href="tel:+1-800-872-6238">+1 (800) 872-6238</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; <span id="year">2025</span> CyberProRecover. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const byId = id => document.getElementById(id);
+        const root = document.documentElement;
+        const themeBtn = byId('themeBtn');
+        const mobileBtn = byId('mobileMenuBtn');
+        const mobileNav = byId('mobileNav');
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        root.setAttribute('data-theme', savedTheme);
+        themeBtn.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+        themeBtn.addEventListener('click', () => {
+            const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeBtn.textContent = newTheme === 'light' ? '☀️' : '🌙';
+        });
+
+        mobileBtn.addEventListener('click', () => {
+            const isOpen = mobileNav.classList.contains('open');
+            if(!isOpen) {
+                mobileNav.classList.add('open');
+                mobileNav.setAttribute('aria-hidden', 'false');
+                mobileBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.querySelectorAll('[data-submenu]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                byId(btn.getAttribute('data-submenu')).classList.toggle('open');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if(mobileNav.classList.contains('open') && !mobileNav.contains(e.target) && !mobileBtn.contains(e.target)){
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape' && mobileNav.classList.contains('open')){
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.querySelectorAll('.dropdown > .nav-link').forEach(btn => {
+            const dropdown = btn.closest('.dropdown');
+            btn.addEventListener('mouseenter', () => {
+                if(window.innerWidth > 720) dropdown.setAttribute('data-open', '');
+            });
+            dropdown.addEventListener('mouseleave', () => {
+                dropdown.removeAttribute('data-open');
+            });
+        });
+
+        byId('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

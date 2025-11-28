@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stablecoin Recovery - CyberProRecover</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0b1020;
+            --bg-2: #0f1724;
+            --card: rgba(255,255,255,0.04);
+            --text: #e6eef6;
+            --muted: #9aa7b7;
+            --accent: #6366f1;
+            --accent-2: #8b5cf6;
+            --glass: rgba(255,255,255,0.06);
+            --success: #10b981;
+            --danger: #f43f5e;
+            --radius: 12px;
+            --shadow: 0 10px 30px rgba(2,6,23,0.6);
+        }
+        [data-theme="light"] {
+            --bg: #f8f9fa;
+            --bg-2: #ffffff;
+            --card: rgba(0,0,0,0.02);
+            --text: #1a202c;
+            --muted: #4a5568;
+            --accent: #6366f1;
+            --accent-2: #8b5cf6;
+            --glass: rgba(0,0,0,0.04);
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; position: relative; padding-top: 70px; }
+        @media (max-width: 720px) { body { padding-top: 64px; } }
+        
+        /* Animated Background */
+        .animated-bg { position: fixed; inset: 0; z-index: -1; }
+        .grid { position: absolute; inset: 0; background-image: linear-gradient(0deg, rgba(99,102,241,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px); background-size: 50px 50px; background-position: 0 0, 0 0; animation: gridShift 20s linear infinite; }
+        @keyframes gridShift { 0% { background-position: 0 0, 0 0; } 100% { background-position: 50px 50px, 50px 50px; } }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); mix-blend-mode: screen; opacity: 0.15; }
+        .orb-1 { width: 400px; height: 400px; background: linear-gradient(135deg, #6366f1, #8b5cf6); top: -100px; left: -100px; animation: drift 8s ease-in-out infinite; }
+        .orb-2 { width: 300px; height: 300px; background: linear-gradient(135deg, #06b6d4, #0ea5e9); bottom: -50px; right: -50px; animation: drift 10s ease-in-out infinite 1s; }
+        .orb-3 { width: 350px; height: 350px; background: linear-gradient(135deg, #8b5cf6, #d946ef); top: 50%; right: -100px; animation: drift 12s ease-in-out infinite 2s; }
+        .orb-4 { width: 280px; height: 280px; background: linear-gradient(135deg, #06b6d4, #6366f1); bottom: 20%; left: 10%; animation: drift 9s ease-in-out infinite 1.5s; }
+        @keyframes drift { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, 30px); } }
+
+        /* Header */
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: linear-gradient(180deg, rgba(11,16,32,0.95), rgba(15,23,36,0.85)); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.3); height: 70px; }
+        @media (max-width: 720px) { header { height: 64px; } }
+        
+        .header-wrapper { padding: 0 24px; height: 100%; display: flex; align-items: center; max-width: 1180px; margin: 0 auto; }
+        .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 900; font-size: 18px; white-space: nowrap; }
+        .logo img { height: 40px; width: auto; }
+        .logo span { background: linear-gradient(135deg, #6366f1, #8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        
+        .nav-desktop { display: flex; gap: 2px; align-items: center; flex: 1; margin: 0 24px; }
+        @media (max-width: 720px) { .nav-desktop { display: none; } }
+        
+        .nav-item { position: relative; }
+        .nav-link { background: none; border: none; color: var(--muted); padding: 8px 12px; cursor: pointer; font-size: 13px; font-weight: 600; border-radius: 8px; transition: all 0.2s; font-family: inherit; white-space: nowrap; }
+        .nav-link:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .dropdown-icon { font-size: 10px; margin-left: 4px; transition: transform 0.2s; }
+        .nav-link[aria-expanded="true"] .dropdown-icon { transform: rotate(180deg); }
+        
+        .dropdown-menu { position: absolute; top: 100%; left: 0; min-width: 220px; background: var(--bg-2); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px; margin-top: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); display: none; z-index: 200; opacity: 0; transform: translateY(-8px); pointer-events: none; transition: all 0.2s ease; }
+        .dropdown[data-open] .dropdown-menu { display: block; opacity: 1; transform: translateY(0); pointer-events: auto; }
+        
+        .dropdown-item { display: block; width: 100%; text-align: left; padding: 10px 12px; color: var(--muted); text-decoration: none; font-size: 13px; border-radius: 6px; transition: all 0.2s; font-weight: 500; cursor: pointer; border: none; background: none; }
+        .dropdown-item:hover { color: var(--accent); background: rgba(99,102,241,0.1); }
+        .dropdown-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 4px 0; }
+        
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+        .theme-toggle { background: none; border: none; padding: 8px; color: var(--text); cursor: pointer; font-size: 16px; border-radius: 8px; transition: all 0.2s; }
+        .theme-toggle:hover { background: rgba(255,255,255,0.05); }
+        
+        .hamburger { display: none; background: none; border: none; color: var(--text); padding: 8px; cursor: pointer; font-size: 20px; }
+        @media (max-width: 720px) { .hamburger { display: block; } }
+        
+        .hamburger span { display: block; width: 20px; height: 2px; background: currentColor; margin: 4px 0; border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger[aria-expanded="true"] span:nth-child(1) { transform: rotate(45deg) translate(8px, 10px); }
+        .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+        .hamburger[aria-expanded="true"] span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+        
+        /* Mobile Navigation */
+        .nav-mobile { position: fixed; right: -100%; top: 70px; bottom: 0; width: 100%; max-width: 280px; background: var(--bg-2); border-left: 1px solid rgba(255,255,255,0.05); overflow-y: auto; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 95; display: flex; flex-direction: column; }
+        @media (max-width: 720px) { .nav-mobile { top: 64px; } }
+        
+        .nav-mobile.open { right: 0; }
+        .nav-mobile-item { display: block; padding: 12px 16px; color: var(--muted); text-decoration: none; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05); border-left: 3px solid transparent; transition: all 0.2s; font-weight: 500; cursor: pointer; background: none; border: none; width: 100%; text-align: left; }
+        .nav-mobile-item:hover { color: var(--accent); background: rgba(99,102,241,0.05); border-left-color: var(--accent); }
+        .nav-mobile-submenu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: rgba(99,102,241,0.05); }
+        .nav-mobile-submenu.open { max-height: 500px; }
+        .nav-mobile-subitem { display: block; padding: 10px 16px 10px 32px; color: var(--muted); text-decoration: none; font-size: 12px; transition: color 0.2s; border-left: 3px solid transparent; margin-left: 0; }
+        .nav-mobile-subitem:hover { color: var(--accent); border-left-color: var(--accent); }
+        
+        /* Container */
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+        @media (max-width: 768px) { .container { padding: 0 16px; } }
+        
+        /* Buttons */
+        .btn { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 13px; transition: all 0.2s; text-decoration: none; display: inline-block; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(99,102,241,0.3); }
+        .copy-btn { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.1)); color: var(--accent); border: 1.5px solid var(--accent); padding: 12px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s; font-family: inherit; }
+        .copy-btn:hover { background: rgba(99,102,241,0.15); }
+        
+        /* Cards */
+        .card { background: var(--card); border: 1.5px solid rgba(99,102,241,0.15); border-radius: var(--radius); padding: 20px; }
+        
+        /* Hero Section */
+        .hero { padding: 80px 0 60px; text-align: center; }
+        .hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 900; margin-bottom: 16px; line-height: 1.1; background: linear-gradient(135deg, var(--text), var(--muted)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero p { font-size: 16px; color: var(--muted); max-width: 700px; margin: 0 auto 32px; line-height: 1.7; }
+        
+        /* Form styles */
+        .form { margin: 32px 0; padding: 32px; background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(139,92,246,0.02)); border: 1.5px solid rgba(99,102,241,0.2); border-radius: 16px; }
+        .form input, .form textarea { width: 100%; padding: 12px 14px; margin-bottom: 16px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); color: var(--text); border-radius: 10px; font-family: inherit; font-size: 14px; transition: all 0.2s; }
+        .form input:focus, .form textarea:focus { outline: none; border-color: var(--accent); background: rgba(99,102,241,0.05); }
+        
+        /* Footer */
+        footer { margin-top: 64px; padding: 48px 0; border-top: 1px solid rgba(255,255,255,0.05); background: linear-gradient(180deg, var(--bg), var(--bg-2)); }
+        footer .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; padding: 32px 0; }
+        footer h5 { font-weight: 900; font-size: 16px; margin-bottom: 14px; }
+        footer p, footer li { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 0; }
+        footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+        footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+        footer a:hover { color: var(--accent); }
+        footer .copyright { border-top: 1px solid rgba(255,255,255,0.05); margin-top: 32px; padding-top: 24px; text-align: center; }
+        footer .copyright p { color: var(--muted); font-size: 12px; margin: 0; }
+        
+        /* Sections */
+        section.container { padding: 64px 0; }
+        h2 { font-size: 36px; font-weight: 900; margin-bottom: 24px; }
+        h3 { font-size: 24px; font-weight: 800; margin-bottom: 16px; }
+        h4 { font-size: 18px; font-weight: 800; margin-bottom: 14px; }
+        
+        .grid-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 32px; }
+        @media (max-width: 768px) { .grid-cols { grid-template-columns: 1fr; } }
+        
+        /* Text sections */
+        .text-center { text-align: center; }
+        .text-muted { color: var(--muted); }
+        .mt { margin-top: 32px; }
+        .mb { margin-bottom: 32px; }
+        
+        /* Scroll animations */
+        .scroll-animate { opacity: 0; }
+        .animate-in { animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important; opacity: 1 !important; }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        
+        /* Contact section */
+        .contact-wrap { display: grid; grid-template-columns: 1fr 350px; gap: 48px; }
+        @media (max-width: 768px) { .contact-wrap { grid-template-columns: 1fr; } }
+        
+        .sticky-desktop { position: sticky; top: 100px; }
+        @media (max-width: 768px) { .sticky-desktop { position: static; } }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-wrapper">
+            <a href="index.html" class="logo">
+                <img src="logo/cropped_circle_image.png" alt="CyberProRecover logo">
+                <span>CyberProRecover</span>
+            </a>
+            
+            <nav class="nav-desktop">
+                <div class="nav-item"><a href="index.html#overview" class="nav-link">Overview</a></div>
+                <div class="nav-item"><a href="index.html#services" class="nav-link">Services</a></div>
+                <div class="nav-item"><a href="index.html#process" class="nav-link">Process</a></div>
+                <div class="nav-item"><a href="index.html#resources" class="nav-link">Resources</a></div>
+                <div class="nav-item"><a href="index.html#faq" class="nav-link">FAQ</a></div>
+                
+                <div class="nav-item dropdown">
+                    <button class="nav-link" aria-haspopup="true" aria-expanded="false">
+                        Crypto Recovery <span class="dropdown-icon">▼</span>
+                    </button>
+                    <div class="dropdown-menu" role="menu">
+                        <a href="bitcoin-recovery.html" class="dropdown-item">Bitcoin Recovery</a>
+                        <a href="ethereum-recovery.html" class="dropdown-item">Ethereum Recovery</a>
+                        <a href="stablecoin-recovery.html" class="dropdown-item">Stablecoin Recovery</a>
+                        <a href="#" class="dropdown-item">DeFi Token Recovery</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">Recovery Tools</a>
+                    </div>
+                </div>
+                
+                <div class="nav-item"><a href="index.html#contact" class="nav-link">Chargeback</a></div>
+                <div class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></div>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">🌙</button>
+                <button class="hamburger" id="mobileMenuBtn" aria-label="Menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-mobile" id="mobileNav" aria-hidden="true">
+        <a href="index.html#overview" class="nav-mobile-item">Overview</a>
+        <a href="index.html#services" class="nav-mobile-item">Services</a>
+        <a href="index.html#process" class="nav-mobile-item">Process</a>
+        <a href="index.html#resources" class="nav-mobile-item">Resources</a>
+        <a href="index.html#faq" class="nav-mobile-item">FAQ</a>
+        
+        <button class="nav-mobile-item" data-submenu="crypto">
+            Crypto Recovery <span style="font-size: 10px; float: right; margin-top: 2px;">▼</span>
+        </button>
+        <div class="nav-mobile-submenu" id="crypto">
+            <a href="bitcoin-recovery.html" class="nav-mobile-subitem">Bitcoin Recovery</a>
+            <a href="ethereum-recovery.html" class="nav-mobile-subitem">Ethereum Recovery</a>
+            <a href="stablecoin-recovery.html" class="nav-mobile-subitem">Stablecoin Recovery</a>
+            <a href="#" class="nav-mobile-subitem">DeFi Token Recovery</a>
+            <a href="#" class="nav-mobile-subitem">Recovery Tools</a>
+        </div>
+        
+        <a href="index.html#contact" class="nav-mobile-item">Chargeback</a>
+        <a href="index.html#contact" class="nav-mobile-item">Contact</a>
+    </nav>
+
+        <!-- Hero -->
+        <section class="hero container">
+            <h1>Stablecoin Recovery</h1>
+            <p>Specialized recovery strategies for USDC, USDT, DAI, and other stablecoin assets. Navigate frozen accounts and exchange holds with our expert team.</p>
+        </section>
+
+        <!-- Overview Section -->
+        <section id="overview" class="container">
+            <div class="text-center mb">
+                <span style="display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px;">Understanding Stablecoins</span>
+                <h2>How Stablecoin Recovery Works</h2>
+                <p class="text-muted" style="font-size: 15px; max-width: 700px; margin: 0 auto; line-height: 1.7;">Stablecoins are pegged to real-world assets like USD but operate across multiple blockchains and platforms. This complexity requires forensic analysis of smart contracts, exchange liquidity, and bridge protocols.</p>
+            </div>
+
+            <div class="grid-cols">
+                <div class="card" style="background: linear-gradient(135deg, rgba(99,102,241,0.08), transparent); border: 1.5px solid rgba(99,102,241,0.15);">
+                    <div style="font-size: 28px; margin-bottom: 10px;">⛓</div>
+                    <h4>Multi-Chain Tracing</h4>
+                    <p class="text-muted" style="font-size: 14px; line-height: 1.6; margin: 0; margin-top: 8px;">Stablecoins exist on Ethereum, Polygon, Solana, Avalanche, and more. We track balances across all chains and bridges.</p>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, rgba(6,182,212,0.08), transparent); border: 1.5px solid rgba(6,182,212,0.15);">
+                    <div style="font-size: 28px; margin-bottom: 10px;">🔐</div>
+                    <h4>Frozen Account Recovery</h4>
+                    <p class="text-muted" style="font-size: 14px; line-height: 1.6; margin: 0; margin-top: 8px;">Stablecoins are subject to issuer freezes (USDC) and blacklisting. We work with issuers to unfreeze or migrate assets.</p>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, rgba(139,92,246,0.08), transparent); border: 1.5px solid rgba(139,92,246,0.15);">
+                    <div style="font-size: 28px; margin-bottom: 10px;">🌉</div>
+                    <h4>Bridge & Liquidity Analysis</h4>
+                    <p class="text-muted" style="font-size: 14px; line-height: 1.6; margin: 0; margin-top: 8px;">Stablecoins move via bridges (Stargate, Across, Connext). We map liquidity flows and locked amounts.</p>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, rgba(16,185,129,0.08), transparent); border: 1.5px solid rgba(16,185,129,0.15);">
+                    <div style="font-size: 28px; margin-bottom: 10px;">💼</div>
+                    <h4>Issuer Coordination</h4>
+                    <p class="text-muted" style="font-size: 14px; line-height: 1.6; margin: 0; margin-top: 8px;">Direct relationships with Circle (USDC) and Tether (USDT) compliance teams for asset recovery & unblocking.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="container" style="padding: 64px 0; border-top: 1px solid rgba(255,255,255,0.03);">
+            <div class="text-center mb">
+                <span style="display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px;">Our Services</span>
+                <h2>Stablecoin Recovery Services</h2>
+                <p class="text-muted" style="font-size: 15px; max-width: 700px; margin: 0 auto; line-height: 1.7;">End-to-end recovery support for stablecoin incidents — from exchange freezes to phishing attacks and DeFi exploits.</p>
+            </div>
+
+            <div class="grid-cols">
+                <div class="card" style="background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(6,182,212,0.05)); border: 1.5px solid rgba(99,102,241,0.2); padding: 24px;">
+                    <div style="font-size: 24px; margin-bottom: 12px;">🔍</div>
+                    <h4>Exchange Hold Investigation</h4>
+                    <p class="text-muted" style="font-size: 13px; line-height: 1.6; margin: 0; margin-top: 8px;">Stablecoins frozen on Kraken, Binance, Coinbase? We liaise directly with compliance to release funds and document evidence.</p>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05)); border: 1.5px solid rgba(99,102,241,0.2); padding: 24px;">
+                    <div style="font-size: 24px; margin-bottom: 12px;">🛡️</div>
+                    <h4>Phishing & Theft Recovery</h4>
+                    <p class="text-muted" style="font-size: 13px; line-height: 1.6; margin: 0; margin-top: 8px;">Unauthorized transfers and wallet compromises. We trace USDC/USDT through exchanges and pursue recovery with legal support.</p>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(6,182,212,0.05)); border: 1.5px solid rgba(99,102,241,0.2); padding: 24px;">
+                    <div style="font-size: 24px; margin-bottom: 12px;">⚠️</div>
+                    <h4>DeFi & Contract Exploit Recovery</h4>
+                    <p class="text-muted" style="font-size: 13px; line-height: 1.6; margin: 0; margin-top: 8px;">Smart contract exploits involving stablecoins. We analyze transaction logs and coordinate with protocol teams for clawback.</p>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05)); border: 1.5px solid rgba(99,102,241,0.2); padding: 24px;">
+                    <div style="font-size: 24px; margin-bottom: 12px;">⚖️</div>
+                    <h4>Legal & Compliance Support</h4>
+                    <p class="text-muted" style="font-size: 13px; line-height: 1.6; margin: 0; margin-top: 8px;">AML/KYC freezes and regulatory holds. We prepare documentation for regulators and issuers to expedite unfreeze.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section id="process" class="container" style="padding: 64px 0; border-top: 1px solid rgba(255,255,255,0.03);">
+            <div class="text-center mb">
+                <span style="display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px;">Step-by-step</span>
+                <h2>The Stablecoin Recovery Process</h2>
+                <p class="text-muted" style="font-size: 15px; max-width: 700px; margin: 0 auto; line-height: 1.7;">A streamlined 4-step process designed specifically for stablecoin asset recovery.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 40px;">
+                <div class="card" style="background: linear-gradient(135deg, rgba(99,102,241,0.1), transparent); border: 1.5px solid rgba(99,102,241,0.2); padding: 16px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">🎯</div>
+                    <strong style="font-size: 14px; font-weight: 800;">1. Incident Assessment</strong>
+                    <div style="font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4;">Gather wallet/exchange details and transaction hashes</div>
+                </div>
+                <div class="card" style="background: linear-gradient(135deg, rgba(6,182,212,0.1), transparent); border: 1.5px solid rgba(6,182,212,0.2); padding: 16px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">⛓</div>
+                    <strong style="font-size: 14px; font-weight: 800;">2. Blockchain Analysis</strong>
+                    <div style="font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4;">Map asset across chains and identify destination</div>
+                </div>
+                <div class="card" style="background: linear-gradient(135deg, rgba(139,92,246,0.1), transparent); border: 1.5px solid rgba(139,92,246,0.2); padding: 16px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">◆</div>
+                    <strong style="font-size: 14px; font-weight: 800;">3. Recovery Action</strong>
+                    <div style="font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4;">Coordinate with exchanges & issuers for unfreeze</div>
+                </div>
+                <div class="card" style="background: linear-gradient(135deg, rgba(16,185,129,0.1), transparent); border: 1.5px solid rgba(16,185,129,0.2); padding: 16px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">✓</div>
+                    <strong style="font-size: 14px; font-weight: 800;">4. Settlement & Report</strong>
+                    <div style="font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4;">Asset returned and forensic report delivered</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="container" style="padding: 80px 0 100px; border-top: 1px solid rgba(255,255,255,0.03);">
+            <div class="contact-wrap">
+                <div>
+                    <span style="display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px;">Get started</span>
+                    <h2 style="font-size: 36px; font-weight: 900; margin-bottom: 16px; background: linear-gradient(135deg, var(--text), var(--muted)); -webkit-background-clip: text; background-clip: text; color: transparent;">Stablecoin Recovery Intake</h2>
+                    <p class="text-muted" style="max-width: 700px; font-size: 15px; line-height: 1.7; margin-bottom: 8px;">Submit details of your stablecoin incident — exchange freezes, theft, or lost assets — and we'll begin forensic analysis within 24 hours.</p>
+                    <p class="text-muted" style="max-width: 700px; font-size: 13px; line-height: 1.6; opacity: 0.8;">No fees until recovery. Transparent reporting every step.</p>
+
+                    <div class="form">
+                        <h4 style="font-size: 18px; font-weight: 900; margin-bottom: 24px; color: var(--text);">Report Your Incident</h4>
+                        <form id="contactForm" novalidate>
+                            <div style="margin-bottom: 20px;">
+                                <label for="name" style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block; margin-bottom: 8px;">Full name</label>
+                                <input id="name" name="name" autocomplete="name" required style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); color: var(--text); font-size: 14px; transition: all 0.2s; font-family: inherit;">
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <label for="emailIn" style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block; margin-bottom: 8px;">Email address</label>
+                                <input id="emailIn" type="email" name="email" autocomplete="email" required style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); color: var(--text); font-size: 14px; transition: all 0.2s; font-family: inherit;">
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <label for="phone" style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block; margin-bottom: 8px;">Phone number</label>
+                                <input id="phone" type="tel" name="phone" autocomplete="tel" placeholder="+1 (800) 000-0000" style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); color: var(--text); font-size: 14px; transition: all 0.2s; font-family: inherit;">
+                            </div>
+
+                            <div style="margin-bottom: 24px;">
+                                <label for="incident" style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block; margin-bottom: 8px;">Incident summary</label>
+                                <textarea id="incident" name="incident" rows="6" placeholder="Date (UTC), exchange/platform, wallet address, amount (USDC/USDT/DAI), what happened..." required style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); color: var(--text); font-size: 14px; transition: all 0.2s; font-family: inherit; resize: vertical;"></textarea>
+                            </div>
+
+                            <div style="padding: 14px; background: rgba(99,102,241,0.1); border-radius: 10px; border-left: 3px solid var(--accent); margin-bottom: 24px;">
+                                <label for="consent" style="font-weight: 600; font-size: 12px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; cursor: pointer; margin: 0;">
+                                    <input id="consent" type="checkbox" required style="margin-top: 3px; cursor: pointer; accent-color: var(--accent);">
+                                    <span>I consent to share incident information with exchanges, issuers, and recovery partners.</span>
+                                </label>
+                            </div>
+
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <button class="btn" type="submit" style="flex: 1; min-width: 140px; font-size: 14px; padding: 14px 18px;">Submit Incident</button>
+                            </div>
+
+                            <div id="formStatus" role="status" aria-live="polite" style="margin-top: 16px; padding: 12px; border-radius: 8px; color: var(--accent); font-size: 12px; font-weight: 600; background: rgba(99,102,241,0.1); display: none;"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <aside class="sticky-desktop card" style="background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(6,182,212,0.05)); border: 1.5px solid rgba(16,185,129,0.2); padding: 28px; border-radius: 14px;">
+                    <div style="font-size: 20px; margin-bottom: 14px; color: var(--success);">⚡</div>
+                    <h4 style="font-size: 16px; font-weight: 900; margin-bottom: 16px; color: var(--text);">What to Prepare</h4>
+                    <ol style="color: var(--muted); margin: 0; padding-left: 18px; line-height: 1.7; font-size: 13px;">
+                        <li>Your wallet address or exchange account details</li>
+                        <li>Transaction hashes (if available) or trade IDs</li>
+                        <li>Screenshots of freeze notices or error messages</li>
+                        <li>Complete timeline of the incident</li>
+                        <li>Original receipts or documentation</li>
+                    </ol>
+                    <p style="font-size: 12px; color: var(--muted); margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">We keep all submissions confidential and secure.</p>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <!-- Company info -->
+            <div>
+                <h5>CyberProRecover</h5>
+                <p>Digital asset recovery specialists combining forensic intelligence, legal coordination, and transparent reporting.</p>
+            </div>
+
+            <!-- Services -->
+            <div>
+                <h5 style="text-transform: uppercase; letter-spacing: 0.05em;">Services</h5>
+                <ul>
+                    <li><a href="index.html#overview">Blockchain Forensics</a></li>
+                    <li><a href="index.html#services">Legal & Chargebacks</a></li>
+                    <li><a href="index.html#process">Recovery Process</a></li>
+                    <li><a href="index.html#contact">Start Recovery</a></li>
+                </ul>
+            </div>
+
+            <!-- Company Links -->
+            <div>
+                <h5 style="text-transform: uppercase; letter-spacing: 0.05em;">Company</h5>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="index.html#contact">Contact Us</a></li>
+                    <li><a href="#">Security</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div>
+                <h5 style="text-transform: uppercase; letter-spacing: 0.05em;">Get in touch</h5>
+                <ul style="display: flex; flex-direction: column; gap: 10px;">
+                    <li style="display: flex; gap: 8px; align-items: center;"><span style="color: var(--accent);">✉</span><a href="mailto:support@recoverx.io">support@recoverx.io</a></li>
+                    <li style="display: flex; gap: 8px; align-items: center;"><span style="color: var(--accent);">☏</span><a href="tel:+1-800-872-6238">+1 (800) 872-6238</a></li>
+                    <li style="display: flex; gap: 8px; align-items: center;"><span style="color: var(--accent);">⬆</span><span style="color: var(--muted);">123 Recovery Lane, DC 20001 USA</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; <span id="year">2025</span> CyberProRecover Digital Asset Recovery Services. All rights reserved. | Built for security and transparency.</p>
+        </div>
+    </footer>
+
+    <script>
+        const byId = (id) => document.getElementById(id);
+
+        // Theme toggle
+        const themeBtn = byId('themeBtn');
+        const htmlRoot = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        htmlRoot.setAttribute('data-theme', savedTheme);
+        themeBtn.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+        
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = htmlRoot.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlRoot.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeBtn.textContent = newTheme === 'light' ? '☀️' : '🌙';
+        });
+
+        // Mobile menu
+        const mobileBtn = byId('mobileMenuBtn');
+        const mobileNav = byId('mobileNav');
+        
+        mobileBtn.addEventListener('click', () => {
+            const isOpen = mobileNav.classList.contains('open');
+            if(!isOpen) {
+                mobileNav.classList.add('open');
+                mobileNav.setAttribute('aria-hidden', 'false');
+                mobileBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Mobile submenu toggle
+        document.querySelectorAll('[data-submenu]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const submenuId = btn.getAttribute('data-submenu');
+                const submenu = byId(submenuId);
+                submenu.classList.toggle('open');
+            });
+        });
+
+        // Close mobile menu on outside click
+        document.addEventListener('click', (e) => {
+            if(mobileNav.classList.contains('open') && !mobileNav.contains(e.target) && !mobileBtn.contains(e.target)){
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape' && mobileNav.classList.contains('open')){
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Desktop dropdown menus
+        document.querySelectorAll('.dropdown > .nav-link').forEach(button => {
+            const dropdown = button.closest('.dropdown');
+            button.addEventListener('mouseenter', () => {
+                if(window.innerWidth > 720){
+                    button.setAttribute('aria-expanded', 'true');
+                    dropdown.setAttribute('data-open', '');
+                }
+            });
+            
+            dropdown.addEventListener('mouseleave', () => {
+                if(window.innerWidth > 720){
+                    button.setAttribute('aria-expanded', 'false');
+                    dropdown.removeAttribute('data-open');
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = { threshold: 0.05, rootMargin: '0px 0px -80px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if(entry.isIntersecting){
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('section.container, .cards, .testimonials, .steps, .partners, .btn:not(header .btn), .card').forEach((el) => {
+            if(!el.closest('header') && !el.closest('nav')){
+                el.classList.add('scroll-animate');
+                observer.observe(el);
+            }
+        });
+
+        // Form handling
+        byId('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = byId('name').value.trim();
+            const em = byId('emailIn').value.trim();
+            const inc = byId('incident').value.trim();
+            if(!name || !em || !inc){
+                byId('formStatus').innerText = 'Please fill all required fields.';
+                byId('formStatus').style.display = 'block';
+                return;
+            }
+            byId('formStatus').innerText = 'Thank you — your incident report has been received. We will contact you within 24 hours.';
+            byId('formStatus').style.display = 'block';
+            e.target.reset();
+            setTimeout(() => { byId('formStatus').style.display = 'none'; }, 5000);
+        });
+
+        // Footer year
+        const yearEl = byId('year');
+        if(yearEl) yearEl.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
