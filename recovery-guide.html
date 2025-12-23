@@ -30,7 +30,8 @@
         .dropdown-item:hover{color:var(--accent);background:rgba(99,102,241,0.1)}
 
         .header-actions{display:flex;gap:12px;align-items:center}
-        .theme-toggle{background:0;border:0;padding:8px;color:var(--text);cursor:pointer;font-size:16px;border-radius:8px;transition:all 0.2s}
+        .theme-toggle{background:0;border:0;padding:8px;color:var(--text);cursor:pointer;border-radius:8px;transition:all 0.2s;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+        .theme-toggle svg{width:20px;height:20px;fill:currentColor}
 
         .hamburger{display:none;background:0;border:0;color:var(--text);padding:8px;cursor:pointer}
         @media(max-width:720px){.hamburger{display:block}}
@@ -83,11 +84,8 @@
 
     <header>
         <div class="header-wrapper">
-            <a href="index.html" class="logo">
-                <img src="logo/cropped_circle_image.png" alt="Logo">
-                <span>CyberProRecover</span>
-            </a>
-            <nav class="nav-desktop">
+            <a href="index.html" class="logo"><img src="logo/cropped_circle_image.png" alt="logo"><span>CyberProRecover</span></a>
+            <nav class="nav-desktop" aria-label="Primary navigation">
                 <div class="nav-item"><a href="index.html#overview" class="nav-link">Overview</a></div>
                 <div class="nav-item"><a href="index.html#services" class="nav-link">Services</a></div>
                 <div class="nav-item"><a href="bank-wire-reversal.html" class="nav-link">Wire Reversal</a></div>
@@ -95,19 +93,15 @@
                 <div class="nav-item"><a href="contact-us.html" class="nav-link">Contact</a></div>
             </nav>
             <div class="header-actions">
-                <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme"></button>
-                <button class="hamburger" id="mobileMenuBtn" aria-expanded="false"><span></span><span></span><span></span></button>
+                <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme"></button>
+                <button id="mobileMenuBtn" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                  <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
     </header>
 
-    <nav class="nav-mobile" id="mobileNav" aria-hidden="true">
-        <a href="index.html#overview" class="nav-mobile-item">Overview</a>
-        <a href="index.html#services" class="nav-mobile-item">Services</a>
-        <a href="bank-wire-reversal.html" class="nav-mobile-item">Wire Reversal</a>
-        <a href="chargeback.html" class="nav-mobile-item">Chargeback</a>
-        <a href="contact-us.html" class="nav-mobile-item">Contact</a>
-    </nav>
+    <nav class="nav-mobile" id="mobileNav"></nav>
 
     <main>
         <section class="container">
@@ -240,60 +234,11 @@
     </footer>
 
     <script>
-        const byId = id => document.getElementById(id);
-        const root = document.documentElement;
-        const themeBtn = byId('themeBtn');
-        const mobileBtn = byId('mobileMenuBtn');
-        const mobileNav = byId('mobileNav');
-
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        root.setAttribute('data-theme', savedTheme);
-        const moonSVG = '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
-        const sunSVG = '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84 4.97 6.63 6.76 4.84zM1 13h3v-2H1v2zm10 8h2v-3h-2v3zm7.24-2.84l1.8 1.79 1.79-1.79-1.79-1.79-1.8 1.79zM20 11v2h3v-2h-3zM4.97 17.37L3.17 19.17l1.79 1.79 1.8-1.79-1.79-1.8zM12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>';
-        themeBtn.innerHTML = savedTheme === 'light' ? sunSVG : moonSVG;
-        themeBtn.setAttribute('aria-pressed', savedTheme === 'light' ? 'true' : 'false');
-        themeBtn.addEventListener('click', () => {
-            const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            root.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeBtn.innerHTML = newTheme === 'light' ? sunSVG : moonSVG;
-            themeBtn.setAttribute('aria-pressed', newTheme === 'light' ? 'true' : 'false');
-        });
-
-        mobileBtn.addEventListener('click', () => {
-            const isOpen = mobileNav.classList.contains('open');
-            if(!isOpen) {
-                mobileNav.classList.add('open');
-                mobileNav.setAttribute('aria-hidden', 'false');
-                mobileBtn.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            } else {
-                mobileNav.classList.remove('open');
-                mobileNav.setAttribute('aria-hidden', 'true');
-                mobileBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if(mobileNav.classList.contains('open') && !mobileNav.contains(e.target) && !mobileBtn.contains(e.target)){
-                mobileNav.classList.remove('open');
-                mobileNav.setAttribute('aria-hidden', 'true');
-                mobileBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if(e.key === 'Escape' && mobileNav.classList.contains('open')){
-                mobileNav.classList.remove('open');
-                mobileNav.setAttribute('aria-hidden', 'true');
-                mobileBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        byId('year').textContent = new Date().getFullYear();
+      const root=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+      const moonSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+      const sunSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+      const saved=localStorage.getItem('theme')||'dark';root.setAttribute('data-theme',saved);if(themeBtn){themeBtn.innerHTML=saved==='light'?sunSVG:moonSVG;themeBtn.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);localStorage.setItem('theme',n);themeBtn.innerHTML=n==='light'?sunSVG:moonSVG;});}const mobileMenuBtn=document.getElementById('mobileMenuBtn');const mobileNav=document.getElementById('mobileNav');if(mobileMenuBtn){const navItems=['<a class="nav-mobile-item" href="index.html#overview">Overview</a>','<a class="nav-mobile-item" href="index.html#services">Services</a>','<a class="nav-mobile-item" href="bank-wire-reversal.html">Wire Reversal</a>','<a class="nav-mobile-item" href="chargeback.html">Chargeback</a>','<a class="nav-mobile-item" href="contact-us.html">Contact</a>'];mobileNav.innerHTML=navItems.join('');mobileMenuBtn.addEventListener('click',()=>{const isOpen=mobileNav.classList.contains('open');mobileMenuBtn.setAttribute('aria-expanded',!isOpen);mobileNav.classList.toggle('open');document.body.style.overflow=isOpen?'auto':'hidden';});}
+      document.getElementById('year').textContent=new Date().getFullYear();
     </script>
 </body>
 </html>
