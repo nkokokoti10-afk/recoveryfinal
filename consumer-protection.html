@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Consumer Protection & Resources — CyberProRecover</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#071028;--bg-2:#0d1524;--text:#e6eef6;--muted:#9aa7b7;--accent:#f59e0b}
+    [data-theme="light"]{--bg:#fff;--bg-2:#f6f7fb;--text:#0b1220;--muted:#50606f}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue';color:var(--text);background:var(--bg);padding-top:72px}
+
+    .animated-bg{position:fixed;inset:0;background:radial-gradient(800px 400px at 20% 30%,rgba(245,158,11,0.08),transparent),radial-gradient(700px 300px at 75% 70%,rgba(245,158,11,0.06),transparent);z-index:-1}
+
+    header{position:fixed;top:0;left:0;right:0;height:72px;background:linear-gradient(180deg,rgba(6,7,12,0.6),rgba(6,7,12,0.25));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .header-wrapper{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;padding:0 20px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;text-decoration:none}
+    .logo img{height:40px}
+
+    .nav-desktop{display:flex;gap:8px;margin-left:20px}
+    .nav-link{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14px;transition:all 0.2s}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    .header-actions{margin-left:auto}
+    .theme-toggle{background:transparent;border:0;padding:8px;border-radius:8px;color:var(--text);cursor:pointer}
+
+    @media(max-width:820px){.nav-desktop{display:none}}
+
+    main{max-width:1200px;margin:0 auto;padding:44px 20px 80px}
+
+    h1{font-size:clamp(28px,4.6vw,40px);font-weight:900;margin-bottom:8px}
+    h2{font-size:18px;color:var(--text);margin-top:16px;margin-bottom:8px}
+    h3{font-size:16px;color:var(--text);margin-top:12px}
+    p{color:var(--muted);line-height:1.75;margin-bottom:12px}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);margin-bottom:14px}
+
+    .resource-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:14px}
+    @media(max-width:900px){.resource-grid{grid-template-columns:1fr}}
+
+    .resource-item{background:linear-gradient(180deg,rgba(245,158,11,0.04),rgba(245,158,11,0.01));padding:18px;border-radius:10px;border:1px solid rgba(245,158,11,0.1)}
+    .resource-item h3{color:var(--accent);margin-top:0}
+
+    .checklist{margin-left:18px;color:var(--muted);line-height:1.75}
+    .checklist li{margin-bottom:8px;list-style:disc}
+
+    .warning-box{background:linear-gradient(90deg,rgba(245,158,11,0.06),rgba(245,158,11,0.03));padding:16px;border-left:4px solid var(--accent);border-radius:8px;margin-bottom:14px}
+
+    .faq-item{background:var(--bg-2);padding:16px;border-radius:10px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.03)}
+    .faq-q{font-weight:700;color:var(--text);margin-bottom:6px;cursor:pointer}
+    .faq-a{color:var(--muted);line-height:1.75;font-size:14px}
+
+    footer{margin-top:48px;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.03)}
+    footer .container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    footer h5{font-weight:800;margin-bottom:8px}
+    footer p,footer a{color:var(--muted);font-size:14px;text-decoration:none}
+    footer a:hover{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="animated-bg" aria-hidden="true"></div>
+
+  <header>
+    <div class="header-wrapper">
+      <a href="index.html" class="logo"><img src="logo/cropped_circle_image.png" alt="logo"><span>CyberProRecover</span></a>
+      <nav class="nav-desktop" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html#overview">Overview</a>
+        <a class="nav-link" href="about-us.html">About</a>
+        <a class="nav-link" href="scam-prevention.html">Prevention</a>
+        <a class="nav-link" href="contact-us.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1>Consumer Protection & Resources</h1>
+    <p class="muted">Comprehensive guidance for protecting yourself from fraud, understanding your rights, and accessing support resources when things go wrong.</p>
+
+    <div class="card">
+      <h2>Understanding your rights</h2>
+      <p class="muted">Consumer protection laws vary by jurisdiction, but several frameworks provide recourse for victims of financial fraud and cryptocurrency-related crimes.</p>
+
+      <h3>Relevant regulatory frameworks</h3>
+      <ul class="checklist">
+        <li><strong>FCRA (Fair Credit Reporting Act):</strong> Protects your right to access and dispute inaccurate credit information related to fraud accounts opened in your name.</li>
+        <li><strong>FDCPA (Fair Debt Collection Practices Act):</strong> Prohibits abusive collection practices if fraudsters attempt to collect debts using your identity.</li>
+        <li><strong>SEC Regulations:</strong> For investment fraud and securities-related scams; enforced through the Securities and Exchange Commission.</li>
+        <li><strong>Wire Fraud & Bank Fraud Statutes:</strong> Federal crimes with penalties up to 20 years imprisonment for wire fraud, 30 years for bank fraud.</li>
+        <li><strong>State Consumer Protection Acts:</strong> Additional safeguards vary by state; many provide restitution funds and civil remedies.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Immediate action steps</h2>
+      <p class="muted">If you believe you've been a victim of cryptocurrency or financial fraud, follow these critical steps immediately:</p>
+
+      <div class="resource-grid">
+        <div class="resource-item">
+          <h3>Document everything</h3>
+          <p class="muted">Preserve all evidence: transaction records, email communications, wallet addresses, blockchain confirmations, contract terms, and any communications with perpetrators. Screenshot everything with timestamps.</p>
+        </div>
+        <div class="resource-item">
+          <h3>Report to authorities</h3>
+          <p class="muted">File reports with FBI (IC3.gov), SEC (if securities involved), IRS-CI, local law enforcement, and state attorney general. Obtain case numbers for each report as proof of filing for recovery claims.</p>
+        </div>
+        <div class="resource-item">
+          <h3>Secure your accounts</h3>
+          <p class="muted">Change passwords on all accounts, enable two-factor authentication, monitor credit reports at all three bureaus (Equifax, Experian, TransUnion), and place fraud alerts and credit freezes.</p>
+        </div>
+        <div class="resource-item">
+          <h3>Contact financial institutions</h3>
+          <p class="muted">Notify your bank, payment processor, exchange, and credit card company of the fraud. Request they freeze or recover funds if transaction is recent. File claims under their respective fraud protection policies.</p>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <strong>⚠ Time-sensitive:</strong> Many recovery options have strict deadlines (often 30-60 days). Acting quickly significantly improves recovery probability. Do not destroy evidence or attempt vigilante recovery.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Government & non-profit resources</h2>
+
+      <h3>Federal agencies & reporting portals</h3>
+      <ul class="checklist">
+        <li><strong>IC3.gov (Internet Crime Complaint Center):</strong> FBI-operated portal for reporting online fraud. Free, confidential, no action promised but reports fed to FBI, Secret Service, and Interpol.</li>
+        <li><strong>SEC Complaint Center:</strong> Specialized for investment fraud, pump-and-dump schemes, and securities violations.</li>
+        <li><strong>CFPB (Consumer Financial Protection Bureau):</strong> Files complaints for banking, credit, and lending fraud. Maintains public complaint database.</li>
+        <li><strong>FTC Identity Theft Report:</strong> IdentityTheft.gov provides identity theft reports recognized by creditors and agencies for dispute purposes.</li>
+        <li><strong>State Attorney General:</strong> Consumer protection offices handle state-level fraud complaints and consumer disputes.</li>
+      </ul>
+
+      <h3>Non-profit support organizations</h3>
+      <ul class="checklist">
+        <li><strong>National Consumer Law Center (NCLC):</strong> Provides free resources and advocate connections for consumer fraud victims.</li>
+        <li><strong>National Cyber Security Alliance:</strong> Offers education and resources for preventing and responding to cybercrime.</li>
+        <li><strong>Crypto Victims Collective:</strong> Peer support network connecting victims, sharing recovery strategies, and advocating for better protections.</li>
+        <li><strong>Stop. Think. Connect.</strong> Campaign by DHS for cybersecurity awareness and incident response guidance.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Fraud prevention best practices</h2>
+
+      <div class="resource-grid">
+        <div class="resource-item">
+          <h3>Technical security</h3>
+          <ul class="checklist">
+            <li>Use hardware wallets (Ledger, Trezor) for cryptocurrency storage</li>
+            <li>Enable authenticator apps (Google, Authy) not SMS two-factor auth</li>
+            <li>Regular security audits of smart contracts before interaction</li>
+            <li>Verify URLs manually; never click links in unsolicited messages</li>
+            <li>Keep software/firmware updated on all devices</li>
+          </ul>
+        </div>
+        <div class="resource-item">
+          <h3>Behavioral security</h3>
+          <ul class="checklist">
+            <li>Never share seed phrases or private keys; legitimate services never request them</li>
+            <li>Verify project legitimacy independently; check official channels only</li>
+            <li>Treat unsolicited investment opportunities with extreme skepticism</li>
+            <li>Research before sending money; scams often appear legitimate initially</li>
+            <li>Use escrow services for high-value transactions with unfamiliar parties</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">Can crypto transactions be reversed?</div>
+        <div class="faq-a">Blockchain transactions are generally irreversible by design. However, funds may be recoverable if they remain in exchanges or identifiable wallets subject to legal holds or law enforcement seizure. Recovery requires tracing and legal intervention, not technical reversal.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How long does recovery typically take?</div>
+        <div class="faq-a">Recovery timelines vary from weeks to years depending on factors: complexity of fund movements, regulatory jurisdiction, perpetrator cooperation, and legal processes. Recent, geographically-traceable cases resolve faster. International cases may take significantly longer.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if I don't have all documentation?</div>
+        <div class="faq-a">Partial information is recoverable from blockchain records, exchange data, and law enforcement investigations. However, documentation you retain (emails, transaction confirmations, screenshots) accelerates the process. Work with professionals to reconstruct evidence from available on-chain sources.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is there a time limit for recovery attempts?</div>
+        <div class="faq-a">Civil lawsuits typically have 3-6 year statutes of limitations depending on jurisdiction. However, criminal statutes of limitations vary. Federal wire fraud has no statute of limitations. Report promptly to preserve evidence and documentation.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What are typical recovery costs?</div>
+        <div class="faq-a">Recovery professionals typically charge contingency fees (percentage of recovered funds) ranging 15-40%, plus expenses. Some offer flat fees or hourly rates. Never pay upfront to report fraud or file complaints (that's free). Be wary of services guaranteeing recovery.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I recover funds sent through legitimate exchanges?</div>
+        <div class="faq-a">Yes, if the receiving address hasn't withdrawn funds and is subject to legal holds. Exchanges cooperate with law enforcement and can freeze accounts. Recovery depends on identifying the recipient and establishing legal grounds for asset seizure.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>When to seek professional assistance</h2>
+      <p class="muted">Consider professional recovery services when:</p>
+
+      <ul class="checklist">
+        <li>Substantial funds are involved (generally $50,000+ justifies recovery investment)</li>
+        <li>Complex cross-chain or international transactions occurred</li>
+        <li>Perpetrators used sophisticated obfuscation or mixing services</li>
+        <li>Time-sensitive coordination with law enforcement or exchanges is required</li>
+        <li>You lack technical expertise to trace fund movements independently</li>
+        <li>Multiple victims require coordinated recovery efforts</li>
+      </ul>
+
+      <p class="muted" style="margin-top: 14px;"><strong>CyberProRecover specializes in complex recovery cases combining forensic investigation, legal coordination, and exchange liaison to maximize recovery probability. Contact us for a confidential consultation about your specific situation.</strong></p>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div>
+          <h5>Consumer Resources</h5>
+          <p class="muted">Protection guidance and recovery information for fraud victims.</p>
+        </div>
+        <div>
+          <h5>Services</h5>
+          <p class="muted"><a href="investigative-service.html">Investigation</a></p>
+          <p class="muted"><a href="blockchain-forensic.html">Forensics</a></p>
+          <p class="muted"><a href="recovery-guide.html">Recovery Guide</a></p>
+        </div>
+        <div>
+          <h5>Support</h5>
+          <p class="muted"><a href="scam-prevention.html">Prevention</a></p>
+          <p class="muted"><a href="contact-us.html">Contact Us</a></p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:18px;color:var(--muted)">&copy; <span id="year">2025</span> CyberProRecover</div>
+    </footer>
+  </main>
+
+  <script>
+    const root=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+    const moonSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+    const sunSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84 4.97 6.63 6.76 4.84zM12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>';
+    const saved=localStorage.getItem('theme')||'dark';root.setAttribute('data-theme',saved);if(themeBtn)themeBtn.innerHTML=saved==='light'?sunSVG:moonSVG;themeBtn?.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);localStorage.setItem('theme',n);themeBtn.innerHTML=n==='light'?sunSVG:moonSVG});
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

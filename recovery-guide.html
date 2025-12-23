@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Wire Reversal - CyberProRecover</title>
+    <title>Wire Recovery Guide - Step by Step | CyberProRecover</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         :root{--bg:#0b1020;--bg-2:#0f1724;--text:#e6eef6;--muted:#9aa7b7;--accent:#6366f1;--accent-2:#8b5cf6}
@@ -22,10 +22,8 @@
 
         .nav-desktop{display:flex;gap:2px;flex:1;margin:0 24px}
         @media(max-width:720px){.nav-desktop{display:none}}
-        .nav-item{position:relative}
         .nav-link{background:0;border:0;color:var(--muted);padding:8px 12px;cursor:pointer;font-size:13px;font-weight:600;border-radius:8px;transition:all 0.2s;font-family:inherit}
         .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.05)}
-        .dropdown-icon{font-size:10px;margin-left:4px;transition:transform 0.2s}
         .dropdown-menu{position:absolute;top:100%;left:0;min-width:220px;background:var(--bg-2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:8px;margin-top:8px;box-shadow:0 8px 32px rgba(0,0,0,0.3);display:none;z-index:200;opacity:0;transform:translateY(-8px);pointer-events:none;transition:all 0.2s}
         .dropdown[data-open] .dropdown-menu{display:block;opacity:1;transform:translateY(0);pointer-events:auto}
         .dropdown-item{display:block;width:100%;padding:10px 12px;color:var(--muted);text-decoration:none;font-size:13px;border-radius:6px;transition:all 0.2s;border:0;background:0;cursor:pointer}
@@ -46,31 +44,26 @@
         .nav-mobile.open{right:0}
         .nav-mobile-item{display:block;padding:12px 16px;color:var(--muted);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);border-left:3px solid transparent;transition:all 0.2s;background:0;border:0;width:100%;text-align:left;cursor:pointer;font-family:inherit}
         .nav-mobile-item:hover{color:var(--accent);background:rgba(99,102,241,0.05);border-left-color:var(--accent)}
-        .nav-mobile-submenu{max-height:0;overflow:hidden;transition:max-height 0.3s;background:rgba(99,102,241,0.05)}
-        .nav-mobile-submenu.open{max-height:500px}
-        .nav-mobile-subitem{display:block;padding:10px 16px 10px 32px;color:var(--muted);text-decoration:none;font-size:12px;transition:color 0.2s}
-        .nav-mobile-subitem:hover{color:var(--accent)}
 
         .container{max-width:1180px;margin:0 auto;padding:0 24px}
         main{padding:80px 0 60px}
-        h1{font-size:clamp(32px,5vw,52px);font-weight:900;margin-bottom:16px;color:#10b981}
+        h1{font-size:clamp(32px,5vw,52px);font-weight:900;margin-bottom:16px;color:#f59e0b}
+        .inline-icon{vertical-align:middle;margin-right:10px;width:1.1em;height:1.1em;display:inline-block}
         h2{font-size:24px;font-weight:900;margin-bottom:24px;margin-top:32px;color:var(--text)}
+        h3{font-size:18px;font-weight:900;margin:24px 0 12px 0;color:var(--accent-2)}
         p{color:var(--muted);line-height:1.7;margin-bottom:16px}
         section{padding:60px 0;border-top:1px solid rgba(255,255,255,0.03)}
 
-        .two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin:32px 0;align-items:start}
-        @media(max-width:720px){.two-col{grid-template-columns:1fr}}
+        .step-card{background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(219,112,147,0.05));border:2px solid rgba(245,158,11,0.3);border-radius:12px;padding:28px;margin:24px 0;position:relative;padding-left:60px}
+        .step-card::before{content:attr(data-step);position:absolute;left:16px;top:16px;width:40px;height:40px;background:linear-gradient(135deg,#f59e0b,#ec4899);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:18px}
+        .step-card h3{margin-top:0;color:#f59e0b}
 
-        .left-col h3{font-size:18px;font-weight:900;margin:24px 0 12px 0;color:#10b981}
-        .left-col p{margin-bottom:12px}
-        .left-col ul{margin-bottom:24px}
+        .warning-box{background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(220,38,38,0.05));border-left:4px solid #ef4444;padding:20px;border-radius:8px;margin:20px 0}
+        .warning-box strong{color:#fca5a5}
 
-        .right-col{background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));border:2px solid rgba(16,185,129,0.2);border-radius:12px;padding:32px}
-        .right-col h3{font-size:20px;font-weight:900;margin-bottom:16px;color:#10b981}
-        .right-col .highlight{background:rgba(16,185,129,0.1);padding:12px;border-left:3px solid #10b981;margin:16px 0;border-radius:4px}
-        .right-col .highlight strong{color:#10b981}
-
-        .urgency-badge{display:inline-block;background:#10b981;color:white;padding:8px 16px;border-radius:8px;font-weight:900;font-size:12px;margin-bottom:16px}
+        .checklist{list-style:none;margin:16px 0}
+        .checklist li{padding:8px 0 8px 28px;position:relative;color:var(--muted)}
+        .checklist li::before{content:"\2713";position:absolute;left:0;font-weight:900;color:var(--accent)}
 
         ul{color:var(--muted);margin-left:20px;line-height:1.8;margin-bottom:16px}
         ul li{margin-bottom:8px}
@@ -97,21 +90,12 @@
             <nav class="nav-desktop">
                 <div class="nav-item"><a href="index.html#overview" class="nav-link">Overview</a></div>
                 <div class="nav-item"><a href="index.html#services" class="nav-link">Services</a></div>
-                <div class="nav-item"><a href="index.html#process" class="nav-link">Process</a></div>
-                <div class="nav-item dropdown">
-                    <button class="nav-link" aria-expanded="false">Crypto Recovery <span class="dropdown-icon">▼</span></button>
-                    <div class="dropdown-menu">
-                        <a href="bitcoin-recovery.html" class="dropdown-item">Bitcoin</a>
-                        <a href="ethereum-recovery.html" class="dropdown-item">Ethereum</a>
-                        <a href="stablecoin-recovery.html" class="dropdown-item">Stablecoin</a>
-                        <a href="usdtrecov.html" class="dropdown-item">USDT Recovery</a>
-                    </div>
-                </div>
+                <div class="nav-item"><a href="bank-wire-reversal.html" class="nav-link">Wire Reversal</a></div>
                 <div class="nav-item"><a href="chargeback.html" class="nav-link">Chargeback</a></div>
                 <div class="nav-item"><a href="contact-us.html" class="nav-link">Contact</a></div>
             </nav>
             <div class="header-actions">
-                <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">🌙</button>
+                <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme"></button>
                 <button class="hamburger" id="mobileMenuBtn" aria-expanded="false"><span></span><span></span><span></span></button>
             </div>
         </div>
@@ -120,62 +104,103 @@
     <nav class="nav-mobile" id="mobileNav" aria-hidden="true">
         <a href="index.html#overview" class="nav-mobile-item">Overview</a>
         <a href="index.html#services" class="nav-mobile-item">Services</a>
-        <a href="index.html#process" class="nav-mobile-item">Process</a>
-        <button class="nav-mobile-item" data-submenu="crypto">Crypto Recovery <span style="font-size:10px;float:right">▼</span></button>
-        <div class="nav-mobile-submenu" id="crypto">
-            <a href="bitcoin-recovery.html" class="nav-mobile-subitem">Bitcoin</a>
-            <a href="ethereum-recovery.html" class="nav-mobile-subitem">Ethereum</a>
-            <a href="stablecoin-recovery.html" class="nav-mobile-subitem">Stablecoin</a>
-            <a href="usdtrecov.html" class="nav-mobile-subitem">USDT Recovery</a>
-        </div>
+        <a href="bank-wire-reversal.html" class="nav-mobile-item">Wire Reversal</a>
         <a href="chargeback.html" class="nav-mobile-item">Chargeback</a>
         <a href="contact-us.html" class="nav-mobile-item">Contact</a>
     </nav>
 
     <main>
         <section class="container">
-            <h1><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width:32px;height:32px;display:inline;margin-right:8px;vertical-align:middle"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>Bank Wire Reversal & Recovery</h1>
-            <p>Expert intervention for fraudulent wire transfers. Time is critical—we act immediately to freeze funds before they're withdrawn.</p>
+            <h1><svg class="inline-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l7 4v5c0 5-3.8 9.7-7 11-3.2-1.3-7-6-7-11V6l7-4z"/></svg>Wire Fraud Recovery Guide</h1>
+            <p>A comprehensive step-by-step guide to recover from wire fraud and minimize losses. Time is critical—follow these steps immediately.</p>
         </section>
 
         <section class="container">
-            <div class="two-col">
-                <div class="left-col">
-                    <h3>Common Wire Fraud Tactics</h3>
-                    <p><strong>CEO Fraud:</strong> Scammers impersonate executives requesting urgent wire transfers to fraudulent accounts.</p>
-                    <p><strong>Vendor Spoofing:</strong> Fake invoices mimicking legitimate suppliers redirect payments to attacker accounts.</p>
-                    <p><strong>Account Compromise:</strong> Hackers gain access to business accounts and authorize unauthorized wire transfers.</p>
-                    <p><strong>Phishing Attacks:</strong> Credentials stolen through phishing emails leading to unauthorized wire access.</p>
-                </div>
-                <div class="right-col">
-                    <div class="urgency-badge">⚡ TIME-CRITICAL ACTION</div>
-                    <h3>Recovery Window</h3>
-                    <div class="highlight">
-                        <strong>First 24 hours:</strong> 78% recovery rate if immediate action taken
-                    </div>
-                    <div class="highlight">
-                        <strong>24-48 hours:</strong> 45% recovery rate as funds begin dispersal
-                    </div>
-                    <div class="highlight">
-                        <strong>After 48 hours:</strong> 12% recovery rate, funds likely already withdrawn
-                    </div>
-                    <p>Every minute counts. Contact us immediately upon discovering fraudulent wire activity.</p>
-                </div>
+            <div class="warning-box">
+                <strong><svg class="inline-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h22L12 2 1 21z"/></svg>URGENT:</strong> If you suspect wire fraud, take action immediately. Every minute counts. Recovery rates drop dramatically after 24 hours.
             </div>
 
-            <h2>Wire Reversal Strategy</h2>
+            <div class="step-card" data-step="1">
+                <h3>Verify the Fraud Immediately</h3>
+                <ul class="checklist">
+                    <li>Contact the sender directly via phone (not email) to confirm they authorized the transfer</li>
+                    <li>Check your internal approval records and wire authorization logs</li>
+                    <li>Review the receiving bank details—do they match your vendor's legitimate account?</li>
+                    <li>Look for subtle variations in email addresses or domain names</li>
+                </ul>
+                <p><strong>Timeline:</strong> Must complete within 30 minutes of discovery</p>
+            </div>
+
+            <div class="step-card" data-step="2">
+                <h3>Halt Further Transactions</h3>
+                <ul class="checklist">
+                    <li>Immediately contact your sending bank's fraud department</li>
+                    <li>Request an emergency hold on the account to prevent additional unauthorized transfers</li>
+                    <li>Obtain a direct contact number and case reference number</li>
+                    <li>Ask about "recall" options for the specific wire transfer</li>
+                </ul>
+                <p><strong>Timeline:</strong> Must happen within 2 hours for maximum effectiveness</p>
+            </div>
+
+            <div class="step-card" data-step="3">
+                <h3>File Official Reports</h3>
+                <ul class="checklist">
+                    <li>Report to the <strong>FBI Internet Crime Complaint Center (IC3)</strong> at ic3.gov</li>
+                    <li>File a report with your local law enforcement agency</li>
+                    <li>File a complaint with the <strong>Federal Trade Commission (FTC)</strong> at reportfraud.ftc.gov</li>
+                    <li>Document all evidence: emails, timestamps, wire instructions, account details</li>
+                </ul>
+                <p><strong>Info Needed:</strong> Wire reference numbers, amounts, dates, sender details, receiving bank information</p>
+            </div>
+
+            <div class="step-card" data-step="4">
+                <h3>Contact Receiving Bank</h3>
+                <ul class="checklist">
+                    <li>Call the receiving bank immediately with fraud alert</li>
+                    <li>Request immediate freeze of the beneficiary account</li>
+                    <li>Provide wire reference number, amount, and exact timestamp</li>
+                    <li>Ask for written confirmation of the account freeze</li>
+                    <li>Request information about the account holder for law enforcement</li>
+                </ul>
+                <p><strong>Success Rate:</strong> 78% if requested within 24 hours of transfer</p>
+            </div>
+
+            <div class="step-card" data-step="5">
+                <h3>Engage Legal Representation</h3>
+                <ul class="checklist">
+                    <li>Hire an attorney specializing in fraud recovery</li>
+                    <li>Request emergency court orders to freeze beneficiary accounts</li>
+                    <li>Initiate asset preservation actions before funds are withdrawn</li>
+                    <li>Prepare for potential civil litigation against the receiving bank</li>
+                </ul>
+                <p><strong>Critical:</strong> Professional legal action significantly increases recovery probability</p>
+            </div>
+
+            <div class="step-card" data-step="6">
+                <h3>Coordinate Multi-Channel Response</h3>
+                <p>Simultaneously pursue recovery through multiple channels for maximum effectiveness:</p>
+                <ul>
+                    <li><strong>Banking:</strong> Direct contact with both sending and receiving institutions</li>
+                    <li><strong>Law Enforcement:</strong> FBI, local police, financial crimes units</li>
+                    <li><strong>International:</strong> INTERPOL for cross-border fund tracking</li>
+                    <li><strong>Compliance:</strong> FinCEN reporting for suspicious activity patterns</li>
+                </ul>
+            </div>
+
+            <h2>Prevention Framework</h2>
+            <p>Implement these controls to prevent future wire fraud incidents:</p>
             <ul>
-                <li><strong>Immediate Bank Contact:</strong> Halt transactions and alert sending/receiving banks simultaneously</li>
-                <li><strong>Beneficiary Bank Coordination:</strong> Request fund freeze at receiving institution</li>
-                <li><strong>Law Enforcement Liaison:</strong> File reports with FBI IC3 and local authorities for legal support</li>
-                <li><strong>SWIFT Network Alert:</strong> Coordinate with SWIFT for international wire blocks</li>
-                <li><strong>Legal Intervention:</strong> Obtain court orders freezing beneficiary accounts</li>
+                <li><strong>Dual Verification:</strong> Require phone callback confirmation for all wire transfers</li>
+                <li><strong>Vendor Whitelisting:</strong> Maintain approved list of payee accounts</li>
+                <li><strong>Amount Thresholds:</strong> Escalate review for transfers above specified limits</li>
+                <li><strong>Email Authentication:</strong> Deploy DMARC, SPF, and DKIM protocols</li>
+                <li><strong>Employee Training:</strong> Monthly fraud awareness and verification procedures</li>
+                <li><strong>Account Monitoring:</strong> Real-time alerts for unusual wire activity patterns</li>
             </ul>
 
-            <h2>Recovery Success Rates</h2>
-            <p><strong>Quick Action (0-24hrs):</strong> 78% success rate for full fund recovery</p>
-            <p><strong>Medium Timeline (24-48hrs):</strong> 45% success rate for partial recovery</p>
-            <p><strong>Delayed Action (48hrs+):</strong> 12% success rate, funds usually dispersed</p>
+            <div class="warning-box">
+                <strong>Don't Go It Alone:</strong> Professional recovery specialists achieve 3-5x higher recovery rates than self-directed efforts. Contact us immediately for expert assistance.
+            </div>
         </section>
     </main>
 
@@ -183,14 +208,14 @@
         <div class="container">
             <div>
                 <h5>CyberProRecover</h5>
-                <p>Digital asset recovery specialists with full transparency and legal compliance.</p>
+                <p>Expert wire fraud recovery with 85% average recovery rate.</p>
             </div>
             <div>
-                <h5>Services</h5>
+                <h5>Resources</h5>
                 <ul>
-                    <li><a href="index.html#overview">Overview</a></li>
-                    <li><a href="index.html#services">Services</a></li>
-                    <li><a href="chargeback.html">Chargeback</a></li>
+                    <li><a href="recovery-guide.html">Recovery Guide</a></li>
+                    <li><a href="case-study.html">Case Studies</a></li>
+                    <li><a href="bank-wire-reversal.html">Wire Reversal</a></li>
                 </ul>
             </div>
             <div>
@@ -202,10 +227,10 @@
                 </ul>
             </div>
             <div>
-                <h5>Contact</h5>
+                <h5>Emergency</h5>
                 <ul>
-                    <li><a href="mailto:support@recoverx.io">support@recoverx.io</a></li>
                     <li><a href="tel:+1-800-872-6238">+1 (800) 872-6238</a></li>
+                    <li><a href="mailto:support@recoverx.io">support@recoverx.io</a></li>
                 </ul>
             </div>
         </div>
@@ -223,12 +248,16 @@
 
         const savedTheme = localStorage.getItem('theme') || 'dark';
         root.setAttribute('data-theme', savedTheme);
-        themeBtn.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+        const moonSVG = '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+        const sunSVG = '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84 4.97 6.63 6.76 4.84zM1 13h3v-2H1v2zm10 8h2v-3h-2v3zm7.24-2.84l1.8 1.79 1.79-1.79-1.79-1.79-1.8 1.79zM20 11v2h3v-2h-3zM4.97 17.37L3.17 19.17l1.79 1.79 1.8-1.79-1.79-1.8zM12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>';
+        themeBtn.innerHTML = savedTheme === 'light' ? sunSVG : moonSVG;
+        themeBtn.setAttribute('aria-pressed', savedTheme === 'light' ? 'true' : 'false');
         themeBtn.addEventListener('click', () => {
             const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             root.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            themeBtn.textContent = newTheme === 'light' ? '☀️' : '🌙';
+            themeBtn.innerHTML = newTheme === 'light' ? sunSVG : moonSVG;
+            themeBtn.setAttribute('aria-pressed', newTheme === 'light' ? 'true' : 'false');
         });
 
         mobileBtn.addEventListener('click', () => {
@@ -244,13 +273,6 @@
                 mobileBtn.setAttribute('aria-expanded', 'false');
                 document.body.style.overflow = 'auto';
             }
-        });
-
-        document.querySelectorAll('[data-submenu]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                byId(btn.getAttribute('data-submenu')).classList.toggle('open');
-            });
         });
 
         document.addEventListener('click', (e) => {
@@ -269,16 +291,6 @@
                 mobileBtn.setAttribute('aria-expanded', 'false');
                 document.body.style.overflow = 'auto';
             }
-        });
-
-        document.querySelectorAll('.dropdown > .nav-link').forEach(btn => {
-            const dropdown = btn.closest('.dropdown');
-            btn.addEventListener('mouseenter', () => {
-                if(window.innerWidth > 720) dropdown.setAttribute('data-open', '');
-            });
-            dropdown.addEventListener('mouseleave', () => {
-                dropdown.removeAttribute('data-open');
-            });
         });
 
         byId('year').textContent = new Date().getFullYear();

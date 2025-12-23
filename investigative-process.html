@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Investigative Process — CyberProRecover</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#071028;--bg-2:#0d1524;--text:#e6eef6;--muted:#9aa7b7;--accent:#f59e0b}
+    [data-theme="light"]{--bg:#fff;--bg-2:#f6f7fb;--text:#0b1220;--muted:#50606f}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue';color:var(--text);background:var(--bg);padding-top:72px}
+
+    .animated-bg{position:fixed;inset:0;background:radial-gradient(800px 400px at 8% 22%,rgba(245,158,11,0.08),transparent),radial-gradient(700px 300px at 90% 78%,rgba(99,102,241,0.06),transparent);z-index:-1}
+
+    header{position:fixed;top:0;left:0;right:0;height:72px;background:linear-gradient(180deg,rgba(6,7,12,0.6),rgba(6,7,12,0.25));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .header-wrapper{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;padding:0 20px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;text-decoration:none}
+    .logo img{height:40px}
+
+    .nav-desktop{display:flex;gap:8px;margin-left:20px}
+    .nav-link{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14px;transition:all 0.2s}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    .header-actions{margin-left:auto;display:flex;gap:12px;align-items:center}
+    .theme-toggle{background:transparent;border:0;padding:8px;border-radius:8px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;width:32px;height:32px}
+    .theme-toggle svg{width:20px;height:20px;fill:currentColor}
+
+    @media(max-width:820px){.nav-desktop{display:none}}
+
+    main{max-width:1200px;margin:0 auto;padding:44px 20px 80px}
+
+    h1{font-size:clamp(28px,4.6vw,40px);font-weight:900;margin-bottom:8px}
+    h2{font-size:18px;color:var(--text);margin-top:16px;margin-bottom:8px}
+    h3{font-size:16px;color:var(--text);margin-top:12px}
+    p{color:var(--muted);line-height:1.75;margin-bottom:12px}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);margin-bottom:14px}
+
+    .timeline{margin-top:14px;border-left:4px solid var(--accent);padding-left:16px}
+    .timeline-item{margin-bottom:20px}
+    .timeline-item h3{color:var(--accent);margin-top:0;margin-bottom:6px}
+    .timeline-item p{margin-bottom:6px}
+
+    .step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:14px}
+    .step-card{background:linear-gradient(180deg,rgba(245,158,11,0.04),rgba(245,158,11,0.01));padding:16px;border-radius:10px;border:1px solid rgba(245,158,11,0.1)}
+    .step-card h3{color:var(--accent)}
+
+    .list{margin-left:18px;color:var(--muted);line-height:1.75}
+    .list li{margin-bottom:8px}
+
+    footer{margin-top:48px;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.03)}
+    footer .container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    footer h5{font-weight:800;margin-bottom:8px}
+    footer p,footer a{color:var(--muted);font-size:14px;text-decoration:none}
+    footer a:hover{color:var(--accent)}
+
+    .cta{margin-top:20px;padding:18px 20px;border-radius:12px;background:linear-gradient(90deg,rgba(245,158,11,0.06),rgba(99,102,241,0.04));display:flex;justify-content:space-between;align-items:center}
+    .cta a{background:var(--accent);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px}
+
+    .hamburger{display:none;flex-direction:column;gap:6px;cursor:pointer;background:transparent;border:0;padding:8px;margin-left:12px}
+    .hamburger span{width:24px;height:2.5px;background:var(--text);border-radius:2px;transition:all 0.3s}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(10px,8px)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(8px,-8px)}
+
+    .nav-mobile{position:fixed;top:72px;right:-100%;width:280px;height:calc(100vh - 72px);background:var(--bg-2);border-left:1px solid rgba(255,255,255,0.03);transition:right 0.3s ease;z-index:35;overflow-y:auto;display:flex;flex-direction:column;padding:16px 0}
+    .nav-mobile.open{right:0}
+    .nav-mobile-item{color:var(--muted);text-decoration:none;padding:12px 20px;display:block;transition:all 0.2s;border-left:3px solid transparent}
+    .nav-mobile-item:hover{color:var(--text);background:rgba(255,255,255,0.02);border-left-color:var(--accent)}
+
+    @media(max-width:820px){.hamburger{display:flex}.theme-toggle{display:flex;align-items:center;justify-content:center;width:32px;height:32px}.theme-toggle svg{width:20px;height:20px;fill:currentColor}}
+  </style>
+</head>
+<body>
+  <div class="animated-bg" aria-hidden="true"></div>
+
+  <header>
+    <div class="header-wrapper">
+      <a href="index.html" class="logo"><img src="logo/cropped_circle_image.png" alt="logo"><span>CyberProRecover</span></a>
+      <nav class="nav-desktop" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html#overview">Overview</a>
+        <a class="nav-link" href="investigative-service.html">Investigations</a>
+        <a class="nav-link" href="blockchain-forensic.html">Forensics</a>
+        <a class="nav-link" href="contact-us.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme"></button>
+        <button id="mobileMenuBtn" class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+      <div id="mobileNav" class="nav-mobile"></div>
+    </div>
+  </header>
+
+  <main>
+    <h1>Our Investigative Process</h1>
+    <p class="muted">A proven methodology for rapid incident response, thorough forensics, and coordinated recovery actions. Transparency and speed are core to everything we do.</p>
+
+    <div class="card">
+      <h2>Six-phase investigation workflow</h2>
+      <p class="muted">Our structured approach ensures nothing is overlooked while maintaining urgency where it matters most: the first 24-72 hours after an incident.</p>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>Phase 1: Initial Assessment (0-6 hours)</h3>
+          <p class="muted">Immediate intake and triage. We speak directly with victims, collect preliminary evidence (transaction IDs, wallet addresses, screenshots), and perform a rapid technical assessment of the incident scope.</p>
+          <ul class="list">
+            <li>Document incident timeline and affected parties</li>
+            <li>Identify asset types and blockchain networks involved</li>
+            <li>Assess urgency and recovery probability</li>
+            <li>Establish communication protocols and escalation procedures</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <h3>Phase 2: Incident Mapping (6-24 hours)</h3>
+          <p class="muted">Rapid forensic analysis to map fund flows, identify attacker wallets, and pinpoint potential cash-out points. We use real-time monitoring to detect ongoing movement.</p>
+          <ul class="list">
+            <li>Trace transactions through contracts, DEXs, and bridges</li>
+            <li>Identify exchange deposits and intermediary wallets</li>
+            <li>Detect clustering patterns to isolate attacker infrastructure</li>
+            <li>Flag time-sensitive actions (upcoming withdrawals, bridge transactions)</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <h3>Phase 3: Deep Technical Analysis (24-72 hours)</h3>
+          <p class="muted">Comprehensive examination of smart contracts, smart contract behavior, and exploitation mechanics. Determine root cause and assess whether recovery mechanisms exist.</p>
+          <ul class="list">
+            <li>Static code analysis for backdoors and vulnerabilities</li>
+            <li>Event log analysis and transaction sequencing</li>
+            <li>Behavioral profiling of attacker transactions</li>
+            <li>Determine if owner keys or pauses can facilitate recovery</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <h3>Phase 4: Evidence Packaging (48-96 hours)</h3>
+          <p class="muted">Prepare court-ready and exchange-ready evidence packages. This includes detailed forensic timelines, address clustering maps, verified transaction sequences, and legal affidavits for exchange cooperation.</p>
+          <ul class="list">
+            <li>Create forensic reports with visual flow diagrams</li>
+            <li>Build evidence timeline with timestamp verification</li>
+            <li>Prepare subpoena requests for targeted exchanges</li>
+            <li>Draft legal affidavits and declarations</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <h3>Phase 5: Multi-Party Coordination (72-336 hours)</h3>
+          <p class="muted">Execute recovery strategy through coordinated action. Engage exchanges for emergency holds, work with legal counsel for subpoenas, coordinate with law enforcement, and explore owner interventions.</p>
+          <ul class="list">
+            <li>Submit emergency takedown requests to exchanges</li>
+            <li>File legal motions for provisional remedies and asset freezes</li>
+            <li>Coordinate with law enforcement (FBI, IRS-CI, Secret Service)</li>
+            <li>Explore smart contract-based recovery options (owner functions, pauses)</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <h3>Phase 6: Ongoing Monitoring & Updates (336+ hours)</h3>
+          <p class="muted">Continue monitoring for new transactions, maintain legal coordination, and provide regular status updates to victims. Recovery may take weeks or months, but persistent effort yields results.</p>
+          <ul class="list">
+            <li>Monitor attacker wallets for further movement</li>
+            <li>Track legal proceeding milestones</li>
+            <li>Coordinate follow-up evidence submissions</li>
+            <li>Report recovered or frozen assets to victims</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Key decision points</h2>
+      <p class="muted">Throughout the investigation, we assess specific factors to prioritize efforts and determine the most effective recovery strategy.</p>
+
+      <div class="step-grid">
+        <div class="step-card">
+          <h3>Exchange identification</h3>
+          <p class="muted">Do we know which exchange holds attacker funds? If yes, direct legal action becomes viable. If no, continued tracing is necessary.</p>
+        </div>
+        <div class="step-card">
+          <h3>Smart contract controls</h3>
+          <p class="muted">Can the original deployer pause, burn, or reverse transactions? Owner intervention is often the fastest recovery mechanism.</p>
+        </div>
+        <div class="step-card">
+          <h3>Regulatory cooperation</h3>
+          <p class="muted">Which jurisdictions are involved? Certain exchanges and countries are more responsive to legal requests than others.</p>
+        </div>
+        <div class="step-card">
+          <h3>Timeline & urgency</h3>
+          <p class="muted">Has the attacker already withdrawn? Cash-out speed determines whether prevention or post-fact recovery is possible.</p>
+        </div>
+        <div class="step-card">
+          <h3>Budget & ROI</h3>
+          <p class="muted">Is the incident value sufficient to justify investigation costs? We provide transparent cost-benefit analysis upfront.</p>
+        </div>
+        <div class="step-card">
+          <h3>Victim cooperation</h3>
+          <p class="muted">Are victims willing to pursue legal action? Some strategies require direct victim involvement and testimony.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Communication & transparency</h2>
+      <p class="muted">We provide regular updates to clients throughout the investigation. Weekly status reports detail findings, actions taken, and next steps.</p>
+
+      <h3>What you can expect</h3>
+      <ul class="list">
+        <li>Initial assessment within 6 hours of intake</li>
+        <li>Detailed incident map within 24 hours</li>
+        <li>Weekly status updates during active investigation</li>
+        <li>Transparent cost estimates and fee structure</li>
+        <li>Clear explanation of recovery probability and timelines</li>
+      </ul>
+    </div>
+
+    <div class="cta">
+      <div>
+        <strong>Start the investigation process</strong>
+        <span class="muted">Contact us with incident details to begin our proven methodology.</span>
+      </div>
+      <div><a href="contact-us.html">Contact Now</a></div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div>
+          <h5>CyberProRecover</h5>
+          <p class="muted">Proven investigative methodology and rapid response.</p>
+        </div>
+        <div>
+          <h5>Services</h5>
+          <p class="muted"><a href="investigative-service.html">Investigations</a></p>
+          <p class="muted"><a href="blockchain-forensic.html">Forensics</a></p>
+          <p class="muted"><a href="defi-token-recovery.html">DeFi Recovery</a></p>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <p class="muted"><a href="contact-us.html">Get in Touch</a></p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:18px;color:var(--muted)">&copy; <span id="year">2025</span> CyberProRecover</div>
+    </footer>
+  </main>
+
+  <script>
+    const root=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+    const moonSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+    const sunSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+    const saved=localStorage.getItem('theme')||'dark';root.setAttribute('data-theme',saved);if(themeBtn){themeBtn.innerHTML=saved==='light'?sunSVG:moonSVG;themeBtn.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);localStorage.setItem('theme',n);themeBtn.innerHTML=n==='light'?sunSVG:moonSVG;});}
+    const mobileMenuBtn=document.getElementById('mobileMenuBtn');const mobileNav=document.getElementById('mobileNav');if(mobileMenuBtn){const navItems=['<a class="nav-mobile-item" href="index.html#overview">Overview</a>','<a class="nav-mobile-item" href="investigative-service.html">Investigations</a>','<a class="nav-mobile-item" href="blockchain-forensic.html">Forensics</a>','<a class="nav-mobile-item" href="contact-us.html">Contact</a>'];mobileNav.innerHTML=navItems.join('');mobileMenuBtn.addEventListener('click',()=>{const isOpen=mobileNav.classList.contains('open');mobileMenuBtn.setAttribute('aria-expanded',!isOpen);mobileNav.classList.toggle('open');document.body.style.overflow=isOpen?'auto':'hidden';});}
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

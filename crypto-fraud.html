@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cryptocurrency Fraud — CyberProRecover</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#071028;--bg-2:#0d1524;--text:#e6eef6;--muted:#9aa7b7;--accent:#f97316}
+    [data-theme="light"]{--bg:#fff;--bg-2:#f6f7fb;--text:#0b1220;--muted:#50606f}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue';color:var(--text);background:var(--bg);padding-top:72px}
+
+    .animated-bg{position:fixed;inset:0;background:radial-gradient(800px 400px at 20% 25%,rgba(249,115,22,0.08),transparent),radial-gradient(700px 300px at 75% 70%,rgba(249,115,22,0.06),transparent);z-index:-1}
+
+    header{position:fixed;top:0;left:0;right:0;height:72px;background:linear-gradient(180deg,rgba(6,7,12,0.6),rgba(6,7,12,0.25));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .header-wrapper{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;padding:0 20px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;text-decoration:none}
+    .logo img{height:40px}
+
+    .nav-desktop{display:flex;gap:8px;margin-left:20px}
+    .nav-link{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14px;transition:all 0.2s}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    .header-actions{margin-left:auto}
+    .theme-toggle{background:transparent;border:0;padding:8px;border-radius:8px;color:var(--text);cursor:pointer}
+
+    @media(max-width:820px){.nav-desktop{display:none}}
+
+    main{max-width:1200px;margin:0 auto;padding:44px 20px 80px}
+
+    h1{font-size:clamp(28px,4.6vw,40px);font-weight:900;margin-bottom:8px}
+    h2{font-size:18px;color:var(--text);margin-top:16px;margin-bottom:8px}
+    h3{font-size:16px;color:var(--text);margin-top:12px}
+    p{color:var(--muted);line-height:1.75;margin-bottom:12px}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);margin-bottom:14px}
+
+    .fraud-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:14px}
+    @media(max-width:900px){.fraud-grid{grid-template-columns:1fr}}
+
+    .fraud-item{background:linear-gradient(180deg,rgba(249,115,22,0.04),rgba(249,115,22,0.01));padding:18px;border-radius:10px;border:1px solid rgba(249,115,22,0.1)}
+    .fraud-item h3{color:var(--accent);margin-top:0}
+
+    .list{margin-left:18px;color:var(--muted);line-height:1.75}
+    .list li{margin-bottom:8px}
+
+    .warning{background:linear-gradient(90deg,rgba(249,115,22,0.06),rgba(249,115,22,0.03));padding:16px;border-left:4px solid var(--accent);border-radius:8px;margin-bottom:14px}
+
+    footer{margin-top:48px;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.03)}
+    footer .container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    footer h5{font-weight:800;margin-bottom:8px}
+    footer p,footer a{color:var(--muted);font-size:14px;text-decoration:none}
+    footer a:hover{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="animated-bg" aria-hidden="true"></div>
+
+  <header>
+    <div class="header-wrapper">
+      <a href="index.html" class="logo"><img src="logo/cropped_circle_image.png" alt="logo"><span>CyberProRecover</span></a>
+      <nav class="nav-desktop" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html#overview">Overview</a>
+        <a class="nav-link" href="scam-prevention.html">Prevention</a>
+        <a class="nav-link" href="investigative-service.html">Investigation</a>
+        <a class="nav-link" href="contact-us.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1>Cryptocurrency Fraud</h1>
+    <p class="muted">Comprehensive guide to understanding cryptocurrency fraud schemes, recognizing warning signs, protecting your assets, and taking action if you've been victimized.</p>
+
+    <div class="card">
+      <h2>Common crypto fraud types</h2>
+
+      <div class="fraud-grid">
+        <div class="fraud-item">
+          <h3>Rug pulls</h3>
+          <p class="muted">Fraudulent projects that raise capital from investors, then vanish or drain liquidity pools. Perpetrators typically retain backdoor access to drain remaining funds at will.</p>
+        </div>
+        <div class="fraud-item">
+          <h3>Phishing attacks</h3>
+          <p class="muted">Deceptive websites, emails, or messages impersonating legitimate services to steal private keys, seed phrases, or login credentials. Often target users during high-emotion moments.</p>
+        </div>
+        <div class="fraud-item">
+          <h3>Ponzi schemes</h3>
+          <p class="muted">Fraudulent investment schemes promising unrealistic returns. Early investors paid from new investor contributions rather than legitimate profits, creating pyramid structure collapse.</p>
+        </div>
+        <div class="fraud-item">
+          <h3>Romance scams</h3>
+          <p class="muted">Fraudsters build romantic relationships with victims online, then convince them to invest in cryptocurrency "opportunities" or transfer funds for emergency situations.</p>
+        </div>
+        <div class="fraud-item">
+          <h3>Impersonation fraud</h3>
+          <p class="muted">Criminals impersonate celebrities, influencers, or company executives to promote fake cryptocurrency projects, offering free tokens or investment opportunities.</p>
+        </div>
+        <div class="fraud-item">
+          <h3>Exchange hacks</h3>
+          <p class="muted">Compromised exchange infrastructure leading to mass theft of customer funds. Often involves sophisticated social engineering or zero-day exploit targeting security infrastructure.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Red flags & warning signs</h2>
+
+      <h3>Unrealistic promises</h3>
+      <ul class="list">
+        <li>Guaranteed returns exceeding 30% annually</li>
+        <li>Guaranteed profit claims with no risk disclosure</li>
+        <li>Promises of quick wealth or "easy money"</li>
+        <li>No mention of fees, risks, or investment volatility</li>
+      </ul>
+
+      <h3>Operational red flags</h3>
+      <ul class="list">
+        <li>No regulatory registration or compliance information</li>
+        <li>Anonymous team members with limited verifiable credentials</li>
+        <li>Pressure to invest immediately before "opportunity closes"</li>
+        <li>Requirement to recruit others for commissions (pyramid structure)</li>
+        <li>Complex structures designed to obscure actual operations</li>
+      </ul>
+
+      <h3>Technical indicators</h3>
+      <ul class="list">
+        <li>Unsolicited access requests to wallets or seed phrases</li>
+        <li>Suspicious smart contract code with hidden functions</li>
+        <li>Claims of "exclusive" or "hidden" tokens unavailable elsewhere</li>
+        <li>Website URLs similar to but not identical to legitimate services</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Fraud statistics & impact</h2>
+
+      <p class="muted"><strong>2024 crypto fraud figures:</strong> Over $3.8B in reported losses to cryptocurrency fraud. Average victim loss: $14,000. Recovery rate without professional assistance: 2-5%.</p>
+
+      <h3>Most targeted demographics</h3>
+      <ul class="list">
+        <li>Ages 25-50 with higher incomes and investment capital</li>
+        <li>Cryptocurrency newcomers seeking to learn investment strategies</li>
+        <li>Emotionally vulnerable individuals (lonely, grieving, stressed)</li>
+        <li>High-net-worth individuals targeted for large-scale theft</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Immediate protection steps</h2>
+
+      <div class="warning">
+        <strong>If you suspect fraud:</strong> Stop all communications immediately, do not send additional funds, document all interactions, report to authorities (FBI IC3.gov), and contact professional recovery services.
+      </div>
+
+      <h3>Protective measures</h3>
+      <ul class="list">
+        <li>Never share seed phrases or private keys with anyone</li>
+        <li>Use hardware wallets (Ledger, Trezor) for significant holdings</li>
+        <li>Enable all available security features (2FA, whitelist withdrawals)</li>
+        <li>Verify all communications through official channels only</li>
+        <li>Research projects independently before investing</li>
+        <li>Diversify holdings across multiple secure storage methods</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Recovery options</h2>
+
+      <p class="muted">If you've been defrauded, professional recovery services can trace stolen funds, coordinate with exchanges for emergency holds, and work with law enforcement for asset recovery. Average recovery timeline: 30-90 days for traceable cases.</p>
+
+      <p class="muted">CyberProRecover specializes in complex fraud investigations with 75% average recovery rate across 1,500+ cases. Contact us for a confidential case evaluation.</p>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div>
+          <h5>Crypto Fraud Information</h5>
+          <p class="muted">Understand fraud types, protect yourself, and recover if victimized.</p>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <p class="muted"><a href="scam-prevention.html">Prevention Guide</a></p>
+          <p class="muted"><a href="crypto-scam-detection.html">Detection</a></p>
+          <p class="muted"><a href="crypto-fraud-report.html">Report Fraud</a></p>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <p class="muted"><a href="contact-us.html">Get Help</a></p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:18px;color:var(--muted)">&copy; <span id="year">2025</span> CyberProRecover</div>
+    </footer>
+  </main>
+
+  <script>
+    const root=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+    const moonSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+    const sunSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84 4.97 6.63 6.76 4.84zM12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>';
+    const saved=localStorage.getItem('theme')||'dark';root.setAttribute('data-theme',saved);if(themeBtn)themeBtn.innerHTML=saved==='light'?sunSVG:moonSVG;themeBtn?.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);localStorage.setItem('theme',n);themeBtn.innerHTML=n==='light'?sunSVG:moonSVG});
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

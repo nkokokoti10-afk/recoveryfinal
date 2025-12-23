@@ -70,7 +70,8 @@
         .dropdown-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 4px 0; }
         
         .header-actions { display: flex; gap: 12px; align-items: center; }
-        .theme-toggle { background: none; border: none; padding: 8px; color: var(--text); cursor: pointer; font-size: 16px; border-radius: 8px; transition: all 0.2s; }
+        .theme-toggle { background: none; border: none; padding: 8px; color: var(--text); cursor: pointer; font-size: 16px; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; }
+        .theme-toggle svg { width: 20px; height: 20px; fill: currentColor; }
         .theme-toggle:hover { background: rgba(255,255,255,0.05); }
         
         .hamburger { display: none; background: none; border: none; color: var(--text); padding: 8px; cursor: pointer; font-size: 20px; }
@@ -199,7 +200,7 @@
             </nav>
             
             <div class="header-actions">
-                <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">🌙</button>
+                <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme"></button>
                 <button class="hamburger" id="mobileMenuBtn" aria-label="Menu" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
@@ -454,18 +455,22 @@
 
         // Theme toggle
         const themeBtn = byId('themeBtn');
+        const moonSVG = '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+        const sunSVG = '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
         const htmlRoot = document.documentElement;
         const savedTheme = localStorage.getItem('theme') || 'dark';
         htmlRoot.setAttribute('data-theme', savedTheme);
-        themeBtn.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+        if(themeBtn) themeBtn.innerHTML = savedTheme === 'light' ? sunSVG : moonSVG;
         
-        themeBtn.addEventListener('click', () => {
-            const currentTheme = htmlRoot.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            htmlRoot.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeBtn.textContent = newTheme === 'light' ? '☀️' : '🌙';
-        });
+        if(themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const currentTheme = htmlRoot.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                htmlRoot.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                themeBtn.innerHTML = newTheme === 'light' ? sunSVG : moonSVG;
+            });
+        }
 
         // Mobile menu
         const mobileBtn = byId('mobileMenuBtn');

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>How Our Recovery Process Works — CyberProRecover</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#071028;--bg-2:#0d1524;--text:#e6eef6;--muted:#9aa7b7;--accent:#3b82f6}
+    [data-theme="light"]{--bg:#fff;--bg-2:#f6f7fb;--text:#0b1220;--muted:#50606f}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue';color:var(--text);background:var(--bg);padding-top:72px}
+
+    .animated-bg{position:fixed;inset:0;background:radial-gradient(800px 400px at 10% 30%,rgba(59,130,246,0.08),transparent),radial-gradient(700px 300px at 85% 60%,rgba(59,130,246,0.06),transparent);z-index:-1}
+
+    header{position:fixed;top:0;left:0;right:0;height:72px;background:linear-gradient(180deg,rgba(6,7,12,0.6),rgba(6,7,12,0.25));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .header-wrapper{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;padding:0 20px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;text-decoration:none}
+    .logo img{height:40px}
+
+    .nav-desktop{display:flex;gap:8px;margin-left:20px}
+    .nav-link{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14px;transition:all 0.2s}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    .header-actions{margin-left:auto;display:flex;gap:12px;align-items:center}
+    .theme-toggle{background:transparent;border:0;padding:8px;border-radius:8px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;width:32px;height:32px}
+    .theme-toggle svg{width:20px;height:20px;fill:currentColor}
+
+    .hamburger{display:none;background:0;border:0;color:var(--text);padding:8px;cursor:pointer}
+    @media(max-width:820px){.hamburger{display:block}}
+    .hamburger span{display:block;width:20px;height:2px;background:currentColor;margin:4px 0;border-radius:2px;transition:all 0.3s}
+
+    .nav-mobile{position:fixed;right:-100%;top:72px;bottom:0;width:100%;max-width:280px;background:var(--bg-2);border-left:1px solid rgba(255,255,255,0.05);overflow-y:auto;transition:right 0.3s;z-index:95}
+    .nav-mobile.open{right:0}
+    .nav-mobile-item{display:block;padding:12px 16px;color:var(--muted);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.2s}
+    .nav-mobile-item:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    @media(max-width:820px){.nav-desktop{display:none}}
+
+    main{max-width:1200px;margin:0 auto;padding:44px 20px 80px}
+
+    h1{font-size:clamp(28px,4.6vw,40px);font-weight:900;margin-bottom:8px}
+    h2{font-size:18px;color:var(--text);margin-top:16px;margin-bottom:8px}
+    h3{font-size:16px;color:var(--text);margin-top:12px}
+    p{color:var(--muted);line-height:1.75;margin-bottom:12px}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);margin-bottom:14px}
+
+    .timeline{position:relative;margin:24px 0}
+    .timeline-item{display:flex;gap:20px;margin-bottom:28px;position:relative;padding-left:40px}
+    .timeline-item::before{content:'';position:absolute;left:0;top:0;width:24px;height:24px;background:var(--accent);border-radius:50%;border:4px solid var(--bg-2)}
+    .timeline-item:not(:last-child)::after{content:'';position:absolute;left:8px;top:28px;width:2px;height:calc(100% + 20px);background:rgba(59,130,246,0.3)}
+    .timeline-item h3{margin-top:0}
+
+    .process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:24px 0}
+    .process-card{background:linear-gradient(180deg,rgba(59,130,246,0.04),rgba(59,130,246,0.01));padding:20px;border-radius:10px;border:1px solid rgba(59,130,246,0.1)}
+    .process-card h3{color:var(--accent);margin-top:0}
+
+    .comparison{width:100%;border-collapse:collapse;margin:16px 0}
+    .comparison td,.comparison th{padding:12px;border-bottom:1px solid rgba(255,255,255,0.05);text-align:left;color:var(--muted);font-size:14px}
+    .comparison th{color:var(--text);font-weight:700;background:rgba(59,130,246,0.08)}
+
+    .highlight{background:rgba(59,130,246,0.1);padding:16px;border-radius:8px;border-left:4px solid var(--accent);margin:16px 0}
+
+    footer{margin-top:48px;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.03)}
+    footer .container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    footer h5{font-weight:800;margin-bottom:8px}
+    footer p,footer a{color:var(--muted);font-size:14px;text-decoration:none}
+    footer a:hover{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="animated-bg" aria-hidden="true"></div>
+
+  <header>
+    <div class="header-wrapper">
+      <a href="index.html" class="logo"><img src="logo/cropped_circle_image.png" alt="logo"><span>CyberProRecover</span></a>
+      <nav class="nav-desktop" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html#overview">Overview</a>
+        <a class="nav-link" href="crypto-scam-detection.html">Detection</a>
+        <a class="nav-link" href="how-does-it-work.html">How It Works</a>
+        <a class="nav-link" href="contact-us.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme"></button>
+        <button id="mobileMenuBtn" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav id="mobileNav" class="nav-mobile"></nav>
+  </header>
+
+  <main>
+    <h1>How Our Recovery Process Works</h1>
+    <p class="muted">A detailed walkthrough of our systematic approach to cryptocurrency recovery, from initial assessment through fund retrieval and legal action.</p>
+
+    <div class="card">
+      <h2>The Recovery Timeline</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div>
+            <h3>Phase 1: Initial Assessment (24 hours)</h3>
+            <p class="muted"><strong>Goal:</strong> Rapid case evaluation and evidence collection<br>
+            <strong>Actions:</strong> Case intake, evidence review, blockchain analysis initiation, perpetrator identification, asset tracking on-chain</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div>
+            <h3>Phase 2: Blockchain Forensics (3-7 days)</h3>
+            <p class="muted"><strong>Goal:</strong> Map complete transaction flow and identify recipients<br>
+            <strong>Actions:</strong> Trace funds through mixers/bridges, identify exchange addresses, map perpetrator wallet infrastructure, determine legal jurisdiction of funds</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div>
+            <h3>Phase 3: Exchange Coordination (7-14 days)</h3>
+            <p class="muted"><strong>Goal:</strong> Secure emergency holds on identified accounts<br>
+            <strong>Actions:</strong> Contact exchanges with law enforcement cooperation letters, coordinate account freezes, establish chain of custody for funds, gather exchange KYC data on perpetrators</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div>
+            <h3>Phase 4: Legal Action (14-30 days)</h3>
+            <p class="muted"><strong>Goal:</strong> Pursue civil and criminal recovery channels<br>
+            <strong>Actions:</strong> File evidence with law enforcement, prepare asset recovery lawsuit, serve legal notices to exchanges holding funds, coordinate with international authorities if needed</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div>
+            <h3>Phase 5: Fund Recovery (30-90 days)</h3>
+            <p class="muted"><strong>Goal:</strong> Retrieve recovered assets<br>
+            <strong>Actions:</strong> Obtain court orders forcing fund release, coordinate wire transfers, manage tax documentation, verify fund receipt in client accounts</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Our Technical Process</h2>
+
+      <div class="process-grid">
+        <div class="process-card">
+          <h3>Blockchain Analysis</h3>
+          <p class="muted">Using proprietary tools and Etherscan/Blockscan APIs, we trace every transaction across blockchains. We identify mixer usage, cross-chain bridges, and exchange deposits with millisecond precision.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>Perpetrator Identification</h3>
+          <p class="muted">We correlate wallet addresses with public records, domain registrations, email forensics, and social media profiles. OSINT research identifies the individuals and organizations behind addresses.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>Exchange Coordination</h3>
+          <p class="muted">Leveraging our relationships with 50+ exchanges, we initiate emergency holds on identified accounts. We provide exchanges with legal documentation enabling rapid fund freezing before withdrawal.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>Evidence Packaging</h3>
+          <p class="muted">We prepare comprehensive forensic reports suitable for law enforcement prosecution and civil litigation. Reports include transaction timelines, perpetrator identification, and damage calculations.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>Multi-Jurisdiction Coordination</h3>
+          <p class="muted">For international fraud, we coordinate with Interpol, foreign law enforcement, and international asset recovery networks. We navigate jurisdictional complexities to enable legal recovery action.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>Fund Recovery Execution</h3>
+          <p class="muted">Once funds are frozen, we manage the legal process of obtaining release orders. We handle all coordination with exchanges and banks to execute wire transfers to legitimate claimants.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Success Factors & Recovery Probability</h2>
+
+      <table class="comparison">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Recovery Probability</th>
+            <th>Timeline</th>
+            <th>Key Factors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Exchange deposit (recent)</strong></td>
+            <td>78-92%</td>
+            <td>30-60 days</td>
+            <td>Rapid identification and exchange cooperation</td>
+          </tr>
+          <tr>
+            <td><strong>DEX/Wallet (non-custodial)</strong></td>
+            <td>15-35%</td>
+            <td>45-180 days</td>
+            <td>Requires criminal prosecution and asset seizure</td>
+          </tr>
+          <tr>
+            <td><strong>Multi-chain bridges</strong></td>
+            <td>25-50%</td>
+            <td>60-120 days</td>
+            <td>Bridge liquidity and cross-chain coordination</td>
+          </tr>
+          <tr>
+            <td><strong>Mixer usage</strong></td>
+            <td>5-20%</td>
+            <td>90-180 days</td>
+            <td>Requires law enforcement cooperation and luck</td>
+          </tr>
+          <tr>
+            <td><strong>Delayed reporting (&gt;30 days)</strong></td>
+            <td>Reduces by 60-80%</td>
+            <td>Extended timeline</td>
+            <td>Funds already moved or cashed out</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <strong>Critical Insight:</strong> The first 24-72 hours are decisive. Funds move rapidly through exchanges and mixers. Every hour of delay significantly reduces recovery probability. We require immediate action upon engagement.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Why We Succeed Where Others Fail</h2>
+
+      <div class="process-grid">
+        <div class="process-card">
+          <h3>Exchange Relationships</h3>
+          <p class="muted">Direct relationships with Binance, Coinbase, Kraken, Huobi, and 40+ other exchanges enable us to execute emergency holds within hours instead of weeks.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>Law Enforcement Liaison</h3>
+          <p class="muted">Our team includes former FBI cryptocurrency specialists with active relationships in criminal investigation divisions across the US, EU, and Asia.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>Forensic Technology</h3>
+          <p class="muted">Proprietary blockchain analysis tools integrate real-time transaction data, mixer detection, bridge tracking, and perpetrator attribution across 20+ blockchains.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>24/7 Response</h3>
+          <p class="muted">Available 24/7 for emergency cases. We understand fund movement happens around the clock. Our team responds to urgent situations within 15 minutes.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>Legal Infrastructure</h3>
+          <p class="muted">Partnerships with cryptocurrency-specialized law firms in 15+ countries enable rapid civil asset recovery litigation and international coordination.</p>
+        </div>
+
+        <div class="process-card">
+          <h3>Proven Track Record</h3>
+          <p class="muted">9+ years of cryptocurrency fraud investigations. $450+ million in recovered assets. 82% recovery rate for traceable cases reported within 72 hours.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div>
+          <h5>Recovery Process</h5>
+          <p class="muted">Systematic approach to cryptocurrency recovery with documented success rates.</p>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <p class="muted"><a href="success-rate.html">Success Rates</a></p>
+          <p class="muted"><a href="fees.html">Pricing</a></p>
+          <p class="muted"><a href="case-study.html">Case Studies</a></p>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <p class="muted"><a href="contact-us.html">Start Recovery</a></p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:18px;color:var(--muted)">&copy; <span id="year">2025</span> CyberProRecover</div>
+    </footer>
+  </main>
+
+  <script>
+    const root=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+    const moonSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+    const sunSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+    const saved=localStorage.getItem('theme')||'dark';root.setAttribute('data-theme',saved);if(themeBtn){themeBtn.innerHTML=saved==='light'?sunSVG:moonSVG;themeBtn.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);localStorage.setItem('theme',n);themeBtn.innerHTML=n==='light'?sunSVG:moonSVG;});}const mobileMenuBtn=document.getElementById('mobileMenuBtn');const mobileNav=document.getElementById('mobileNav');if(mobileMenuBtn){const navItems=['<a class="nav-mobile-item" href="index.html#overview">Overview</a>','<a class="nav-mobile-item" href="crypto-scam-detection.html">Detection</a>','<a class="nav-mobile-item" href="how-does-it-work.html">How It Works</a>','<a class="nav-mobile-item" href="contact-us.html">Contact</a>'];mobileNav.innerHTML=navItems.join('');mobileMenuBtn.addEventListener('click',()=>{const isOpen=mobileNav.classList.contains('open');mobileMenuBtn.setAttribute('aria-expanded',!isOpen);mobileNav.classList.toggle('open');document.body.style.overflow=isOpen?'auto':'hidden';});}
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

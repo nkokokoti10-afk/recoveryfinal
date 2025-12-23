@@ -44,6 +44,22 @@
             .animated-bg::before{content:'';position:absolute;width:100%;height:100%;background-image:linear-gradient(0deg, rgba(99,102,241,0.03) 1px, transparent 1px),linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);background-size:50px 50px;animation:gridShift 20s linear infinite;pointer-events:none}
             [data-theme="light"] .animated-bg::before{background-image:linear-gradient(0deg, rgba(85,88,243,0.05) 1px, transparent 1px),linear-gradient(90deg, rgba(85,88,243,0.05) 1px, transparent 1px)}
             @keyframes gridShift{0%{background-position:0 0}100%{background-position:50px 50px}}
+
+            /* Advanced micro animations for stats */
+            @keyframes countUp{0%{opacity:0;transform:scale(0.8)}50%{opacity:1}100%{opacity:1;transform:scale(1)}}
+            @keyframes countDown{0%{opacity:0;transform:translateX(-12px)}100%{opacity:1;transform:translateX(0)}}
+            @keyframes slideIn{0%{opacity:0;transform:translateX(-16px)}100%{opacity:1;transform:translateX(0)}}
+            @keyframes glowPulse{0%{text-shadow:0 0 0 rgba(99,102,241,0)}50%{text-shadow:0 0 12px rgba(99,102,241,0.6)}100%{text-shadow:0 0 0 rgba(99,102,241,0)}}
+            @keyframes bounceIn{0%{opacity:0;transform:scale(0.7) translateY(20px)}70%{transform:scale(1.05)}100%{opacity:1;transform:scale(1) translateY(0)}}
+
+            .app-stat-value{animation:countUp 1.2s cubic-bezier(0.34,1.56,0.64,1) !important}
+            
+            /* Smooth hover effects for transaction items */
+            [style*="display:grid"][style*="grid-template-columns:1fr auto"] {transition:all 0.3s ease}
+            [style*="display:grid"][style*="grid-template-columns:1fr auto"]:hover{transform:translateX(4px);background:linear-gradient(90deg,rgba(99,102,241,0.12),rgba(99,102,241,0.04)) !important}
+
+            /* Eyebrow badge animation */
+            .eyebrow{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:12px;animation:fadeInDown 0.6s ease-out 0.3s both}
             .orb{position:absolute;border-radius:50%;filter:blur(80px);mix-blend-mode:screen;animation:drift 9s ease-in-out infinite}
             [data-theme="light"] .orb{display:none}
             .orb.one{width:520px;height:520px;background:linear-gradient(135deg,rgba(99,102,241,0.25),rgba(139,92,246,0.15));left:-12%;top:-8%;opacity:0.15}
@@ -58,6 +74,31 @@
             .particle::before{content:'';position:absolute;width:6px;height:6px;border:1px solid rgba(99,102,241,0.3);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.5}
             [data-theme="light"] .particle{opacity:0.25;box-shadow:0 0 8px rgba(85,88,243,0.4),0 0 20px rgba(85,88,243,0.1)}
             @keyframes float{0%{transform:translateY(0) translateX(0)}25%{transform:translateY(-60px) translateX(20px)}50%{transform:translateY(-100px) translateX(-20px)}75%{transform:translateY(-60px) translateX(30px)}100%{transform:translateY(0) translateX(0)}}
+
+            /* Enhanced hero micro animations */
+            @keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+            @keyframes fadeInDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+            @keyframes scaleIn{from{opacity:0;transform:scale(0.94)}to{opacity:1;transform:scale(1)}}
+            @keyframes slideInRight{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+            @keyframes slideInLeft{from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
+            @keyframes pulseGlow{0%{box-shadow:0 0 8px rgba(99,102,241,0.3),0 4px 16px rgba(99,102,241,0.15)}50%{box-shadow:0 0 16px rgba(99,102,241,0.5),0 8px 24px rgba(99,102,241,0.25)}100%{box-shadow:0 0 8px rgba(99,102,241,0.3),0 4px 16px rgba(99,102,241,0.15)}}
+            @keyframes shimmer{0%{background-position:-1000px 0}100%{background-position:1000px 0}}
+            @keyframes floatHero{0%{transform:translateY(0px)}50%{transform:translateY(-8px)}100%{transform:translateY(0px)}}
+
+            .hero-content{animation:fadeInUp 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.2s both}
+            .hero-content > .eyebrow{animation:fadeInDown 0.6s ease-out 0.3s both;display:inline-block}
+            .hero-content h2{animation:fadeInUp 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.4s both}
+            .hero-content > .lead{animation:fadeInUp 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.5s both}
+            .hero-content ul{animation:fadeInUp 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.6s both}
+            .hero-content > div:last-child{animation:fadeInUp 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.7s both}
+            
+            .app-mock{animation:slideInRight 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;will-change:transform}
+            .app-mock:hover{transform:translateY(-8px);animation:none}
+            
+            .hero-content ul li{animation:fadeInUp 0.6s ease-out both}
+            .hero-content ul li:nth-child(1){animation-delay:0.65s}
+            .hero-content ul li:nth-child(2){animation-delay:0.75s}
+            .hero-content ul li:nth-child(3){animation-delay:0.85s}
 
             /* App shell --------------------------------------------------------- */
             header{position:fixed;top:0;left:0;right:0;z-index:100;background:linear-gradient(180deg,rgba(11,16,32,0.95),rgba(15,23,36,0.85));backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.05);box-shadow:0 4px 20px rgba(0,0,0,0.3)}
@@ -157,6 +198,27 @@
             .btn-secondary:hover{background:rgba(99,102,241,0.08);border-color:var(--accent)}
             [data-theme="light"] .btn{box-shadow:0 8px 24px rgba(85,88,243,0.2)}
             [data-theme="light"] .btn-secondary{border-color:rgba(85,88,243,0.3);color:#5558f3}
+
+            /* Hero card animations for app mock */
+            .app-mock[style*="grid-template"] > div:nth-child(1){animation:scaleIn 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.4s both}
+            .app-mock svg{animation:slideInRight 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.5s both}
+            .app-mock [style*="display:flex"][style*="gap:12px"] > div:nth-child(1){animation:fadeInUp 0.6s ease-out 0.6s both}
+            .app-mock [style*="display:flex"][style*="gap:12px"] > div:nth-child(2){animation:fadeInUp 0.6s ease-out 0.7s both}
+            .app-mock [style*="display:flex"][style*="gap:12px"] > div:nth-child(3){animation:fadeInUp 0.6s ease-out 0.8s both}
+
+            /* Button animations on hero */
+            .btn{transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+            .btn:hover{box-shadow:0 12px 32px rgba(99,102,241,0.4);transform:translateY(-3px) scale(1.02)}
+            .btn:active{transform:translateY(-1px) scale(0.98)}
+            
+            .copy-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;background:transparent;border:1.5px solid rgba(99,102,241,0.3);color:var(--muted);font-weight:600;cursor:pointer;font-size:13px;transition:all 0.3s ease;white-space:nowrap}
+            .copy-btn:hover{border-color:rgba(99,102,241,0.6);background:rgba(99,102,241,0.05);color:var(--accent);transform:translateY(-1px)}
+            .copy-btn:focus{outline:2px solid rgba(99,102,241,0.5);outline-offset:2px}
+
+            /* Subtle background shift effect */
+            @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+            
+            .hero{position:relative;z-index:1}
 
             /* Hero ------------------------------------------------------------- */
             .hero{padding:100px 0 60px;text-align:center}
@@ -366,7 +428,7 @@
                         </div>
                         <div class="nav-item dropdown">
                             <button class="nav-link" aria-haspopup="true" aria-expanded="false" aria-label="Crypto Recovery submenu">
-                                Crypto Recovery <span class="dropdown-icon" aria-hidden="true">▼</span>
+                                Recoveries <span class="dropdown-icon" aria-hidden="true">▼</span>
                             </button>
                             <div class="dropdown-menu" role="menu">
                                 <a href="#" class="dropdown-item" role="menuitem">Bitcoin Recovery</a>
@@ -384,6 +446,8 @@
                             <div class="dropdown-menu" role="menu">
                                 <a href="#" class="dropdown-item" role="menuitem">Credit Card Chargebacks</a>
                                 <a href="#" class="dropdown-item" role="menuitem">Bank Wire Reversals</a>
+                                <a href="#" class="dropdown-item" role="menuitem">Payment Disputes</a>
+                                <a href="#" class="dropdown-item" role="menuitem">paypal Disputes</a>
                                 <a href="#" class="dropdown-item" role="menuitem">Payment Disputes</a>
                                 <a href="#" class="dropdown-item" role="menuitem">Refund Claims</a>
                                 <div class="dropdown-divider"></div>
@@ -433,7 +497,7 @@
                             <a href="#" class="mobile-submenu-link">Timeline Expectations</a>
                             <a href="#contact" class="mobile-submenu-link">Contact Support</a>
                         </div>
-                        <button class="mobile-nav-link mobile-dropdown-toggle" data-target="crypto-recovery-submenu" aria-expanded="false">Crypto Recovery ▼</button>
+                        <button class="mobile-nav-link mobile-dropdown-toggle" data-target="crypto-recovery-submenu" aria-expanded="false">Recoveriess ▼</button>
                         <div id="crypto-recovery-submenu" class="mobile-submenu" style="display:none">
                             <a href="#" class="mobile-submenu-link">Bitcoin Recovery</a>
                             <a href="#" class="mobile-submenu-link">Ethereum Recovery</a>
@@ -446,6 +510,7 @@
                             <a href="#" class="mobile-submenu-link">Credit Card Chargebacks</a>
                             <a href="#" class="mobile-submenu-link">Bank Wire Reversals</a>
                             <a href="#" class="mobile-submenu-link">Payment Disputes</a>
+                            <a href="#" class="mobile-submenu-link">paypal Disputes</a>
                             <a href="#" class="mobile-submenu-link">Refund Claims</a>
                             <a href="#" class="mobile-submenu-link">Dispute Filing Guide</a>
                         </div>
@@ -790,17 +855,7 @@ Additional notes / screenshots (links):</pre>
                         </div>
                     </div>
 
-                    <aside class="sticky-desktop card" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.05));border:1.5px solid rgba(16,185,129,0.2);padding:28px;border-radius:14px;position:sticky;top:100px;width:100%">
-                        <div style="font-size:20px;margin-bottom:14px;color:var(--success)">⚡</div>
-                        <h4 style="font-size:16px;font-weight:900;margin-bottom:16px;color:var(--text)">Quick checklist</h4>
-                        <ol style="color:var(--muted);margin:0;padding-left:18px;line-height:1.7;font-size:13px">
-                            <li>Preserve transaction hashes and screenshots.</li>
-                            <li>Never share private keys — only addresses and hashes.</li>
-                            <li>Note dates, platform usernames and payment details.</li>
-                            <li>Have your incident timeline ready.</li>
-                        </ol>
-                        <p style="font-size:12px;color:var(--muted);margin-top:14px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px">We prepare formatted reports you can submit directly to law enforcement and exchanges.</p>
-                    </aside>
+                    
                 </div>
             </section>
     </main>
@@ -1041,6 +1096,78 @@ Additional notes / screenshots (links):</pre>
       // Evidence toggle for keyboard users
       const evToggle = byId('evidenceToggle'); evToggle.addEventListener('click', (evt)=>{ evt.preventDefault(); evToggle.setAttribute('aria-expanded', evToggle.getAttribute('aria-expanded')==='true' ? 'false' : 'true'); document.getElementById('evidence').focus(); });
 
+      // Enhanced hero micro animations
+      const heroSection = document.querySelector('.hero');
+      if(heroSection){
+        // Parallax effect on mouse move
+        const heroContent = heroSection.querySelector('.hero-content');
+        const heroCard = heroSection.querySelector('.app-mock');
+        document.addEventListener('mousemove', (e)=>{
+          if(!heroContent || !heroCard) return;
+          const rect = heroSection.getBoundingClientRect();
+          if(rect.top > window.innerHeight || rect.bottom < 0) return;
+          const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
+          const moveY = (e.clientY / window.innerHeight - 0.5) * 8;
+          heroContent.style.transform = `translateY(0) translateX(${moveX * 0.5}px)`;
+          heroCard.style.transform = `translateX(${moveX * 0.3}px) translateY(${moveY * 0.4}px)`;
+        });
+
+        // Reset on mouse leave
+        heroSection.addEventListener('mouseleave', ()=>{
+          if(heroContent) heroContent.style.transform = '';
+          if(heroCard) heroCard.style.transform = '';
+        });
+
+        // Add interactive glow to buttons on hero
+        const heroBtns = heroSection.querySelectorAll('.btn, .copy-btn');
+        heroBtns.forEach(btn=>{
+          btn.addEventListener('mouseenter', function(){
+            this.style.transition = 'all 0.3s cubic-bezier(0.34,1.56,0.64,1)';
+          });
+          btn.addEventListener('mouseleave', function(){
+            this.style.transition = 'all 0.3s ease';
+          });
+        });
+
+        // Smooth entrance animation trigger
+        const observerHero = new IntersectionObserver((entries)=>{
+          entries.forEach(entry=>{
+            if(entry.isIntersecting){
+              entry.target.style.animation = 'none';
+              setTimeout(()=>{
+                entry.target.classList.add('hero-animate-in');
+              }, 50);
+            }
+          });
+        }, {threshold: 0.1});
+        
+        observerHero.observe(heroSection);
+      }
+
+      // Add visual feedback on stat value updates
+      document.querySelectorAll('.app-stat-value').forEach(stat=>{
+        const originalText = stat.textContent;
+        stat.addEventListener('animationend', ()=>{
+          stat.style.textShadow = '0 0 12px rgba(99,102,241,0.4)';
+          setTimeout(()=>{
+            stat.style.textShadow = '';
+          }, 1000);
+        });
+      });
+
+      // Interactive card lift effect on list items
+      const listItems = document.querySelectorAll('.hero-content ul li');
+      listItems.forEach((item, idx)=>{
+        item.addEventListener('mouseenter', function(){
+          this.style.transform = 'translateX(8px)';
+          this.style.transition = 'all 0.3s cubic-bezier(0.34,1.56,0.64,1)';
+        });
+        item.addEventListener('mouseleave', function(){
+          this.style.transform = '';
+          this.style.transition = 'all 0.3s ease';
+        });
+      });
+
       // Animate dashboard values on page load (countdown effect)
       const animateNumber = (el, target, duration = 1000, isCurrency = false, isBTC = false) => {
         const startVal = 0;
@@ -1064,11 +1191,11 @@ Additional notes / screenshots (links):</pre>
         const btcTarget = byId('targetBTC');
         const liaison = byId('liaisonCount');
         
-        if (recovered) animateNumber(recovered, 38195710, 1200, true, false);
+        if (recovered) animateNumber(recovered, 418195710, 1200, true, false);
         if (btcTarget) {
           const btcNum = 12.71;
           const startTime = Date.now();
-          const duration = 1200;
+          const duration = 3000;
           const update = () => {
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
@@ -1087,7 +1214,7 @@ Additional notes / screenshots (links):</pre>
             const progress = Math.min(elapsed / duration, 1);
             liaison.innerText = Math.floor(counts[1] * progress) + ' channels';
             if (progress < 1) requestAnimationFrame(update);
-            else liaison.innerText = '3 channels';
+            else liaison.innerText = '17 channels';
           };
           requestAnimationFrame(update);
         }

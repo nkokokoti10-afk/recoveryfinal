@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Recovery Tools & Platforms — CyberProRecover</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#071028;--bg-2:#0d1524;--text:#e6eef6;--muted:#9aa7b7;--accent:#6366f1}
+    [data-theme="light"]{--bg:#fff;--bg-2:#f6f7fb;--text:#0b1220;--muted:#50606f}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue';color:var(--text);background:var(--bg);padding-top:72px}
+
+    .animated-bg{position:fixed;inset:0;background:radial-gradient(800px 400px at 15% 25%,rgba(99,102,241,0.08),transparent),radial-gradient(700px 300px at 80% 75%,rgba(99,102,241,0.06),transparent);z-index:-1}
+
+    header{position:fixed;top:0;left:0;right:0;height:72px;background:linear-gradient(180deg,rgba(6,7,12,0.6),rgba(6,7,12,0.25));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .header-wrapper{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;padding:0 20px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;text-decoration:none}
+    .logo img{height:40px}
+
+    .nav-desktop{display:flex;gap:8px;margin-left:20px}
+    .nav-link{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14px;transition:all 0.2s}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    .header-actions{margin-left:auto;display:flex;gap:12px;align-items:center}
+    .theme-toggle{background:transparent;border:0;padding:8px;border-radius:8px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;width:32px;height:32px}
+    .theme-toggle svg{width:20px;height:20px;fill:currentColor}
+
+    @media(max-width:820px){.nav-desktop{display:none}}
+
+    main{max-width:1200px;margin:0 auto;padding:44px 20px 80px}
+
+    h1{font-size:clamp(28px,4.6vw,40px);font-weight:900;margin-bottom:8px}
+    h2{font-size:18px;color:var(--text);margin-top:16px;margin-bottom:8px}
+    h3{font-size:16px;color:var(--text);margin-top:12px}
+    p{color:var(--muted);line-height:1.75;margin-bottom:12px}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);margin-bottom:14px}
+
+    .tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:14px}
+    @media(max-width:900px){.tool-grid{grid-template-columns:1fr}}
+
+    .tool-item{background:linear-gradient(180deg,rgba(99,102,241,0.04),rgba(99,102,241,0.01));padding:18px;border-radius:10px;border:1px solid rgba(99,102,241,0.1)}
+    .tool-item h3{color:var(--accent);margin-top:0}
+
+    .list{margin-left:18px;color:var(--muted);line-height:1.75}
+    .list li{margin-bottom:8px}
+
+    .hamburger{display:none;flex-direction:column;gap:6px;cursor:pointer;background:transparent;border:0;padding:8px;margin-left:12px}
+    .hamburger span{width:24px;height:2.5px;background:var(--text);border-radius:2px;transition:all 0.3s}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(10px,8px)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(8px,-8px)}
+
+    .nav-mobile{position:fixed;top:72px;right:-100%;width:280px;height:calc(100vh - 72px);background:var(--bg-2);border-left:1px solid rgba(255,255,255,0.03);transition:right 0.3s ease;z-index:35;overflow-y:auto;display:flex;flex-direction:column;padding:16px 0}
+    .nav-mobile.open{right:0}
+    .nav-mobile-item{color:var(--muted);text-decoration:none;padding:12px 20px;display:block;transition:all 0.2s;border-left:3px solid transparent}
+    .nav-mobile-item:hover{color:var(--text);background:rgba(255,255,255,0.02);border-left-color:var(--accent)}
+
+    @media(max-width:820px){.hamburger{display:flex}.theme-toggle{display:flex;align-items:center;justify-content:center;width:32px;height:32px}.theme-toggle svg{width:20px;height:20px;fill:currentColor}}
+
+    footer{margin-top:48px;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.03)}
+    footer .container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    footer h5{font-weight:800;margin-bottom:8px}
+    footer p,footer a{color:var(--muted);font-size:14px;text-decoration:none}
+    footer a:hover{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="animated-bg" aria-hidden="true"></div>
+
+  <header>
+    <div class="header-wrapper">
+      <a href="index.html" class="logo"><img src="logo/cropped_circle_image.png" alt="logo"><span>CyberProRecover</span></a>
+      <nav class="nav-desktop" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html#overview">Overview</a>
+        <a class="nav-link" href="blockchain-forensic.html">Forensics</a>
+        <a class="nav-link" href="defi-token-recovery.html">DeFi Recovery</a>
+        <a class="nav-link" href="contact-us.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme"></button>
+        <button id="mobileMenuBtn" class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+      <div id="mobileNav" class="nav-mobile"></div>
+    </div>
+  </header>
+
+  <main>
+    <h1>Recovery Tools & Platforms</h1>
+    <p class="muted">A comprehensive toolkit of industry-leading platforms, proprietary systems, and specialized infrastructure we use for forensic analysis, evidence collection, and coordinated recovery efforts across all major blockchain networks.</p>
+
+    <div class="card">
+      <h2>On-chain analysis & tracing infrastructure</h2>
+      <p class="muted">We leverage multiple data sources and analytical frameworks to build comprehensive pictures of fund flows and attacker behavior patterns across all major blockchains and cross-chain bridges.</p>
+
+      <div class="tool-grid">
+        <div class="tool-item">
+          <h3>Etherscan & Blockchair</h3>
+          <p class="muted">Primary decentralized transaction explorers providing raw transaction data, event logs, contract source code, and historical state reconstruction for Ethereum, Bitcoin, and multiple EVM chains. Real-time indexing with comprehensive historical archives for incident forensics.</p>
+        </div>
+        <div class="tool-item">
+          <h3>Chainalysis & Elliptic</h3>
+          <p class="muted">Enterprise-grade blockchain analytics platforms with advanced clustering algorithms, entity risk scoring, and exchange deposit identification. Proprietary machine learning models for behavioral analysis, pattern recognition, and perpetrator attribution with high confidence scoring.</p>
+        </div>
+        <div class="tool-item">
+          <h3>Proprietary indexers</h3>
+          <p class="muted">Custom-built, high-performance indexing infrastructure for rapid historical state reconstruction and real-time monitoring. Supports complex event filtering, cross-contract relationships, and anomaly detection across multiple chains simultaneously.</p>
+        </div>
+        <div class="tool-item">
+          <h3>Bridge & DEX aggregators</h3>
+          <p class="muted">Real-time monitoring of cross-chain bridges (Stargate, LayerZero, Multichain, Wormhole) and DEX routing protocols (1inch, 0x, CowSwap). Tracks fund movements across chains and identifies probable cash-out routes through liquidity pools.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Forensic & investigation tooling</h2>
+      <p class="muted">Advanced techniques and purpose-built tools for address clustering, entity resolution, behavioral analysis, and temporal correlation to map full attacker infrastructure and track stolen assets comprehensively.</p>
+
+      <h3>Address clustering & heuristics</h3>
+      <p class="muted">Multi-level clustering using co-spending analysis, temporal correlation patterns, transaction fee-paying behavior, and smart contract interaction signatures. Enables grouping of related addresses and identification of operator-controlled wallets with high confidence levels.</p>
+
+      <h3>Smart contract analysis tools</h3>
+      <p class="muted">Static bytecode analysis using Etherscan decompilers and Dedaub, symbolic execution frameworks, reentrancy vulnerability detection. Runtime analysis using transaction tracing tools and state diff analysis to identify exploitation vectors, backdoors, and malicious code patterns.</p>
+
+      <h3>Off-chain enrichment</h3>
+      <p class="muted">Integration of off-chain data including IP geolocation databases, WHOIS registration analysis, email clustering, domain registration history, and social media linkage. Enables sophisticated correlation of on-chain and off-chain identities for perpetrator attribution.</p>
+
+      <h3>Temporal & behavioral profiling</h3>
+      <p class="muted">Time-series analysis of transaction patterns, volume trends, and actor behavior signatures. Machine learning models trained on 500+ historical fraud cases identify similar patterns in new incidents and predict likely perpetrator next moves.</p>
+    </div>
+
+    <div class="card">
+      <h2>Legal & compliance infrastructure</h2>
+      <p class="muted">Established templates, workflows, and pre-built relationships for rapid evidence packaging and law enforcement coordination at scale with multiple jurisdictions.</p>
+
+      <h3>Subpoena & legal templates</h3>
+      <p class="muted">Standardized, court-approved subpoena templates for exchanges, payment processors, custodians, and financial intermediaries. Pre-drafted civil asset recovery pleadings, preliminary injunction motions, asset freeze requests, and coordinated filing procedures with established law firms.</p>
+
+      <h3>Exchange liaison & emergency protocols</h3>
+      <p class="muted">Direct relationships with compliance teams at Kraken, Coinbase, Gemini, Bitstamp, and 30+ regional/international exchanges. Pre-established emergency hold procedures, expedited KYC matching requests, rapid subpoena intake workflows. Average processing: 6-12 hours for emergency holds.</p>
+
+      <h3>Law enforcement coordination</h3>
+      <p class="muted">Established partnerships with FBI cybercrime divisions, IRS Criminal Investigation, Secret Service electronic crimes task forces, UK NCA, Europol, and RCMP. Pre-formatted evidence packages optimized for law enforcement intake and prosecution support with high conviction rates.</p>
+
+      <h3>Multi-jurisdictional support</h3>
+      <p class="muted">Relationships with attorneys across US states, EU countries, and major financial centers. Expertise in cross-border asset recovery, international rogatory letters, and multi-party coordination protocols.</p>
+    </div>
+
+    <div class="card">
+      <h2>Operational security & incident management</h2>
+      <p class="muted">Purpose-built systems for secure evidence handling, victim communication, and multi-party coordination during active recovery efforts without exposing sensitive investigation details.</p>
+
+      <h3>Secure communication infrastructure</h3>
+      <p class="muted">End-to-end encrypted channels (Signal, Proton Mail) for sensitive victim and exchange communications. Cryptographic verification of sender identity prevents social engineering. Secure file transfer protocols for evidence exchange with law enforcement and legal counsel.</p>
+
+      <h3>Chain-of-custody procedures</h3>
+      <p class="muted">Forensic-standard evidence preservation protocols with cryptographic hashing (SHA-256) of all findings and timestamped records. Documented evidence chain ensures admissibility in court proceedings. Regular evidence integrity audits and verification procedures.</p>
+
+      <h3>Incident coordination platform</h3>
+      <p class="muted">Secure portal for coordinating across exchanges, legal counsel, law enforcement, and victim stakeholders. Role-based access controls, comprehensive audit logging, and compartmentalized information disclosure prevent accidental exposure of sensitive investigation details.</p>
+
+      <h3>Real-time monitoring dashboards</h3>
+      <p class="muted">Custom dashboards tracking fund movements in real-time, emergency alerts for suspicious activity, and centralized incident management with multi-stakeholder visibility and access control.</p>
+    </div>
+
+    <div class="card">
+      <h2>AI & machine learning models</h2>
+      <p class="muted">Custom-developed models trained on historical incidents to predict attacker behavior, identify similar patterns in new cases, and prioritize investigation efforts based on recovery probability.</p>
+
+      <ul class="list">
+        <li>Behavioral anomaly detection for identifying compromised wallets and suspicious transactions</li>
+        <li>Temporal correlation models for linking related transactions across time and chains</li>
+        <li>Risk scoring algorithms estimating recovery probability based on incident characteristics</li>
+        <li>Pattern matching systems comparing new incidents to 500+ historical fraud cases</li>
+        <li>Natural language processing for analyzing on-chain metadata and identifying intent</li>
+        <li>Perpetrator clustering models for identifying related criminal infrastructure</li>
+        <li>Predictive models forecasting likely conversion points and cash-out venues</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Use case optimization</h2>
+
+      <h3>DeFi incident response</h3>
+      <p class="muted">Real-time monitoring of DEX activity, bridge crossings, and liquidity pool interactions. Rapid identification of fund movements and immediate exchange coordination for emergency holds.</p>
+
+      <h3>Institutional fraud investigation</h3>
+      <p class="muted">Large-scale multi-entity coordination requiring comprehensive due diligence, perpetrator infrastructure mapping, and regulatory agency engagement. Multi-week investigation with detailed litigation-ready documentation.</p>
+
+      <h3>Cross-chain analysis</h3>
+      <p class="muted">Simultaneous monitoring across Ethereum, Bitcoin, Polygon, Arbitrum, Optimism, Solana, and emerging chains. Bridge activity correlation and multi-chain perpetrator infrastructure identification.</p>
+
+      <h3>Privacy-enhanced evidence handling</h3>
+      <p class="muted">Specialized tools for mixer usage detection, privacy coin transition identification, and indirect perpetrator attribution. Enhanced analysis for complex obfuscation scenarios.</p>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div>
+          <h5>CyberProRecover Tools</h5>
+          <p class="muted">Advanced infrastructure for blockchain forensics and recovery.</p>
+        </div>
+        <div>
+          <h5>Services</h5>
+          <p class="muted"><a href="blockchain-forensic.html">Forensics</a></p>
+          <p class="muted"><a href="defi-token-recovery.html">DeFi Recovery</a></p>
+          <p class="muted"><a href="recovery-guide.html">Recovery Guide</a></p>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <p class="muted"><a href="contact-us.html">Get in Touch</a></p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:18px;color:var(--muted)">&copy; <span id="year">2025</span> CyberProRecover</div>
+    </footer>
+  </main>
+
+  <script>
+    const root=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+    const moonSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+    const sunSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+    const saved=localStorage.getItem('theme')||'dark';root.setAttribute('data-theme',saved);if(themeBtn){themeBtn.innerHTML=saved==='light'?sunSVG:moonSVG;themeBtn.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);localStorage.setItem('theme',n);themeBtn.innerHTML=n==='light'?sunSVG:moonSVG;});}
+    const mobileMenuBtn=document.getElementById('mobileMenuBtn');const mobileNav=document.getElementById('mobileNav');if(mobileMenuBtn){const navItems=['<a class="nav-mobile-item" href="index.html#overview">Overview</a>','<a class="nav-mobile-item" href="blockchain-forensic.html">Forensics</a>','<a class="nav-mobile-item" href="defi-token-recovery.html">DeFi Recovery</a>','<a class="nav-mobile-item" href="contact-us.html">Contact</a>'];mobileNav.innerHTML=navItems.join('');mobileMenuBtn.addEventListener('click',()=>{const isOpen=mobileNav.classList.contains('open');mobileMenuBtn.setAttribute('aria-expanded',!isOpen);mobileNav.classList.toggle('open');document.body.style.overflow=isOpen?'auto':'hidden';});}
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

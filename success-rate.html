@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Success Rates & Recovery Statistics — CyberProRecover</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#071028;--bg-2:#0d1524;--text:#e6eef6;--muted:#9aa7b7;--accent:#3b82f6}
+    [data-theme="light"]{--bg:#fff;--bg-2:#f6f7fb;--text:#0b1220;--muted:#50606f}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue';color:var(--text);background:var(--bg);padding-top:72px}
+
+    .animated-bg{position:fixed;inset:0;background:radial-gradient(800px 400px at 10% 30%,rgba(59,130,246,0.08),transparent),radial-gradient(700px 300px at 85% 60%,rgba(59,130,246,0.06),transparent);z-index:-1}
+
+    header{position:fixed;top:0;left:0;right:0;height:72px;background:linear-gradient(180deg,rgba(6,7,12,0.6),rgba(6,7,12,0.25));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .header-wrapper{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;padding:0 20px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;text-decoration:none}
+    .logo img{height:40px}
+
+    .nav-desktop{display:flex;gap:8px;margin-left:20px}
+    .nav-link{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14px;transition:all 0.2s}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    .header-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .theme-toggle{background:transparent;border:0;padding:8px;border-radius:8px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;width:32px;height:32px}
+    .theme-toggle svg{width:20px;height:20px;fill:currentColor}
+
+    .hamburger{display:none;background:0;border:0;color:var(--text);padding:8px;cursor:pointer}
+    @media(max-width:820px){.hamburger{display:block}}
+    .hamburger span{display:block;width:20px;height:2px;background:currentColor;margin:4px 0;border-radius:2px;transition:all 0.3s}
+
+    .nav-mobile{position:fixed;right:-100%;top:72px;bottom:0;width:100%;max-width:280px;background:var(--bg-2);border-left:1px solid rgba(255,255,255,0.05);overflow-y:auto;transition:right 0.3s;z-index:95}
+    .nav-mobile.open{right:0}
+    .nav-mobile-item{display:block;padding:12px 16px;color:var(--muted);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.2s}
+    .nav-mobile-item:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    @media(max-width:820px){.nav-desktop{display:none}}
+
+    main{max-width:1200px;margin:0 auto;padding:44px 20px 80px}
+
+    h1{font-size:clamp(28px,4.6vw,40px);font-weight:900;margin-bottom:8px}
+    h2{font-size:18px;color:var(--text);margin-top:16px;margin-bottom:8px}
+    h3{font-size:16px;color:var(--text);margin-top:12px}
+    p{color:var(--muted);line-height:1.75;margin-bottom:12px}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);margin-bottom:14px}
+
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+    .stat-box{background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(59,130,246,0.02));padding:20px;border-radius:10px;border:1px solid rgba(59,130,246,0.15);text-align:center}
+    .stat-number{font-size:32px;font-weight:900;color:var(--accent);margin:8px 0}
+    .stat-label{color:var(--muted);font-size:13px;font-weight:600}
+
+    .comparison{width:100%;border-collapse:collapse;margin:24px 0;overflow-x:auto}
+    .comparison td,.comparison th{padding:14px;border-bottom:1px solid rgba(255,255,255,0.05);text-align:left;color:var(--muted);font-size:14px}
+    .comparison th{color:var(--text);font-weight:700;background:rgba(59,130,246,0.08)}
+
+    @media(max-width:768px){
+      .comparison{font-size:12px;display:block;overflow-x:auto}
+      .comparison td,.comparison th{padding:10px 8px}
+      .stat-grid{grid-template-columns:1fr}
+      main{padding:44px 16px 80px}
+      h1{font-size:clamp(24px,3vw,32px)}
+    }
+
+    .bar-chart{margin:20px 0}
+    .chart-row{display:flex;align-items:center;margin:12px 0;gap:12px}
+    .chart-label{width:160px;color:var(--muted);font-size:13px;font-weight:600}
+    .chart-bar-bg{flex:1;height:28px;background:rgba(59,130,246,0.1);border-radius:4px;position:relative;overflow:hidden}
+    .chart-bar{height:100%;background:linear-gradient(90deg,var(--accent),rgba(59,130,246,0.7));border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding:0 8px;color:var(--text);font-weight:700;font-size:13px}
+
+    .timeline-item{margin:16px 0;padding:12px;background:rgba(59,130,246,0.04);border-left:4px solid var(--accent);border-radius:4px}
+    .timeline-item strong{color:var(--accent)}
+
+    .highlight{background:rgba(59,130,246,0.1);padding:16px;border-radius:8px;border-left:4px solid var(--accent);margin:16px 0}
+
+    footer{margin-top:48px;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.03)}
+    footer .container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    footer h5{font-weight:800;margin-bottom:8px}
+    footer p,footer a{color:var(--muted);font-size:14px;text-decoration:none}
+    footer a:hover{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="animated-bg" aria-hidden="true"></div>
+
+  <header>
+    <div class="header-wrapper">
+      <a href="index.html" class="logo"><img src="logo/cropped_circle_image.png" alt="logo"><span>CyberProRecover</span></a>
+      <nav class="nav-desktop" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html#overview">Overview</a>
+        <a class="nav-link" href="crypto-scam-detection.html">Detection</a>
+        <a class="nav-link" href="how-does-it-work.html">How It Works</a>
+        <a class="nav-link" href="contact-us.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme"></button>
+        <button id="mobileMenuBtn" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav id="mobileNav" class="nav-mobile"></nav>
+  </header>
+
+  <main>
+    <h1>Recovery Success Rates</h1>
+    <p class="muted">Comprehensive statistics on our recovery operations, success metrics, and factors that determine recovery probability.</p>
+
+    <div class="card">
+      <h2>Overall Performance Metrics</h2>
+
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-label">Total Cases Handled</div>
+          <div class="stat-number">2,847</div>
+          <p class="muted" style="font-size:12px">Since 2016</p>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-label">Average Recovery Rate</div>
+          <div class="stat-number">82%</div>
+          <p class="muted" style="font-size:12px">For traceable cases</p>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-label">Total Recovered</div>
+          <div class="stat-number">$450M+</div>
+          <p class="muted" style="font-size:12px">USD equivalent</p>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-label">Avg Recovery Time</div>
+          <div class="stat-number">58 days</div>
+          <p class="muted" style="font-size:12px">From engagement</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Success Rates by Fraud Type</h2>
+
+      <table class="comparison">
+        <thead>
+          <tr>
+            <th>Fraud Type</th>
+            <th>Cases</th>
+            <th>Recovery Rate</th>
+            <th>Avg Amount</th>
+            <th>Avg Timeline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Exchange compromise</strong></td>
+            <td>312</td>
+            <td>91%</td>
+            <td>$28K</td>
+            <td>28 days</td>
+          </tr>
+          <tr>
+            <td><strong>Investment scam</strong></td>
+            <td>456</td>
+            <td>78%</td>
+            <td>$82K</td>
+            <td>45 days</td>
+          </tr>
+          <tr>
+            <td><strong>Rug pull</strong></td>
+            <td>218</td>
+            <td>34%</td>
+            <td>$156K</td>
+            <td>90 days</td>
+          </tr>
+          <tr>
+            <td><strong>Phishing scam</strong></td>
+            <td>542</td>
+            <td>72%</td>
+            <td>$15K</td>
+            <td>38 days</td>
+          </tr>
+          <tr>
+            <td><strong>Romance scam</strong></td>
+            <td>287</td>
+            <td>45%</td>
+            <td>$42K</td>
+            <td>68 days</td>
+          </tr>
+          <tr>
+            <td><strong>Pump & dump</strong></td>
+            <td>134</td>
+            <td>28%</td>
+            <td>$64K</td>
+            <td>120 days</td>
+          </tr>
+          <tr>
+            <td><strong>Bridge theft</strong></td>
+            <td>89</td>
+            <td>51%</td>
+            <td>$124K</td>
+            <td>75 days</td>
+          </tr>
+          <tr>
+            <td><strong>Wallet compromise</strong></td>
+            <td>809</td>
+            <td>18%</td>
+            <td>$8K</td>
+            <td>45 days</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Recovery Probability by Time to Report</h2>
+
+      <p class="muted" style="margin-bottom:20px"><strong>Critical Finding:</strong> The timing of fraud report dramatically impacts recovery probability. Report within 24 hours for optimal recovery chances.</p>
+
+      <div class="bar-chart">
+        <div class="chart-row">
+          <div class="chart-label">0-24 hours</div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar" style="width:82%">82%</div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label">24-72 hours</div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar" style="width:64%">64%</div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label">3-7 days</div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar" style="width:48%">48%</div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label">1-2 weeks</div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar" style="width:32%">32%</div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label">2-4 weeks</div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar" style="width:18%">18%</div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label">&gt;1 month</div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar" style="width:8%">8%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight">
+        <strong>Implication:</strong> Reporting delays reduce recovery probability by 5-15% per day. This is why we emphasize immediate action. Every hour matters.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Recovery by Loss Amount</h2>
+
+      <table class="comparison">
+        <thead>
+          <tr>
+            <th>Loss Amount</th>
+            <th>Cases</th>
+            <th>Avg Recovery</th>
+            <th>Success Rate</th>
+            <th>Typical Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>&lt;$5K</strong></td>
+            <td>1,204</td>
+            <td>$3.8K</td>
+            <td>68%</td>
+            <td>Often to personal wallets, lower priority for exchanges</td>
+          </tr>
+          <tr>
+            <td><strong>$5K - $25K</strong></td>
+            <td>842</td>
+            <td>$18.2K</td>
+            <td>74%</td>
+            <td>Exchange deposits frequent, good traceability</td>
+          </tr>
+          <tr>
+            <td><strong>$25K - $100K</strong></td>
+            <td>614</td>
+            <td>$72K</td>
+            <td>81%</td>
+            <td>Multi-step laundering, extended timelines</td>
+          </tr>
+          <tr>
+            <td><strong>$100K - $500K</strong></td>
+            <td>118</td>
+            <td>$285K</td>
+            <td>79%</td>
+            <td>Professional criminal infrastructure involved</td>
+          </tr>
+          <tr>
+            <td><strong>&gt;$500K</strong></td>
+            <td>69</td>
+            <td>$1.2M</td>
+            <td>76%</td>
+            <td>Complex laundering, international coordination required</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Factors Affecting Recovery Success</h2>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:20px 0">
+        <div style="background:rgba(59,130,246,0.04);padding:16px;border-radius:8px;border-left:4px solid var(--accent)">
+          <h3 style="margin-top:0;color:var(--accent)">Positive Factors</h3>
+          <ul style="margin-left:18px;color:var(--muted);line-height:1.75">
+            <li>Funds deposited to regulated exchange</li>
+            <li>Report within 24-72 hours</li>
+            <li>Complete evidence documentation</li>
+            <li>Relatively large transaction amount</li>
+            <li>Transaction on major blockchain (ETH, BTC)</li>
+            <li>KYC'd recipient account</li>
+            <li>Law enforcement cooperation</li>
+          </ul>
+        </div>
+
+        <div style="background:rgba(217,70,39,0.04);padding:16px;border-radius:8px;border-left:4px solid #d94627">
+          <h3 style="margin-top:0;color:#d94627">Negative Factors</h3>
+          <ul style="margin-left:18px;color:var(--muted);line-height:1.75">
+            <li>Funds sent to perpetrator wallet</li>
+            <li>Delayed reporting (&gt;2 weeks)</li>
+            <li>Minimal documentation available</li>
+            <li>Very small transaction amount</li>
+            <li>Mixer/privacy coins used</li>
+            <li>Funds exited to fiat (cash out)</li>
+            <li>International jurisdiction conflicts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Recovery Case Study Timeline</h2>
+
+      <div class="timeline-item">
+        <strong>Day 0-1:</strong> Client reports $85K stolen via fake exchange. We initiate immediate blockchain forensics.
+      </div>
+
+      <div class="timeline-item">
+        <strong>Day 2-3:</strong> Identify funds deposited to Binance account. Contact Binance security with law enforcement cooperation letter.
+      </div>
+
+      <div class="timeline-item">
+        <strong>Day 4-5:</strong> Binance freezes suspect account containing $71K of original theft. Remaining $14K traced to multiple addresses.
+      </div>
+
+      <div class="timeline-item">
+        <strong>Day 6-14:</strong> File evidence with FBI, obtain court order for account release, coordinate with perpetrator's bank.
+      </div>
+
+      <div class="timeline-item">
+        <strong>Day 15-45:</strong> Legal process, victim verification, bank coordination for wire transfer authorization.
+      </div>
+
+      <div class="timeline-item">
+        <strong>Day 46-58:</strong> $68K wire transferred to victim's account. Recovery success rate: 80% of loss amount.
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div>
+          <h5>Success Rates</h5>
+          <p class="muted">Comprehensive recovery statistics and success metrics.</p>
+        </div>
+        <div>
+          <h5>Learn More</h5>
+          <p class="muted"><a href="how-does-it-work.html">Recovery Process</a></p>
+          <p class="muted"><a href="fees.html">Pricing</a></p>
+          <p class="muted"><a href="case-study.html">Case Studies</a></p>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <p class="muted"><a href="contact-us.html">Report Fraud</a></p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:18px;color:var(--muted)">&copy; <span id="year">2025</span> CyberProRecover</div>
+    </footer>
+  </main>
+
+  <script>
+    const root=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+    const moonSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+    const sunSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+    const saved=localStorage.getItem('theme')||'dark';
+    root.setAttribute('data-theme',saved);
+    if(themeBtn){
+      themeBtn.innerHTML=saved==='light'?sunSVG:moonSVG;
+      themeBtn.addEventListener('click',()=>{
+        const n=root.getAttribute('data-theme')==='dark'?'light':'dark';
+        root.setAttribute('data-theme',n);
+        localStorage.setItem('theme',n);
+        themeBtn.innerHTML=n==='light'?sunSVG:moonSVG;
+      });
+    }
+    const mobileMenuBtn=document.getElementById('mobileMenuBtn');
+    const mobileNav=document.getElementById('mobileNav');
+    if(mobileMenuBtn){
+      const navItems=['<a class="nav-mobile-item" href="index.html#overview">Overview</a>','<a class="nav-mobile-item" href="crypto-scam-detection.html">Detection</a>','<a class="nav-mobile-item" href="how-does-it-work.html">How It Works</a>','<a class="nav-mobile-item" href="contact-us.html">Contact</a>'];
+      mobileNav.innerHTML=navItems.join('');
+      mobileMenuBtn.addEventListener('click',()=>{
+        const isOpen=mobileNav.classList.contains('open');
+        mobileMenuBtn.setAttribute('aria-expanded',!isOpen);
+        mobileNav.classList.toggle('open');
+        document.body.style.overflow=isOpen?'auto':'hidden';
+      });
+    }
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

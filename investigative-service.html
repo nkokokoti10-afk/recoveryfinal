@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Investigative Services — CyberProRecover</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#071028;--bg-2:#0d1524;--text:#e6eef6;--muted:#9aa7b7;--accent:#10b981}
+    [data-theme="light"]{--bg:#fff;--bg-2:#f6f7fb;--text:#0b1220;--muted:#50606f}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue';color:var(--text);background:var(--bg);padding-top:72px}
+
+    .animated-bg{position:fixed;inset:0;background:radial-gradient(800px 400px at 5% 30%,rgba(16,185,129,0.08),transparent),radial-gradient(700px 300px at 80% 65%,rgba(16,185,129,0.06),transparent);z-index:-1}
+
+    header{position:fixed;top:0;left:0;right:0;height:72px;background:linear-gradient(180deg,rgba(6,7,12,0.6),rgba(6,7,12,0.25));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .header-wrapper{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;padding:0 20px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;text-decoration:none}
+    .logo img{height:40px}
+
+    .nav-desktop{display:flex;gap:8px;margin-left:20px}
+    .nav-link{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14px;transition:all 0.2s}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    .header-actions{margin-left:auto;display:flex;gap:12px;align-items:center}
+    .theme-toggle{background:transparent;border:0;padding:8px;border-radius:8px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;width:32px;height:32px}
+    .theme-toggle svg{width:20px;height:20px;fill:currentColor}
+
+    .hamburger{display:none;background:0;border:0;color:var(--text);padding:8px;cursor:pointer}
+    @media(max-width:820px){.hamburger{display:block}}
+    .hamburger span{display:block;width:20px;height:2px;background:currentColor;margin:4px 0;border-radius:2px;transition:all 0.3s}
+
+    .nav-mobile{position:fixed;right:-100%;top:72px;bottom:0;width:100%;max-width:280px;background:var(--bg-2);border-left:1px solid rgba(255,255,255,0.05);overflow-y:auto;transition:right 0.3s;z-index:95}
+    .nav-mobile.open{right:0}
+    .nav-mobile-item{display:block;padding:12px 16px;color:var(--muted);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.2s}
+    .nav-mobile-item:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    @media(max-width:820px){.nav-desktop{display:none}}
+
+    main{max-width:1200px;margin:0 auto;padding:44px 20px 80px}
+
+    h1{font-size:clamp(28px,4.6vw,40px);font-weight:900;margin-bottom:8px}
+    h2{font-size:18px;color:var(--text);margin-top:16px;margin-bottom:8px}
+    h3{font-size:16px;color:var(--text);margin-top:12px}
+    p{color:var(--muted);line-height:1.75;margin-bottom:12px}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);margin-bottom:14px}
+
+    .service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:14px}
+    @media(max-width:900px){.service-grid{grid-template-columns:1fr}}
+
+    .service-item{background:linear-gradient(180deg,rgba(16,185,129,0.04),rgba(16,185,129,0.01));padding:18px;border-radius:10px;border:1px solid rgba(16,185,129,0.1)}
+    .service-item h3{color:var(--accent);margin-top:0}
+
+    .methodology-phase{background:var(--bg-2);padding:16px;border-radius:10px;margin-bottom:12px;border-left:4px solid var(--accent)}
+
+    .list{margin-left:18px;color:var(--muted);line-height:1.75}
+    .list li{margin-bottom:8px}
+
+    footer{margin-top:48px;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.03)}
+    footer .container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    footer h5{font-weight:800;margin-bottom:8px}
+    footer p,footer a{color:var(--muted);font-size:14px;text-decoration:none}
+    footer a:hover{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="animated-bg" aria-hidden="true"></div>
+
+  <header>
+    <div class="header-wrapper">
+      <a href="index.html" class="logo"><img src="logo/cropped_circle_image.png" alt="logo"><span>CyberProRecover</span></a>
+      <nav class="nav-desktop" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html#overview">Overview</a>
+        <a class="nav-link" href="blockchain-forensic.html">Forensics</a>
+        <a class="nav-link" href="investigative-process.html">Process</a>
+        <a class="nav-link" href="contact-us.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme"></button>
+        <button id="mobileMenuBtn" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav id="mobileNav" class="nav-mobile"></nav>
+  </header>
+
+  <main>
+    <h1>Investigative Services</h1>
+    <p class="muted">Comprehensive due diligence and fraud detection services for counterparty risk assessment, pre-investment verification, and incident investigation. Our team specializes in blockchain forensics, regulatory compliance verification, and perpetrator attribution.</p>
+
+    <div class="card">
+      <h2>Core investigative services</h2>
+
+      <div class="service-grid">
+        <div class="service-item">
+          <h3>Pre-investment due diligence</h3>
+          <p class="muted">Comprehensive counterparty verification before significant financial commitments. We analyze entity backgrounds, regulatory standing, beneficial ownership structures, and blockchain transaction histories to identify hidden risks.</p>
+        </div>
+        <div class="service-item">
+          <h3>Fraud detection & prevention</h3>
+          <p class="muted">Proactive identification of Ponzi schemes, rug pulls, misappropriation patterns, and exit scam indicators. Pattern recognition across known fraud networks and behavioral anomaly detection.</p>
+        </div>
+        <div class="service-item">
+          <h3>Smart contract analysis</h3>
+          <p class="muted">Static and dynamic analysis of smart contracts for backdoors, hidden functionality, and exploit vectors. Bytecode decompilation, execution tracing, and state diff analysis to identify illicit code patterns.</p>
+        </div>
+        <div class="service-item">
+          <h3>Regulatory compliance verification</h3>
+          <p class="muted">Assessment of regulatory status, licensing validity, and compliance infrastructure. Due diligence on fund managers, exchanges, custody providers, and financial intermediaries across multiple jurisdictions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Due diligence methodology</h2>
+      <p class="muted">Our structured four-phase approach ensures comprehensive risk assessment and fraud detection before capital deployment.</p>
+
+      <div class="methodology-phase">
+        <h3>Phase 1: Background entity verification</h3>
+        <p class="muted">Corporate registration verification, beneficial ownership analysis, executive background screening, regulatory license checks across jurisdictions, previous litigation/enforcement actions, and media/news risk assessment. We verify entity claims through independent sources and cross-reference regulatory databases.</p>
+      </div>
+
+      <div class="methodology-phase">
+        <h3>Phase 2: On-chain activity analysis</h3>
+        <p class="muted">Historical transaction pattern analysis, fund flow tracing, wallet relationship mapping, and behavioral profiling across all transactions. We identify suspicious patterns including wash trading, artificial volume inflation, fund commingling, and address clustering anomalies.</p>
+      </div>
+
+      <div class="methodology-phase">
+        <h3>Phase 3: Technical infrastructure assessment</h3>
+        <p class="muted">Smart contract code review for exploitable vulnerabilities, backdoors, and malicious functionality. Infrastructure assessment of custody solutions, wallet infrastructure, and operational security posture. Token economics analysis for unsustainable mechanisms.</p>
+      </div>
+
+      <div class="methodology-phase">
+        <h3>Phase 4: Integrated risk scoring & recommendations</h3>
+        <p class="muted">Quantitative risk assessment combining regulatory compliance, transaction pattern analysis, technical risk factors, and historical benchmarks against known fraud cases. Actionable recommendations on proceed/defer/decline decisions with supporting forensic evidence.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Fraud investigation procedures</h2>
+
+      <h3>Risk flag assessment</h3>
+      <p class="muted">We identify elevated-risk indicators including: unusually high promised returns (>30% annually), pressure to invest quickly, celebrity/influencer endorsements without disclosure, complex structures obscuring actual operations, lack of regulatory registration, and social engineering tactics.</p>
+
+      <h3>Evidence collection</h3>
+      <p class="muted">Comprehensive documentation gathering including marketing materials, transaction confirmations, communication records, website archives (via Internet Archive), blockchain records, and law enforcement reports. All evidence preserved with cryptographic integrity verification.</p>
+
+      <h3>Investigation report structure</h3>
+      <ul class="list">
+        <li><strong>Executive Summary:</strong> Key findings, risk level, and recommendations in 1-2 pages</li>
+        <li><strong>Entity Background:</strong> Corporate structure, beneficial ownership, regulatory status</li>
+        <li><strong>On-Chain Analysis:</strong> Transaction patterns, fund flows, wallet clustering, behavioral anomalies</li>
+        <li><strong>Technical Assessment:</strong> Contract vulnerabilities, infrastructure risks, operational security evaluation</li>
+        <li><strong>Fraud Risk Indicators:</strong> Probability assessment comparing to known fraud patterns and historical cases</li>
+        <li><strong>Documentation Appendix:</strong> Supporting evidence with chain-of-custody verification</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Investigation team backgrounds</h2>
+
+      <h3>Forensic analysis specialists</h3>
+      <p class="muted">PhDs in computer science and mathematics with backgrounds in cryptographic analysis and blockchain architecture. Former researchers at leading universities and blockchain security labs. Combined 60+ years of experience in transaction analysis and pattern recognition.</p>
+
+      <h3>Regulatory compliance experts</h3>
+      <p class="muted">Former regulators from SEC, CFTC, FinCEN, and state attorneys general offices. Deep expertise in securities law, anti-money laundering (AML), know-your-customer (KYC) procedures, and cross-jurisdictional compliance frameworks. Established relationships with regulatory agencies worldwide.</p>
+
+      <h3>Smart contract auditors</h3>
+      <p class="muted">Certified blockchain developers and security auditors. Track record auditing $50B+ in smart contract deployments. Expertise in EVM, Solana, Cosmos, and Layer-2 chains. Former participants in major bug bounty programs with 500+ vulnerability discoveries.</p>
+
+      <h3>Criminal investigators</h3>
+      <p class="muted">Former law enforcement from FBI cybercrime divisions, IRS Criminal Investigation, and Secret Service electronic crimes task forces. Combined 80+ years of criminal investigation experience. Active relationships with federal agencies and international law enforcement networks.</p>
+    </div>
+
+    <div class="card">
+      <h2>Investigation deliverables</h2>
+
+      <ul class="list">
+        <li><strong>Formal Investigation Report (15-40 pages):</strong> Comprehensive analysis with executive summary, methodology description, detailed findings, forensic evidence, and risk scoring</li>
+        <li><strong>Executive Brief (2-3 pages):</strong> High-level summary for senior leadership or board presentation</li>
+        <li><strong>Evidence Package:</strong> Complete documentation with cryptographic integrity verification and chain-of-custody records</li>
+        <li><strong>Litigation Support Materials (if required):</strong> Court-admissible forensic analysis and expert witness preparation</li>
+        <li><strong>Regulatory Reporting Package:</strong> SEC/CFTC/FinCEN-compliant documentation for regulatory notification</li>
+        <li><strong>Remediation Recommendations:</strong> Specific action steps for fraud prevention and operational improvements</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Industries & use cases</h2>
+
+      <h3>Financial services & investment firms</h3>
+      <p class="muted">Pre-investment due diligence on fund managers, cryptocurrency platforms, and fintech startups. Counterparty risk assessment before partnerships or capital deployment.</p>
+
+      <h3>Cryptocurrency exchanges & custodians</h3>
+      <p class="muted">Listing due diligence on tokens and projects. Regulatory compliance verification. Perpetrator attribution for fraudulent token projects.</p>
+
+      <h3>Insurance & risk management</h3>
+      <p class="muted">Fraud claim investigation. Claim validation for coverage determination. Historical pattern analysis for risk assessment and pricing.</p>
+
+      <h3>Law enforcement & government agencies</h3>
+      <p class="muted">Criminal investigation support. Intelligence analysis on fraud networks. Perpetrator attribution and attribution confidence assessment.</p>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div>
+          <h5>Investigative Services</h5>
+          <p class="muted">Due diligence and fraud detection for investment and operational decisions.</p>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <p class="muted"><a href="investigative-process.html">Our Process</a></p>
+          <p class="muted"><a href="blockchain-forensic.html">Forensics</a></p>
+          <p class="muted"><a href="defi-token-recovery.html">Recovery Services</a></p>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <p class="muted"><a href="contact-us.html">Get in Touch</a></p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:18px;color:var(--muted)">&copy; <span id="year">2025</span> CyberProRecover</div>
+    </footer>
+  </main>
+
+  <script>
+    const root=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+    const moonSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+    const sunSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+    const saved=localStorage.getItem('theme')||'dark';root.setAttribute('data-theme',saved);if(themeBtn){themeBtn.innerHTML=saved==='light'?sunSVG:moonSVG;themeBtn.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);localStorage.setItem('theme',n);themeBtn.innerHTML=n==='light'?sunSVG:moonSVG;});}
+    const mobileMenuBtn=document.getElementById('mobileMenuBtn');const mobileNav=document.getElementById('mobileNav');if(mobileMenuBtn){const navItems=['<a class="nav-mobile-item" href="index.html#overview">Overview</a>','<a class="nav-mobile-item" href="investigative-process.html">Process</a>','<a class="nav-mobile-item" href="how-does-it-work.html">How It Works</a>','<a class="nav-mobile-item" href="contact-us.html">Contact</a>'];mobileNav.innerHTML=navItems.join('');mobileMenuBtn.addEventListener('click',()=>{const isOpen=mobileNav.classList.contains('open');mobileMenuBtn.setAttribute('aria-expanded',!isOpen);mobileNav.classList.toggle('open');document.body.style.overflow=isOpen?'auto':'hidden';});}
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

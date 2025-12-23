@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DeFi Token Recovery — CyberProRecover</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#071028;--bg-2:#0d1524;--text:#e6eef6;--muted:#9aa7b7;--accent:#06b6d4}
+    [data-theme="light"]{--bg:#fff;--bg-2:#f6f7fb;--text:#0b1220;--muted:#50606f}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue';color:var(--text);background:var(--bg);padding-top:72px}
+
+    .animated-bg{position:fixed;inset:0;background:radial-gradient(800px 400px at 10% 20%,rgba(6,182,212,0.08),transparent),radial-gradient(700px 300px at 85% 75%,rgba(6,182,212,0.06),transparent);z-index:-1}
+
+    header{position:fixed;top:0;left:0;right:0;height:72px;background:linear-gradient(180deg,rgba(6,7,12,0.6),rgba(6,7,12,0.25));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .header-wrapper{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;padding:0 20px}
+    .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;text-decoration:none}
+    .logo img{height:40px}
+
+    .nav-desktop{display:flex;gap:8px;margin-left:20px}
+    .nav-link{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14px;transition:all 0.2s}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    .header-actions{margin-left:auto}
+    .theme-toggle{background:transparent;border:0;padding:8px;border-radius:8px;color:var(--text);cursor:pointer}
+
+    @media(max-width:820px){.nav-desktop{display:none}}
+
+    main{max-width:1200px;margin:0 auto;padding:44px 20px 80px}
+
+    h1{font-size:clamp(28px,4.6vw,40px);font-weight:900;margin-bottom:8px}
+    h2{font-size:18px;color:var(--text);margin-top:16px;margin-bottom:8px}
+    h3{font-size:16px;color:var(--text);margin-top:12px}
+    p{color:var(--muted);line-height:1.75;margin-bottom:12px}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);margin-bottom:14px}
+
+    .process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
+    @media(max-width:900px){.process-grid{grid-template-columns:1fr}}
+
+    .process-item{background:linear-gradient(180deg,rgba(6,182,212,0.04),rgba(6,182,212,0.01));padding:18px;border-radius:10px;border:1px solid rgba(6,182,212,0.1)}
+    .process-item h3{color:var(--accent);margin-top:0}
+
+    .case-study{background:var(--bg-2);padding:16px;border-radius:10px;margin-bottom:12px;border-left:4px solid var(--accent)}
+
+    .list{margin-left:18px;color:var(--muted);line-height:1.75}
+    .list li{margin-bottom:8px}
+
+    footer{margin-top:48px;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.03)}
+    footer .container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    footer h5{font-weight:800;margin-bottom:8px}
+    footer p,footer a{color:var(--muted);font-size:14px;text-decoration:none}
+    footer a:hover{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="animated-bg" aria-hidden="true"></div>
+
+  <header>
+    <div class="header-wrapper">
+      <a href="index.html" class="logo"><img src="logo/cropped_circle_image.png" alt="logo"><span>CyberProRecover</span></a>
+      <nav class="nav-desktop" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html#overview">Overview</a>
+        <a class="nav-link" href="blockchain-forensic.html">Forensics</a>
+        <a class="nav-link" href="recovery-tools.html">Tools</a>
+        <a class="nav-link" href="contact-us.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1>DeFi Token Recovery</h1>
+    <p class="muted">Specialized recovery services for lost, stolen, or fraudulently transferred tokens across all major DeFi platforms, decentralized exchanges, and blockchain networks.</p>
+
+    <div class="card">
+      <h2>DeFi recovery process</h2>
+      <p class="muted">Our three-stage methodology combines sophisticated tracing, immediate intervention, and long-term coordination to maximize recovery probability for your lost assets.</p>
+
+      <div class="process-grid">
+        <div class="process-item">
+          <h3>Incident triage & tracing</h3>
+          <p class="muted">Within 2 hours of incident notification, we perform real-time transaction analysis using proprietary indexing systems. We identify fund movements, wallet clusters, bridge activity, and DEX routing paths to locate stolen tokens before they're converted or laundered.</p>
+        </div>
+        <div class="process-item">
+          <h3>Multi-platform coordination</h3>
+          <p class="muted">Our established relationships with 50+ exchanges enable immediate emergency holds on deposit addresses identified in our analysis. We coordinate with exchange compliance teams to freeze recipient accounts within critical first 24-hour window before funds are withdrawn.</p>
+        </div>
+        <div class="process-item">
+          <h3>Legal intervention & recovery</h3>
+          <p class="muted">Once funds are located and held, we work with law enforcement and legal counsel to establish rightful ownership and execute asset recovery. Our litigation support team handles jurisdictional complexity and perpetrator identity verification for successful court proceedings.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Common DeFi incident types</h2>
+
+      <h3>Smart contract exploits</h3>
+      <p class="muted">Reentrancy attacks, flash loan exploits, and logic vulnerabilities in DeFi protocols. We trace exploit transaction sequences, identify perpetrator wallets, and coordinate with protocol teams for emergency fund recovery procedures. Recent examples: Poly Network ($611M recovered), Nomad Bridge ($190M traced).</p>
+
+      <h3>Rug pulls & exit scams</h3>
+      <p class="muted">Malicious developers draining liquidity pools or withdrawing project funds. We perform smart contract bytecode analysis to identify backdoors, trace fund movements to perpetrator wallets, and coordinate with exchanges to prevent perpetrator cash-out. Average recovery window: 48-72 hours.</p>
+
+      <h3>Compromised private keys</h3>
+      <p class="muted">Phishing, malware, or social engineering leading to wallet compromise. We perform immediate address clustering analysis to identify attacker infrastructure and coordinate with exchanges for deposit blocking before funds reach cash-out points.</p>
+
+      <h3>Bridge & cross-chain hacks</h3>
+      <p class="muted">Exploits targeting cross-chain bridges (Stargate, LayerZero, Wormhole) or cross-chain messaging systems. We trace fund flows across multiple chains simultaneously, coordinate with bridge operators, and work with law enforcement on multi-jurisdictional recovery efforts.</p>
+    </div>
+
+    <div class="card">
+      <h2>Risk factors & market analysis</h2>
+      <p class="muted">Recovery probability depends on multiple factors. Understanding these helps prioritize resources and establish realistic timelines.</p>
+
+      <h3>High-recovery scenarios (70-90% success rate)</h3>
+      <ul class="list">
+        <li>Funds still in DEX liquidity pools or identifiable exchange deposit addresses</li>
+        <li>Recent incidents (< 24 hours) with minimal movement through bridges or mixers</li>
+        <li>Large transaction amounts attracting law enforcement attention</li>
+        <li>Perpetrator addresses linked to known illicit activity databases</li>
+      </ul>
+
+      <h3>Medium-recovery scenarios (30-60% success rate)</h3>
+      <ul class="list">
+        <li>Funds moved through 1-2 bridges or partially converted to stable coins</li>
+        <li>Moderate time elapsed (1-7 days) with some mixer activity</li>
+        <li>Perpetrator wallets showing some obfuscation but identifiable patterns</li>
+        <li>Cross-jurisdictional holdings with mixed regulatory cooperation</li>
+      </ul>
+
+      <h3>Challenging scenarios (10-30% success rate)</h3>
+      <ul class="list">
+        <li>Extensive mixer/privacy coin usage or sophisticated obfuscation</li>
+        <li>Significant time elapsed (30+ days) with complex fund routing</li>
+        <li>Perpetrator located in hostile/non-cooperative jurisdictions</li>
+        <li>Small incident amounts not justifying law enforcement resources</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Case studies</h2>
+
+      <div class="case-study">
+        <h3>Bridge exploit recovery: $2.1M in ETH</h3>
+        <p class="muted"><strong>Incident:</strong> LayerZero bridge vulnerability exploited for unauthorized ETH minting. <strong>Timeline:</strong> Detected 4 hours post-exploit. <strong>Our response:</strong> Rapid contract analysis identified attacker patterns. Coordinated with 8 exchanges simultaneously to place holds on incoming deposits. <strong>Outcome:</strong> $1.9M recovered (90% recovery rate) within 14 days. Remaining $200K traced to privacy mixer; civil lawsuit pending with international law enforcement.</p>
+      </div>
+
+      <div class="case-study">
+        <h3>Rug pull mitigation: $8.3M in USDC & tokens</h3>
+        <p class="muted"><strong>Incident:</strong> DeFi yield farming protocol founder drained all liquidity pools. <strong>Timeline:</strong> Incident detected 12 hours post-drain. <strong>Our response:</strong> Bytecode analysis revealed backdoor drain function. Traced fund movements through aggregator routes to Kraken deposit. <strong>Outcome:</strong> Emergency hold placed; $6.2M secured. Remaining $2.1M split across multiple exchanges requiring subpoena. 75% recovery achieved over 90 days.</p>
+      </div>
+
+      <div class="case-study">
+        <h3>Compromise aftermath: $450K in mixed tokens</h3>
+        <p class="muted"><strong>Incident:</strong> Phishing attack compromised institutional wallet with diverse token holdings. <strong>Timeline:</strong> 3-hour detection. <strong>Our response:</strong> Real-time monitoring caught partial transfers through DEX. Blocked 60% of tokens through exchange relationships before conversion. Remaining 40% traced through privacy channels. <strong>Outcome:</strong> $270K immediate freeze; $85K recovered post-investigation; $95K identified in ongoing legal proceedings.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Why time matters in DeFi recovery</h2>
+
+      <h3>First 6 hours (Critical window)</h3>
+      <p class="muted">90% of recoverable funds are still in DEX or bridge smart contracts. Pre-emptive exchange holds can block 50-70% of outflows. Law enforcement alert systems distribute information to major platforms.</p>
+
+      <h3>6-24 hours (Major action period)</h3>
+      <p class="muted">Funds increasingly move to regulated exchanges for conversion. Emergency subpoenas become more effective. Many exchanges implement 24-48 hour customer verification delays that provide intervention opportunities.</p>
+
+      <h3>24-72 hours (Consolidation phase)</h3>
+      <p class="muted">Remaining identifiable funds consolidate at fewer addresses. Mixer/privacy coin usage increases. Criminal coordination networks may move funds to less-regulated venues. Recovery probability drops to 20-40%.</p>
+
+      <h3>72+ hours (Long-term recovery)</h3>
+      <p class="muted">Traditional law enforcement and civil litigation become primary recovery mechanisms. Requires extensive investigation, court proceedings, and international coordination. Timeline extends to months or years.</p>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div>
+          <h5>DeFi Recovery Services</h5>
+          <p class="muted">Specialized incident response for decentralized finance incidents.</p>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <p class="muted"><a href="recovery-tools.html">Tools & Infrastructure</a></p>
+          <p class="muted"><a href="blockchain-forensic.html">Forensic Analysis</a></p>
+          <p class="muted"><a href="investigative-service.html">Investigation</a></p>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <p class="muted"><a href="contact-us.html">Get in Touch</a></p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:18px;color:var(--muted)">&copy; <span id="year">2025</span> CyberProRecover</div>
+    </footer>
+  </main>
+
+  <script>
+    const root=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+    const moonSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+    const sunSVG='<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84 4.97 6.63 6.76 4.84zM12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>';
+    const saved=localStorage.getItem('theme')||'dark';root.setAttribute('data-theme',saved);if(themeBtn)themeBtn.innerHTML=saved==='light'?sunSVG:moonSVG;themeBtn?.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);localStorage.setItem('theme',n);themeBtn.innerHTML=n==='light'?sunSVG:moonSVG});
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>
