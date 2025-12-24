@@ -358,6 +358,7 @@
                 .hero ul{padding-left:16px;margin:12px 0;font-size:14px}
             }
         </style>
+        <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=pRvBLswLoi2T"></script>
     </head>
     <body data-theme="dark">
         <a class="skip-link" href="#main">Skip to content</a>
@@ -434,7 +435,7 @@
                                 <a href="defi-token-recovery.html" class="dropdown-item" role="menuitem">DeFi Token Recovery</a>
                                 <a href="usdtrecovery.html" class="dropdown-item" role="menuitem">USDT Recovery</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="crypto-reversal.html" class="dropdown-item" role="menuitem">Crypto Recovery</a>
+                                <a href="#contact" class="dropdown-item" role="menuitem">Recover my Asset Now</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
@@ -457,11 +458,11 @@
                                 About Us <span class="dropdown-icon" aria-hidden="true">▼</span>
                             </button>
                             <div class="dropdown-menu" role="menu">
-                                <a href="#" class="dropdown-item" role="menuitem">Team Profile</a>
-                                <a href="#" class="dropdown-item" role="menuitem">Groups</a>
-                                <a href="#" class="dropdown-item" role="menuitem">About Us</a>
+                                <a href="team-profile.html" class="dropdown-item" role="menuitem">Team Profile</a>
+                                <a href="group.html" class="dropdown-item" role="menuitem">Groups</a>
+                                <a href="about-us.html" class="dropdown-item" role="menuitem">About Us</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item" role="menuitem">Terms and Conditions</a>
+                                <a href="terms-and-conditions.html" class="dropdown-item" role="menuitem">Terms and Conditions</a>
                             </div>
                         </div>
                         <div class="nav-item">
@@ -498,7 +499,7 @@
                                 <a href="security-assessments.html" class="dropdown-item" role="menuitem">Security Assessments</a>
                                 <a href="blockchain-forensics.html" class="dropdown-item" role="menuitem">Blockchain Forensics</a>
                                 <a href="scam-prevention.html" class="dropdown-item" role="menuitem">Scam Prevention</a>
-                            <a href="#" class="mobile-submenu-link">Case Studies</a>
+                            <a href="case-study.html" class="mobile-submenu-link">Case Studies</a>
                         </div>
                         <button class="mobile-nav-link mobile-dropdown-toggle" data-target="faq-submenu" aria-expanded="false">FAQ ▼</button>
                         <div id="faq-submenu" class="mobile-submenu" style="display:none">
@@ -576,7 +577,7 @@
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;margin-bottom:20px">
                             <div>
                                 <div style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:6px">Recovered assets</div>
-                                <div style="font-weight:900;font-size:24px;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:countUp 1s ease-out" class="app-stat-value" id="recoveredAssets">$38,901,780</div>
+                                <div style="font-weight:900;font-size:24px;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:countUp 1s ease-out" class="app-stat-value" id="recoveredAssets">$450,901,780</div>
                             </div>
                             <div style="text-align:right">
                                 <div style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:6px">Case progress</div>
@@ -843,43 +844,89 @@ Additional notes / screenshots (links):</pre>
                         <p style="color:var(--muted);max-width:700px;font-size:13px;line-height:1.6;opacity:0.8">No fees until recovery. Transparent reporting every step.</p>
 
                         <div class="form" aria-labelledby="contact-form-head" style="margin-top:32px;background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(139,92,246,0.02));border:1.5px solid rgba(99,102,241,0.2);padding:32px;border-radius:16px;box-shadow:0 8px 32px rgba(99,102,241,0.08)">
-                            <h4 id="contact-form-head" style="font-size:18px;font-weight:900;margin-bottom:24px;color:var(--text)">Get A Free Consultation</h4>
-                            <form id="contactForm" novalidate>
-                                <div style="margin-bottom:20px">
-                                    <label for="name" style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">Full name</label>
-                                    <input id="name" name="name" autocomplete="name" required style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;transition:all 0.2s;font-family:inherit">
-                                    <input id="name" name="name" autocomplete="name" required style="display:none">
-                                </div>
+                            <h4 id="contact-form-head" style="font-size:18px;font-weight:900;margin-bottom:24px;color:var(--text)">
+  Get A Free Consultation
+</h4>
 
-                                <div style="margin-bottom:20px">
-                                    <label for="emailIn" style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">Email address</label>
-                                    <input id="emailIn" type="email" name="email" autocomplete="email" required style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;transition:all 0.2s;font-family:inherit">
-                                </div>
+<form
+  id="contactForm"
+  action="https://submit-form.com/U08zkLCvQ"
+  method="post"
+>
+  <!-- Email subject -->
+  <input type="hidden" name="_subject" value="New Consultation Request">
 
-                                <div style="margin-bottom:20px">
-                                    <label for="phone" style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">Phone number</label>
-                                    <input id="phone" type="tel" name="phone" autocomplete="tel" placeholder="+1 (800) 000-0000" style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;transition:all 0.2s;font-family:inherit">
-                                </div>
+  <div style="margin-bottom:20px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Full name
+    </label>
+    <input
+      name="name"
+      autocomplete="name"
+      required
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit"
+    >
+  </div>
 
-                                <div style="margin-bottom:24px">
-                                    <label for="incident" style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">Incident summary</label>
-                                    <textarea id="incident" name="incident" rows="6" placeholder="Date (UTC), wallet addresses, transaction hashes, amounts involved, what happened..." required style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;transition:all 0.2s;font-family:inherit;resize:vertical"></textarea>
-                                </div>
+  <div style="margin-bottom:20px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Email address
+    </label>
+    <input
+      type="email"
+      name="email"
+      autocomplete="email"
+      required
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit"
+    >
+  </div>
 
-                                <div style="padding:14px;background:rgba(99,102,241,0.1);border-radius:10px;border-left:3px solid var(--accent);margin-bottom:24px">
-                                    <label for="consent" style="font-weight:600;font-size:12px;color:var(--muted);display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin:0">
-                                        <input id="consent" type="checkbox" required style="margin-top:3px;cursor:pointer;accent-color:var(--accent)"> 
-                                        <span>I consent to share incident information with law enforcement, exchanges, and recovery partners.</span>
-                                    </label>
-                                </div>
+  <div style="margin-bottom:20px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Phone number
+    </label>
+    <input
+      type="tel"
+      name="phone"
+      autocomplete="tel"
+      placeholder="+1 (800) 000-0000"
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit"
+    >
+  </div>
 
-                                <div style="display:flex;gap:12px;flex-wrap:wrap">
-                                    <button class="btn" type="submit" style="flex:1;min-width:140px;font-size:14px;padding:14px 18px">Submit intake</button>
-                                    <button class="copy-btn" id="prefillEvidence" type="button" style="white-space:nowrap;padding:14px 16px;font-size:13px">Template</button>
-                                </div>
+  <div style="margin-bottom:24px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Incident summary
+    </label>
 
-                                <div id="formStatus" role="status" aria-live="polite" style="margin-top:16px;padding:12px;border-radius:8px;color:var(--accent);font-size:12px;font-weight:600;background:rgba(99,102,241,0.1);display:none"></div>
-                            </form>
+    <!-- YOUR textarea, unchanged -->
+    <textarea
+      id="incident"
+      name="message"
+      rows="6"
+      placeholder="Date (UTC), wallet addresses, transaction hashes, amounts involved, what happened..."
+      required
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit;resize:vertical"
+    ></textarea>
+  </div>
+
+  <div style="padding:14px;background:rgba(99,102,241,0.1);border-radius:10px;margin-bottom:24px">
+    <label style="display:flex;gap:10px;color:var(--muted);font-size:12px">
+      <input type="checkbox" name="consent" value="yes" required>
+      <span>I consent to share incident information.</span>
+    </label>
+  </div>
+
+  <!-- YOUR BUTTON -->
+  <button
+    class="btn"
+    type="submit"
+    style="width:100%;padding:14px 18px;font-size:14px"
+  >
+SUBMIT REQUEST
+  </button>
+</form>
+
                         </div>
                     </div>
 
@@ -1197,8 +1244,8 @@ Additional notes / screenshots (links):</pre>
       });
 
       // Animate dashboard values on page load (countdown effect)
-      const animateNumber = (el, target, duration = 1000, isCurrency = false, isBTC = false) => {
-        const startVal = 0;
+      const animateNumber = (el, target, duration = 1000, isCurrency = false, isBTC = false, startVal = 0) => {
+        el.style.animation = 'none';
         const startTime = Date.now();
         const update = () => {
           const elapsed = Date.now() - startTime;
@@ -1214,12 +1261,12 @@ Additional notes / screenshots (links):</pre>
       };
       
       // Trigger animations on load
-      window.addEventListener('load', () => {
+      const runAnimations = () => {
         const recovered = byId('recoveredAssets');
         const btcTarget = byId('targetBTC');
         const liaison = byId('liaisonCount');
         
-        if (recovered) animateNumber(recovered, 418195710, 1200, true, false);
+        if (recovered) animateNumber(recovered, 450901780, 1200, true, false, 100);
         if (btcTarget) {
           const btcNum = 12.71;
           const startTime = Date.now();
@@ -1246,7 +1293,10 @@ Additional notes / screenshots (links):</pre>
           };
           requestAnimationFrame(update);
         }
-      });
+      };
+      
+      // Run animations immediately - DOM is guaranteed to be ready at end of body script
+      runAnimations();
 
       // Initialize particles
       makeParticles(28);
@@ -1254,6 +1304,7 @@ Additional notes / screenshots (links):</pre>
     // footer year (guard when element isn't present)
     const _year = byId('year'); if(_year) _year.textContent = new Date().getFullYear();
     </script>
+    
 </body>
 </html>
 </html>

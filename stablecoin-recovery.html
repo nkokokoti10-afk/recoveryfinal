@@ -155,6 +155,7 @@
         .sticky-desktop { position: sticky; top: 100px; }
         @media (max-width: 768px) { .sticky-desktop { position: static; } }
     </style>
+    <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=pRvBLswLoi2T"></script> 
 </head>
 <body>
     <!-- Animated Background -->
@@ -350,40 +351,84 @@
 
                     <div class="form">
                         <h4 style="font-size: 18px; font-weight: 900; margin-bottom: 24px; color: var(--text);">Report Your Incident</h4>
-                        <form id="contactForm" novalidate>
-                            <div style="margin-bottom: 20px;">
-                                <label for="name" style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block; margin-bottom: 8px;">Full name</label>
-                                <input id="name" name="name" autocomplete="name" required style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); color: var(--text); font-size: 14px; transition: all 0.2s; font-family: inherit;">
-                            </div>
+                        <form
+  id="contactForm"
+  action="https://submit-form.com/qHxAE2CQD"
+  method="post"
+>
+  <!-- Email subject -->
+  <input type="hidden" name="_subject" value="New Consultation Request">
 
-                            <div style="margin-bottom: 20px;">
-                                <label for="emailIn" style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block; margin-bottom: 8px;">Email address</label>
-                                <input id="emailIn" type="email" name="email" autocomplete="email" required style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); color: var(--text); font-size: 14px; transition: all 0.2s; font-family: inherit;">
-                            </div>
+  <div style="margin-bottom:20px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Full name
+    </label>
+    <input
+      name="name"
+      autocomplete="name"
+      required
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit"
+    >
+  </div>
 
-                            <div style="margin-bottom: 20px;">
-                                <label for="phone" style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block; margin-bottom: 8px;">Phone number</label>
-                                <input id="phone" type="tel" name="phone" autocomplete="tel" placeholder="+1 (800) 000-0000" style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); color: var(--text); font-size: 14px; transition: all 0.2s; font-family: inherit;">
-                            </div>
+  <div style="margin-bottom:20px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Email address
+    </label>
+    <input
+      type="email"
+      name="email"
+      autocomplete="email"
+      required
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit"
+    >
+  </div>
 
-                            <div style="margin-bottom: 24px;">
-                                <label for="incident" style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block; margin-bottom: 8px;">Incident summary</label>
-                                <textarea id="incident" name="incident" rows="6" placeholder="Date (UTC), exchange/platform, wallet address, amount (USDC/USDT/DAI), what happened..." required style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); color: var(--text); font-size: 14px; transition: all 0.2s; font-family: inherit; resize: vertical;"></textarea>
-                            </div>
+  <div style="margin-bottom:20px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Phone number
+    </label>
+    <input
+      type="tel"
+      name="phone"
+      autocomplete="tel"
+      placeholder="+1 (800) 000-0000"
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit"
+    >
+  </div>
 
-                            <div style="padding: 14px; background: rgba(99,102,241,0.1); border-radius: 10px; border-left: 3px solid var(--accent); margin-bottom: 24px;">
-                                <label for="consent" style="font-weight: 600; font-size: 12px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; cursor: pointer; margin: 0;">
-                                    <input id="consent" type="checkbox" required style="margin-top: 3px; cursor: pointer; accent-color: var(--accent);">
-                                    <span>I consent to share incident information with exchanges, issuers, and recovery partners.</span>
-                                </label>
-                            </div>
+  <div style="margin-bottom:24px">
+    <label style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent);display:block;margin-bottom:8px">
+      Incident summary
+    </label>
 
-                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                                <button class="btn" type="submit" style="flex: 1; min-width: 140px; font-size: 14px; padding: 14px 18px;">Submit Incident</button>
-                            </div>
+    <!-- YOUR textarea, unchanged -->
+    <textarea
+      id="incident"
+      name="message"
+      rows="6"
+      placeholder="Date (UTC), wallet addresses, transaction hashes, amounts involved, what happened..."
+      required
+      style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px;font-family:inherit;resize:vertical"
+    ></textarea>
+  </div>
 
-                            <div id="formStatus" role="status" aria-live="polite" style="margin-top: 16px; padding: 12px; border-radius: 8px; color: var(--accent); font-size: 12px; font-weight: 600; background: rgba(99,102,241,0.1); display: none;"></div>
-                        </form>
+  <div style="padding:14px;background:rgba(99,102,241,0.1);border-radius:10px;margin-bottom:24px">
+    <label style="display:flex;gap:10px;color:var(--muted);font-size:12px">
+      <input type="checkbox" name="consent" value="yes" required>
+      <span>I consent to share incident information.</span>
+    </label>
+  </div>
+
+  <!-- YOUR BUTTON -->
+  <button
+    class="btn"
+    type="submit"
+    style="width:100%;padding:14px 18px;font-size:14px"
+  >
+   SUBMIT COMPLAINT
+  </button>
+</form>
                     </div>
                 </div>
 
